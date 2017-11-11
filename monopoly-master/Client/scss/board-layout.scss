@@ -1,0 +1,125 @@
+.border {
+  box-sizing: border-box;
+  border: 1px solid black;
+  div {
+    border: 1px solid black;
+    box-sizing: border-box;
+  }
+}
+
+$x: 13%;
+$y: 100% / 9;
+$span: 700px;
+$scale: 0.03;
+
+#game-area {
+  min-width: 1200px;
+
+  #main-board {
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    box-sizing: border-box;
+
+    float: left;
+
+    width: $span;
+    height: $span;
+
+    #top {
+      width: 100%;
+      height: $x;
+    }
+
+    #middle {
+      width: 100%;
+      height: 100% - 2*$x;
+    }
+
+    #bottom {
+      width: 100%;
+      height: $x;
+    }
+
+    .float {
+      > div {
+        float: left;
+      }
+    }
+
+    .corner {
+      width: $x;
+      height: 100%;
+    }
+
+    .h_container {
+      width: 100% - 2*$x;
+      height: 100%;
+    }
+
+    .v_container {
+      width: $x;
+      height: 100%;
+    }
+
+    #top_middle_container,
+    #bottom_middle_container {
+      > div {
+        width: $y;
+        height: 100%;
+      }
+    }
+
+    #middle_right_container,
+    #middle_left_container {
+      > div {
+        width: 100%;
+        height: $y;
+      }
+    }
+
+    .middle {
+      width: 100% - 2*$x;
+      height: 100%;
+    }
+  }
+
+  #pane {
+    float: left;
+    margin-left: 20px;
+
+    #detail-pane {
+      width: 200px;
+      height: 300px;
+    }
+
+  }
+
+  .player {
+    position: relative;
+
+    margin: 0 auto 1px auto;
+    background: red;
+    width: $span * $scale;
+    height: $span * $scale;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+
+    text-align: center;
+    font-size: $span * $scale;
+    line-height: $span * $scale;
+  }
+
+  .cell {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    text-align: center;
+
+    padding: 1px;
+
+    overflow: visible;
+  }
+}

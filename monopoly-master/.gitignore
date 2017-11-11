@@ -1,0 +1,19 @@
+# Server part
+/*/*.pyc
+/*/__pycache__
+/*/*.dat
+
+# Client part
+/Client/current_game_port
+Client/test
+
+#SystemTesting part
+/SystemTesting/__pycacche__
+
+# General
+/*/.DS_Store
+.DS_Store
+/*/.idea
+.idea
+/docs/*/*
+/docs/*

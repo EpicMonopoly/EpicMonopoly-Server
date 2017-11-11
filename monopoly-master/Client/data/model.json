@@ -1,0 +1,246 @@
+{
+  "0": {
+    "id": 0,
+    "type": "action"
+  },
+  "1": {
+    "id": 1,
+    "type": "property",
+    "price": 60,
+    "rent": 10,
+    "estate": 0
+  },
+  "2": {
+    "id": 2,
+    "type": "action"
+  },
+  "3": {
+    "id": 3,
+    "type": "property",
+    "price": 60,
+    "rent": 20,
+    "estate": 0
+  },
+  "4": {
+    "id": 4,
+    "type": "action"
+  },
+  "5": {
+    "id": 5,
+    "type": "property",
+    "price": 150,
+    "rent": -1,
+    "estate": -1
+  },
+  "6": {
+    "id": 6,
+    "type": "property",
+    "price": 100,
+    "rent": 30,
+    "estate": 1
+  },
+  "7": {
+    "id": 7,
+    "type": "action"
+  },
+  "8": {
+    "id": 8,
+    "type": "property",
+    "price": 100,
+    "rent": 30,
+    "estate": 1
+  },
+  "9": {
+    "id": 9,
+    "type": "property",
+    "price": 120,
+    "rent": 40,
+    "estate": 1
+  },
+  "10": {
+    "id": 10,
+    "type": "action"
+  },
+  "11": {
+    "id": 11,
+    "type": "property",
+    "price": 140,
+    "rent": 50,
+    "estate": 2
+  },
+  "12": {
+    "id": 12,
+    "type": "property",
+    "price": 200,
+    "rent": -1,
+    "estate": -1
+  },
+  "13": {
+    "id": 13,
+    "type": "property",
+    "price": 140,
+    "rent": 50,
+    "estate": 2
+  },
+  "14": {
+    "id": 14,
+    "type": "property",
+    "price": 160,
+    "rent": 60,
+    "estate": 2
+  },
+  "15": {
+    "id": 15,
+    "type": "property",
+    "price": 150,
+    "rent": -1,
+    "estate": -1
+  },
+  "16": {
+    "id": 16,
+    "type": "property",
+    "price": 180,
+    "rent": 70,
+    "estate": 3
+  },
+  "17": {
+    "id": 17,
+    "type": "action"
+  },
+  "18": {
+    "id": 18,
+    "type": "property",
+    "price": 180,
+    "rent": 70,
+    "estate": 3
+  },
+  "19": {
+    "id": 19,
+    "type": "property",
+    "price": 200,
+    "rent": 80,
+    "estate": 3
+  },
+  "20": {
+    "id": 20,
+    "type": "action"
+  },
+  "21": {
+    "id": 21,
+    "type": "property",
+    "price": 220,
+    "rent": 90,
+    "estate": 4
+  },
+  "22": {
+    "id": 22,
+    "type": "action"
+  },
+  "23": {
+    "id": 23,
+    "type": "property",
+    "price": 220,
+    "rent": 90,
+    "estate": 4
+  },
+  "24": {
+    "id": 24,
+    "type": "property",
+    "price": 240,
+    "rent": 100,
+    "estate": 4
+  },
+  "25": {
+    "id": 25,
+    "type": "property",
+    "price": 150,
+    "rent": -1,
+    "estate": -1
+  },
+  "26": {
+    "id": 26,
+    "type": "property",
+    "price": 260,
+    "rent": 110,
+    "estate": 5
+  },
+  "27": {
+    "id": 27,
+    "type": "property",
+    "price": 260,
+    "rent": 110,
+    "estate": 5
+  },
+  "28": {
+    "id": 28,
+    "type": "property",
+    "price": 200,
+    "rent": -1,
+    "estate": -1
+  },
+  "29": {
+    "id": 29,
+    "type": "property",
+    "price": 280,
+    "rent": 120,
+    "estate": 5
+  },
+  "30": {
+    "id": 30,
+    "type": "action"
+  },
+  "31": {
+    "id": 31,
+    "type": "property",
+    "price": 300,
+    "rent": 130,
+    "estate": 6
+  },
+  "32": {
+    "id": 32,
+    "type": "property",
+    "price": 300,
+    "rent": 130,
+    "estate": 6
+  },
+  "33": {
+    "id": 33,
+    "type": "action"
+  },
+  "34": {
+    "id": 34,
+    "type": "property",
+    "price": 320,
+    "rent": 150,
+    "estate": 6
+  },
+  "35": {
+    "id": 35,
+    "type": "property",
+    "price": 150,
+    "rent": -1,
+    "estate": -1
+  },
+  "36": {
+    "id": 36,
+    "type": "action"
+  },
+  "37": {
+    "id": 37,
+    "type": "property",
+    "price": 350,
+    "rent": 175,
+    "estate": 7
+  },
+  "38": {
+    "id": 38,
+    "type": "action"
+  },
+  "39": {
+    "id": 39,
+    "type": "property",
+    "price": 400,
+    "rent": 200,
+    "estate": 7
+  }
+}
