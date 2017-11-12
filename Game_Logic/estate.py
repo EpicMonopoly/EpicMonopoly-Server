@@ -52,7 +52,7 @@ class Estate(Property):
     @property
     def mortgage_value(self):
         return self.value * self.mortgage_rate
-
+      
     @property
     def payment(self):
         return self.value

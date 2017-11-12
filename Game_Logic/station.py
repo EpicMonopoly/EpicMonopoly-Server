@@ -24,6 +24,7 @@ class Station(Property):
         :param station_num: number of station
         :param dice_result: dice result
         :return: amount of payment
+
         """
         value = self._estate_value
         if station_num == 1:
