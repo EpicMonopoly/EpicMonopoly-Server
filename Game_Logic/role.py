@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from Property import Property
+from property import Property
 
 
 class Role(metaclass=ABCMeta):
