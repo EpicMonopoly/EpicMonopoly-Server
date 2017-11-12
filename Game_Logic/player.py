@@ -85,39 +85,40 @@ class Player(Role):
         else:
             self._position = position
 
-    # TODO: implement method
     def trade_property(self, properties, from_role, to_role):
         """
-        Trade for other players or bank
-        :type properties: class
-        :type from_role: class
-        :type to_role: class
-        :param properties: Property
+        Trade for other players or bank, here is just to sell
+        :type properties: set
+        :type from_role: Player
+        :type to_role: Player or Bank
+        :param properties: a set of Property
         :param from_role: Role
         :param to_role: Role
         :return boolean: Trade successfully or not
         """
-        pass
+        from_role.remove_property(properties)
+        to_role.add_property(properties)
+        return True
 
-    # TODO: implement method
     def pay(self, amount, from_role, to_role):
         """
         Trade cash between players or bank
-        :type from_role: class
-        :type to_role: class
+        :type from_role: Player
+        :type to_role: Player or Bank
         :param amount: amount of cash to be traded
         :param from_role: Player or Bank
         :param to_role: Player or Bank
         :return boolean: Trade finished or error
         """
-        try:
-            super()._cash(-amount)
+        if from_role._cash >= amount:
+            from_role._cash(-amount)
             if isinstance(to_role, Player):
                 to_role._cash(amount)
                 return True
             if isinstance(to_role, Bank):
                 return True
-        except AttributeError:
+        else:
             return False
+
 
 

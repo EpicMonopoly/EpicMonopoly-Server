@@ -43,15 +43,16 @@ class Role(metaclass=ABCMeta):
     def add_property(self, properties):
         """
         Add property to properties
-        :type properties: Property
-        :param properties: Property
+        :type properties: set
+        :param properties: a set of Property
         """
-        self._properties.add(properties)
+        for p in properties:
+            self._properties.add(p)
 
     def remove_property(self, properties):
         """
         Remove property from properties
-        :type properties: set of Property
+        :type properties: set
         :param properties: properties set
         :return boolean: True if succeed while False if properties is empty
         """
@@ -77,6 +78,9 @@ class Role(metaclass=ABCMeta):
     def pay(self, amount, from_role, to_role):
         """
         Trade cash between players or bank
+        :type amount: int
+        :type from_role: Player or Bank
+        :type to_role: Player or Bank
         :param amount: amount of cash to be traded
         :param from_role: Role
         :param to_role: Role

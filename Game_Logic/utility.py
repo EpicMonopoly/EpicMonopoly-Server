@@ -1,9 +1,9 @@
 from property import Property
 
 class Utility(Property):
-    '''
+    """
     Class Utility
-    '''
+    """
     def __init__(self):
         '''
         Call superclass construct method
