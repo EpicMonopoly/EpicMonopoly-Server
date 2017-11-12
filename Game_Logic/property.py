@@ -1,5 +1,6 @@
 from abc import abstractclassmethod
 from block import Block
+from ef import EF
 
 
 class Property(Block):
@@ -53,8 +54,8 @@ class Property(Block):
     def mortgage_value(self):
         return self._estate_value * self.mortgage_rate
 
-    # TODO: add changeEF method
-    # def changeEF(self):
+    # TODO: implement changeEF method
+    # def change_EF(self):
     #     pass
 
     @property  # getPayment

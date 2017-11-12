@@ -1,5 +1,8 @@
 from role import Role
 from player import Player
+from station import Station
+from utility import Utility
+from estate import Estate
 
 
 class Bank(Role):
@@ -34,25 +37,84 @@ class Bank(Role):
     def mortgage(self, from_role, properties):
         """
         Mortgage the properties of Player
-        :type from_role: Player
+        :type from_role: Role
         :type properties: set
         :param from_role: player
         :param properties: a set of properties
-        :return:
+        :return: True or not of this mortgage
         """
-        # mortgage_value = 0
-        # for p in properties:
-        #     if isinstance(p, Station):
-        pass
+        mortgage_value = 0
+        if properties:
+            for p in properties:
+                if isinstance(p, Station):
+                    mortgage_value += p.mortgage_value
+                    self._loan_list.add(p)
+                elif isinstance(p, Utility):
+                    mortgage_value += p.mortgage_value
+                    self._loan_list.add(p)
+                elif isinstance(p, Estate):
+                    mortgage_value += p.mortgage_value
+                    self._loan_list.add(p)
+            from_role.cash(mortgage_value)
+            return True
+        else:
+            return False
 
-    def repayment(self):
-        pass
+    def repayment(self, from_role, properties):
+        """
+        Repay the mortgaged properties
+        :type from_role: Role
+        :type properties: set
+        :param from_role: player
+        :param properties: a set of properties
+        :return: True or not of this repayment
+        """
+        repay_value = 0
+        if properties:
+            for p in properties:
+                if isinstance(p, Station):
+                    repay_value += p.mortgage_value
+                    self._loan_list.add(p)
+                elif isinstance(p, Utility):
+                    repay_value += p.mortgage_value
+                    self._loan_list.add(p)
+                elif isinstance(p, Estate):
+                    repay_value += p.mortgage_value
+                    self._loan_list.add(p)
+            from_role.cash(repay_value)
+            return True
+        else:
+            return False
 
-    def build_house(self):
-        pass
+    def build_house(self, from_to, estate, house_num):
+        """
+        Build house on estate
+        :type from_to: Role
+        :type estate: Estate
+        :param from_to: Role
+        :param estate: the estate player want to build houses on
+        :param house_num: number of house the player want to build
+        :return: True or not about the result
+        """
+        if from_to.cash >= estate.house_value * house_num:
+            if estate.house_num + house_num <= 4:
+                estate.house_num(estate.house_num + house_num)
+            elif estate.house_num + house_num == 5:
+                estate.house_num(0)
+                estate.hotel_num(1)
+            else:
+                return False
+            from_to.cash(-estate.house_value * estate.house_num)
+            return True
+        else:
+            return False
 
-    def build_hotel(self):
-        pass
+    # def build_hotel(self, estate):
+    #     """
+    #     estate
+    #     :param estate:
+    #     :return:
+    #     """
 
     def trade_property(self, properties, from_role, to_role):
         """
