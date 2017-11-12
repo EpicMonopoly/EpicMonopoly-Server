@@ -1,7 +1,7 @@
-import role
+from role import Role
 
 
-class Bank(role):
+class Bank(Role):
     """
     subclass(Role): Bank
     """
@@ -45,7 +45,7 @@ class Bank(role):
     # TODO: implement method
     def trade_property(self, properties, from_role, to_role):
         """
-        Treade for other players or bank
+        Trade for other players or bank
         :param properties: Property
         :param from_role: Role
         :param to_role: Role

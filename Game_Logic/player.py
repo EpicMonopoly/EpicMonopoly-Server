@@ -1,7 +1,8 @@
-import role
+from role import Role
+from bank import Bank
 
 
-class Player(role):
+class Player(Role):
     """
     subclass(Role): Player
     """
@@ -66,6 +67,10 @@ class Player(role):
     # def station_num(self, station_num):
     #     self._station_num = station_num
 
+    @Role.cash.setter
+    def cash(self, amount):
+        self._cash += amount
+
     def move(self, steps, position=None):
         """
         Move players
@@ -83,7 +88,10 @@ class Player(role):
     # TODO: implement method
     def trade_property(self, properties, from_role, to_role):
         """
-        Treade for other players or bank
+        Trade for other players or bank
+        :type properties: class
+        :type from_role: class
+        :type to_role: class
         :param properties: Property
         :param from_role: Role
         :param to_role: Role
@@ -95,9 +103,21 @@ class Player(role):
     def pay(self, amount, from_role, to_role):
         """
         Trade cash between players or bank
+        :type from_role: class
+        :type to_role: class
         :param amount: amount of cash to be traded
-        :param from_role: Role
-        :param to_role: Role
+        :param from_role: Player or Bank
+        :param to_role: Player or Bank
         :return boolean: Trade finished or error
         """
-        pass
+        try:
+            super()._cash(-amount)
+            if isinstance(to_role, Player):
+                to_role._cash(amount)
+                return True
+            if isinstance(to_role, Bank):
+                return True
+        except AttributeError:
+            return False
+
+

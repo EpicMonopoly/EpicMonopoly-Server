@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-import Property
+from Property import Property
 
 
 class Role(metaclass=ABCMeta):
@@ -32,6 +32,10 @@ class Role(metaclass=ABCMeta):
     def cash(self):
         return self._cash
 
+    # @cash.setter
+    # def cash(self, value):
+    #     self._cash += value
+
     @property  # getProperties
     def properties(self):
         return self._properties
@@ -47,11 +51,13 @@ class Role(metaclass=ABCMeta):
     def remove_property(self, properties):
         """
         Remove property from properties
-        :param properties:
+        :type properties: set of Property
+        :param properties: properties set
         :return boolean: True if succeed while False if properties is empty
         """
         if self._properties:
-            self._properties.remove(properties)
+            for p in properties:
+                self._properties.remove(p)
             return True
         else:
             return False
@@ -59,7 +65,7 @@ class Role(metaclass=ABCMeta):
     @abstractmethod
     def trade_property(self, properties, from_role, to_role):
         """
-        Treade for other players or bank
+        Trade for other players or bank
         :param properties: Property
         :param from_role: Role
         :param to_role: Role

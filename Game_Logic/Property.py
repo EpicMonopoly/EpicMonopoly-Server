@@ -1,8 +1,8 @@
-from abc import ABC, abstractclassmethod
-import block
+from abc import abstractclassmethod
+from block import Block
 
 
-class Property(block):
+class Property(Block):
     """
     Class Property
     """
@@ -61,7 +61,7 @@ class Property(block):
     def payment(self):
         return self._estate_value
 
-    @property # getPosition
+    @property  # getPosition
     def street_id(self):
         return self._street_id
 
@@ -69,3 +69,6 @@ class Property(block):
     def street_id(self, street_id):
         self._street_id = street_id
 
+    @abstractclassmethod
+    def display(self):
+        pass
