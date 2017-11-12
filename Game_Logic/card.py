@@ -19,9 +19,9 @@ class Card(metaclass=ABCMeta):
     def description(self):  # getter
         return self._description
 
-    @abstractmethod
-    def change_value(self, EF):
-        pass
+    # @abstractmethod
+    # def change_value(self, EF):
+    #     pass
 
 
 class MoveCard(Card):
