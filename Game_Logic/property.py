@@ -1,9 +1,9 @@
 from abc import abstractclassmethod
-from block import Block
+import block
 from ef import EF
 
 
-class Property(Block):
+class Property(block.Block):
     """
     Class Property
     """

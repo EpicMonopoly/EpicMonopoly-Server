@@ -1,7 +1,7 @@
-from block import Block
+import block
 
 
-class CardPile(Block):
+class CardPile(block.Block):
     """
     CardPile class
     """

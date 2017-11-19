@@ -1,11 +1,11 @@
-from role import Role
-from player import Player
-from station import Station
-from utility import Utility
-from estate import Estate
+import role
+import player
+import station
+import utility
+import estate
 
 
-class Bank(Role):
+class Bank(role.Role):
     """
     subclass(Role): Bank
     """
@@ -46,13 +46,13 @@ class Bank(Role):
         mortgage_value = 0
         if properties:
             for p in properties:
-                if isinstance(p, Station):
+                if isinstance(p, station.Station):
                     mortgage_value += p.mortgage_value
                     self._loan_list.add(p)
-                elif isinstance(p, Utility):
+                elif isinstance(p, utility.Utility):
                     mortgage_value += p.mortgage_value
                     self._loan_list.add(p)
-                elif isinstance(p, Estate):
+                elif isinstance(p, estate.Estate):
                     mortgage_value += p.mortgage_value
                     self._loan_list.add(p)
             from_role.cash(mortgage_value)
@@ -72,13 +72,13 @@ class Bank(Role):
         repay_value = 0
         if properties:
             for p in properties:
-                if isinstance(p, Station):
+                if isinstance(p, station.Station):
                     repay_value += p.mortgage_value
                     self._loan_list.add(p)
-                elif isinstance(p, Utility):
+                elif isinstance(p, utility.Utility):
                     repay_value += p.mortgage_value
                     self._loan_list.add(p)
-                elif isinstance(p, Estate):
+                elif isinstance(p, estate.Estate):
                     repay_value += p.mortgage_value
                     self._loan_list.add(p)
             from_role.cash(repay_value)
@@ -134,7 +134,8 @@ class Bank(Role):
     def pay(self, amount, to_role):
         """
         Trade cash between players or bank
-        :type to_role: Player
+        :type to_role: player.Player
+        :type amount: int
         :param amount: amount of cash to be traded
         :param to_role: Player who receive the cash
         :return boolean: Trade finished or error

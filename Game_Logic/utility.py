@@ -1,7 +1,7 @@
-from property import Property
+import property
 
 
-class Utility(Property):
+class Utility(property.Property):
     """
     Class Utility
     """

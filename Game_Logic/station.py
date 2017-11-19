@@ -1,7 +1,7 @@
-from property import Property
+import property
 
 
-class Station(Property):
+class Station(property.Property):
     """
     Class Station
     """

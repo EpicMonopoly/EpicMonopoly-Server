@@ -1,8 +1,8 @@
-from role import Role
-from bank import Bank
+import role
+import bank
 
 
-class Player(Role):
+class Player(role.Role):
     """
     subclass(Role): Player
     """
@@ -67,7 +67,7 @@ class Player(Role):
     # def station_num(self, station_num):
     #     self._station_num = station_num
 
-    @Role.cash.setter
+    @role.Role.cash.setter
     def cash(self, amount):
         self._cash += amount
 
@@ -115,7 +115,7 @@ class Player(Role):
             if isinstance(to_role, Player):
                 to_role._cash(amount)
                 return True
-            if isinstance(to_role, Bank):
+            if isinstance(to_role, bank.Bank):
                 return True
         else:
             return False
