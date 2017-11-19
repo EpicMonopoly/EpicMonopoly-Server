@@ -1,0 +1,8 @@
+{
+	"seller_id": 123456,
+	"buyer_id": 123456,
+	"add_property": [1, 5, 7, 3],
+	"remove_property": [4, 9],
+	"cash_seller": 123,
+	"cash_buyer": 456
+}

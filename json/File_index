@@ -1,0 +1,11 @@
+File index:
+	bank.json: 1,
+	block.json: 2,
+	card.json: 3,
+	estate.json: 4,
+	map.json: 5,
+	player.josn: 6,
+	player_list.json: 7,
+	station.json: 8,
+	trade.json: 9,
+	utility.json: 10
