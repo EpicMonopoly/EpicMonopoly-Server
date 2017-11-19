@@ -1,4 +1,5 @@
 import random
+from cardpile import CardPile
 
 class Map(object):
 
