@@ -1,0 +1,111 @@
+[
+  {
+    "card_id": 17,
+    "card_type": 0,
+    "cash": 200,
+    "description": "Advance to Go",
+    "action": "(Collect $200)"
+  },
+  {
+    "card_id": 18,
+    "card_type": 4,
+    "block_id": -2,
+    "description": "Advance to Illinois Ave.",
+    "action": "Move to Illinois Ave"
+  },
+  {
+    "card_id": 19,
+    "card_type": 6,
+    "description": "Advance token to nearest Utility.",
+    "action": "If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown."
+  },
+  {
+    "card_id": 20,
+    "card_type": 6,
+    "description": "Advance token to the nearest Railroad",
+    "action": "Pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."
+  },
+  {
+    "card_id": 21,
+    "card_type": 4,
+    "block_id": -3,
+    "description": "Advance to St. Charles Place",
+    "action": "If you pass Go, collect $200"
+  },
+  {
+    "card_id": 22,
+    "card_type": 0,
+    "cash": 50,
+    "description": "Bank pays you dividend of $50",
+    "action": "(Collect $50)"
+  },
+  {
+    "card_id": 23,
+    "card_type": 5,
+    "description": "Get out of Jail free",
+    "action": "This card may be kept until needed, or sold"
+  },
+  {
+    "card_id": 24,
+    "card_type": 7,
+    "steps": -3,
+    "description": "Go back 3 spaces",
+    "action": ""
+  },
+  {
+    "card_id": 25,
+    "card_type": 4,
+    "block_id": -1,
+    "description": "Go directly to Jail",
+    "action": "Do not pass Go, do not collect $200"
+  },
+  {
+    "card_id": 26,
+    "card_type": 3,
+    "cash": [-25, -100],
+    "description": "Make general repairs on all your property",
+    "action": "For each house pay $25, for each hotel $100"
+  },
+  {
+    "card_id": 27,
+    "card_type": 2,
+    "cash": 15,
+    "description": "Pay poor tax",
+    "action": "(Pay $15)"
+  },
+  {
+    "card_id": 28,
+    "card_type": 4,
+    "block_id": -4,
+    "description": "Take a trip to Reading Railroad",
+    "action": "If you pass Go collect $200"
+  },
+  {
+    "card_id": 29,
+    "card_type": 4,
+    "Block_id": -5,
+    "description": "Take a walk on the Boardwalk",
+    "action": "Advance token to Boardwalk"
+  },
+  {
+    "card_id": 30,
+    "card_type": 7,
+    "cash": 50,
+    "description": "You have been elected chairman of the board",
+    "action": "Pay each player $50"
+  },
+   {
+    "card_id": 31,
+    "card_type": 0,
+    "cash": 150,
+    "description": "Your building loan matures",
+    "action": "(Collect $150)"
+  },
+   {
+    "card_id": 32,
+    "card_type": 0,
+    "cash": 100,
+    "description": "You have won a crossword competition",
+    "action": "(Collect $100)"
+  }
+]
