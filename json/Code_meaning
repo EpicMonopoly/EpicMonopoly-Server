@@ -4,7 +4,7 @@ File index:
 	"card.json": 3,
 	"estate.json": 4,
 	"map.json": 5,
-	"player.josn": 6,
+	"player.json": 6,
 	"player_list.json": 7,
 	"station.json": 8,
 	"trade.json": 9,
@@ -25,3 +25,11 @@ Chest/chance card type:
     6: "Move_nearby",
     7: "Move",
     8: "Pay_to_players"
+
+Block type:
+    0: ["Go", "Go to jail", "In Jail", "Free Parking"]
+    1: ["Community Chest", "Chance"]
+    2: ["Income Tax", "Super Tax"]
+    3. estate.Estate
+    4. station.Station
+    5. utility.Utility
