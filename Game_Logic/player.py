@@ -120,5 +120,3 @@ class Player(Role):
         else:
             return False
 
-
-

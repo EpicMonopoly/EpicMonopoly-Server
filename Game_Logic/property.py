@@ -23,6 +23,8 @@ class Property(Block):
         self._estate_value = int()
         self._status = int()
         self._street_id = int()
+        self.mortgage_rate = 0.5
+        
 
     @property  # setOwner
     def owner(self):
@@ -47,8 +49,6 @@ class Property(Block):
     @status.setter  # setStatus
     def status(self, status):
         self._status = status
-
-    mortgage_rate = 0.5
 
     @property  # getMortgageValue
     def mortgage_value(self):
