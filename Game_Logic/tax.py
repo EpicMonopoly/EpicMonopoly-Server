@@ -1,8 +1,9 @@
-import block
+from block import Block
 
 
-class Tax(block):
+class Tax(Block):
     def __init__(self, rate):
+        super().__init__()
         self._rate = rate
 
     @property

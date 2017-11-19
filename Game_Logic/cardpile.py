@@ -1,8 +1,12 @@
-import block
+from block import Block
 
 
-class CardPile(block):
+class CardPile(Block):
+    """
+    CardPile class
+    """
     def __init__(self):
+        super().__init__()
         self._cards = []
 
     def append_card(self, card):

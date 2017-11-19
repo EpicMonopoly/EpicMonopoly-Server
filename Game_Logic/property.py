@@ -24,7 +24,6 @@ class Property(Block):
         self._status = int()
         self._street_id = int()
         self.mortgage_rate = 0.5
-        
 
     @property  # setOwner
     def owner(self):

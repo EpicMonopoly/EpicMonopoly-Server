@@ -1,7 +1,7 @@
 import random
 
 
-class Street(object):
+class Street:
     """
     Street class is a struct that contain 1-3 blocks
     """

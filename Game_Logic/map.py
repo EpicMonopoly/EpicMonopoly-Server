@@ -1,8 +1,11 @@
 import random
 from cardpile import CardPile
 
-class Map(object):
 
+class Map:
+    """
+    Map class
+    """
     def __init__(self, street_list, two_block_street, three_block_street):
         self._street_list = street_list
         self._two_block_street = two_block_street

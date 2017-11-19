@@ -1,10 +1,11 @@
-import map
+from map import Map
 
 WAIT = 1
 START = 2
 END = 3
 
-class Room(object):
+
+class Room:
 
     def __init__(self, room_id, map, bank):
         self._room_id = room_id
