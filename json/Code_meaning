@@ -1,0 +1,24 @@
+File index:
+	bank.json: 1,
+	block.json: 2,
+	card.json: 3,
+	estate.json: 4,
+	map.json: 5,
+	player.josn: 6,
+	player_list.json: 7,
+	station.json: 8,
+	trade.json: 9,
+	utility.json: 10
+
+Property State:
+	-1: Nobody own
+	0: Mortgage
+	1: Someone own
+
+Chest card type:
+    0: "Collection",
+    1: "Collect_from_players",
+    2: "Pay",
+    3: "Pay_for_repair",
+    4: "Go_to_jail",
+    5: "Bail_card"

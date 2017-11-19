@@ -1,0 +1,442 @@
+[
+	{
+		"name": "Nanan",
+		"block_id": 18,
+		"position": 0,
+		"uid": -1,
+		"estate_value": 60,
+		"status": -1,
+		"street_id": 1,
+		"mortgage_value": -1,
+		"house_value": 50,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Yuzhong",
+		"block_id": 19,
+		"position": 3,
+		"uid": -1,
+		"estate_value": 60,
+		"status": -1,
+		"street_id": 1,
+		"mortgage_value": -1,
+		"house_value": 50,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Xinqu",
+		"block_id": 20,
+		"position": 6,
+		"uid": -1,
+		"estate_value": 100,
+		"status": -1,
+		"street_id": 2,
+		"mortgage_value": -1,
+		"house_value": 50,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Yuanqu",
+		"block_id": 21,
+		"position": 8,
+		"uid": -1,
+		"estate_value": 100,
+		"status": -1,
+		"street_id": 2,
+		"mortgage_value": -1,
+		"house_value": 50,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Jinlu",
+		"block_id": 22,
+		"position": 9,
+		"uid": -1,
+		"estate_value": 120,
+		"status": -1,
+		"street_id": 2,
+		"mortgage_value": -1,
+		"house_value": 50,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Hanyang",
+		"block_id": 23,
+		"position": 10,
+		"uid": -1,
+		"estate_value": 140,
+		"status": -1,
+		"street_id": 3,
+		"mortgage_value": -1,
+		"house_value": 100,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Wuchang",
+		"block_id": 24,
+		"position": 13,
+		"uid": -1,
+		"estate_value": 140,
+		"status": -1,
+		"street_id": 3,
+		"mortgage_value": -1,
+		"house_value": 100,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Hankou",
+		"block_id": 25,
+		"position": 14,
+		"uid": -1,
+		"estate_value": 160,
+		"status": -1,
+		"street_id": 3,
+		"mortgage_value": -1,
+		"house_value": 100,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Nankai",
+		"block_id": 26,
+		"position": 16,
+		"uid": -1,
+		"estate_value": 180,
+		"status": -1,
+		"street_id": 4,
+		"mortgage_value": -1,
+		"house_value": 100,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Hexi",
+		"block_id": 27,
+		"position": 18,
+		"uid": -1,
+		"estate_value": 180,
+		"status": -1,
+		"street_id": 4,
+		"mortgage_value": -1,
+		"house_value": 100,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Heping",
+		"block_id": 28,
+		"position": 19,
+		"uid": -1,
+		"estate_value": 200,
+		"status": -1,
+		"street_id": 4,
+		"mortgage_value": -1,
+		"house_value": 100,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Pudong",
+		"block_id": 29,
+		"position": 21,
+		"uid": -1,
+		"estate_value": 220,
+		"status": -1,
+		"street_id": 5,
+		"mortgage_value": -1,
+		"house_value": 150,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Xuhui",
+		"block_id": 30,
+		"position": 23,
+		"uid": -1,
+		"estate_value": 220,
+		"status": -1,
+		"street_id": 5,
+		"mortgage_value": -1,
+		"house_value": 150,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Jingan",
+		"block_id": 31,
+		"position": 24,
+		"uid": -1,
+		"estate_value": 240,
+		"status": -1,
+		"street_id": 5,
+		"mortgage_value": -1,
+		"house_value": 150,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Haidian",
+		"block_id": 32,
+		"position": 26,
+		"uid": -1,
+		"estate_value": 260,
+		"status": -1,
+		"street_id": 6,
+		"mortgage_value": -1,
+		"house_value": 150,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Chaoyang",
+		"block_id": 33,
+		"position": 27,
+		"uid": -1,
+		"estate_value": 260,
+		"status": -1,
+		"street_id": 6,
+		"mortgage_value": -1,
+		"house_value": 150,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Dongcheng",
+		"block_id": 34,
+		"position": 29,
+		"uid": -1,
+		"estate_value": 260,
+		"status": -1,
+		"street_id": 6,
+		"mortgage_value": -1,
+		"house_value": 150,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Nanshan",
+		"block_id": 35,
+		"position": 31,
+		"uid": -1,
+		"estate_value": 300,
+		"status": -1,
+		"street_id": 7,
+		"mortgage_value": -1,
+		"house_value": 200,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Futian",
+		"block_id": 36,
+		"position": 32,
+		"uid": -1,
+		"estate_value": 300,
+		"status": -1,
+		"street_id": 7,
+		"mortgage_value": -1,
+		"house_value": 200,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Luohu",
+		"block_id": 37,
+		"position": 34,
+		"uid": -1,
+		"estate_value": 320,
+		"status": -1,
+		"street_id": 7,
+		"mortgage_value": -1,
+		"house_value": 200,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Liwan",
+		"block_id": 38,
+		"position": 37,
+		"uid": -1,
+		"estate_value": 350,
+		"status": -1,
+		"street_id": 8,
+		"mortgage_value": -1,
+		"house_value": 200,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	},
+	{
+		"name": "Dongshan",
+		"block_id": 39,
+		"position": 39,
+		"uid": -1,
+		"estate_value": 400,
+		"status": -1,
+		"street_id": 8,
+		"mortgage_value": -1,
+		"house_value": 200,
+		"house_number": 0,
+		"payment": [
+			{"house_number": 1, "payment": -1},
+			{"house_number": 2, "payment": -1},
+			{"house_number": 3, "payment": -1},
+			{"house_number": 4, "payment": -1},
+			{"house_number": 5, "payment": -1},
+			{"house_number": 6, "payment": -1}
+		]
+	}
+]
