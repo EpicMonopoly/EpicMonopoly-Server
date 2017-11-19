@@ -25,3 +25,10 @@ Server structure:
 - Redis is not the main database but is used as a cache server for accelerating
 
 
+## Reference
+- Baidu
+- Monopoly 5(game)
+- MongoDB
+- Nginx
+- Tornado offical guide
+- Wiki
