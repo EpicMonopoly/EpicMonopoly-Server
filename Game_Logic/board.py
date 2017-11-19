@@ -2,9 +2,9 @@ import random
 import cardpile
 
 
-class Map:
+class board:
     """
-    Map class
+    Board class
     """
     def __init__(self, street_list, two_block_street, three_block_street):
         self._street_list = street_list
@@ -13,7 +13,7 @@ class Map:
         self._chest = cardpile.CardPile.__init__()
         self._oppertunity = cardpile.CardPile.__init__()
 
-    def new_map(self):
+    def new_board(self):
         pass
 
     def change_street_order(self):
