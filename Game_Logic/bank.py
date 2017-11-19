@@ -18,9 +18,9 @@ class Bank(role.Role):
         cur_hotel: int
         """
         super().__init__(uid, name, 0)
-        self._loan_list = set()
-        self._cur_house = int()
-        self._cur_hotel = int()
+        self._loan_list = []
+        self._cur_house = 32
+        self._cur_hotel = 12
 
     @property
     def loan_list(self):
@@ -48,13 +48,13 @@ class Bank(role.Role):
             for p in properties:
                 if isinstance(p, station.Station):
                     mortgage_value += p.mortgage_value
-                    self._loan_list.add(p)
+                    self._loan_list.append(p)
                 elif isinstance(p, utility.Utility):
                     mortgage_value += p.mortgage_value
-                    self._loan_list.add(p)
+                    self._loan_list.append(p)
                 elif isinstance(p, estate.Estate):
                     mortgage_value += p.mortgage_value
-                    self._loan_list.add(p)
+                    self._loan_list.append(p)
             from_role.cash(mortgage_value)
             return True
         else:
@@ -74,13 +74,13 @@ class Bank(role.Role):
             for p in properties:
                 if isinstance(p, station.Station):
                     repay_value += p.mortgage_value
-                    self._loan_list.add(p)
+                    self._loan_list.append(p)
                 elif isinstance(p, utility.Utility):
                     repay_value += p.mortgage_value
-                    self._loan_list.add(p)
+                    self._loan_list.append(p)
                 elif isinstance(p, estate.Estate):
                     repay_value += p.mortgage_value
-                    self._loan_list.add(p)
+                    self._loan_list.append(p)
             from_role.cash(repay_value)
             return True
         else:

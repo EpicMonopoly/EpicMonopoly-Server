@@ -6,15 +6,15 @@ class Block(metaclass=ABCMeta):
     Abstract class: Block
     """
 
-    def __init__(self):
+    def __init__(self, name, position):
         """
         Constructor
         initialize variable:
         name: string
         position: int
         """
-        self._name = str()
-        self._position = int()
+        self._name = name
+        self._position = position
 
     @property
     def name(self):
@@ -32,6 +32,5 @@ class Block(metaclass=ABCMeta):
     def position(self, position):
         self._position = position
 
-    @abstractclassmethod
     def display(self):
         pass

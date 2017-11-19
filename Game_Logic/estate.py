@@ -12,9 +12,7 @@ class Estate(Property):
         Init _houseNum and _houseValue
         :param house_value: The value of single house
         """
-        super().__init__()
-        super()._name = name
-        super()._position = position
+        super().__init__(name, position)
         super()._uid = uid
         super()._estate_value = estate_value
         super()._status = status

@@ -1,8 +1,10 @@
-# encoding: utf-8
 from abc import ABCMeta, abstractmethod
 
 
 class Card(metaclass=ABCMeta):
+    """
+    Card class
+    """
     def __init__(self, name, description):
         self._name = name
         self._description = description

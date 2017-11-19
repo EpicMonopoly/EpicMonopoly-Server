@@ -17,11 +17,11 @@ class Player(role.Role):
         """
         super().__init__(uid, name, cash)
         self._alliance = alliance
-        self._position = int()
-        self._bail_card_num = int()
-        self._cur_status = int()
-        self._utility_num = int()
-        self._station_num = int()
+        self._position = 0
+        self._bail_card_num = 0
+        self._cur_status = 1
+        self._utility_num = 0
+        self._station_num = 0
 
     @property  # getAlliance
     def alliance(self):

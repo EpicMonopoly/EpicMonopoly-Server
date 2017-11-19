@@ -2,8 +2,11 @@ import block
 
 
 class Tax(block.Block):
-    def __init__(self, rate):
-        super().__init__()
+    """
+    Tax class
+    """
+    def __init__(self, name, position, rate):
+        super().__init__(name, position)
         self._rate = rate
 
     @property
@@ -14,5 +17,6 @@ class Tax(block.Block):
     def rate(self, rate):
         self._rate = rate
 
+    # TODO: implement display
     def display(self):
         pass

@@ -1,4 +1,4 @@
-import map
+import board
 import bank
 
 WAIT = 1
@@ -8,19 +8,19 @@ END = 3
 
 class Room:
 
-    def __init__(self, room_id, map, bank):
+    def __init__(self, room_id, board, bank):
         """
         Constructor
         :type room_id: int
-        :type map: map.Map
+        :type board: board.Board
         :type bank: bank.Bank
         :param room_id: room id
-        :param map: map we generated
+        :param board: board we generated
         :param bank: bank we instanced
         """
         self._room_id = room_id
         self._status = WAIT  # default status for room
-        self._map = map
+        self._board = board
         self._bank = bank
         self._player_list = []
 
@@ -36,8 +36,8 @@ class Room:
         return self._room_id
 
     @property
-    def map(self):
-        return self._map
+    def board(self):
+        return self._board
 
     @property
     def players(self):

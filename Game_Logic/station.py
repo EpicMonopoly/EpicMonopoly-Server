@@ -10,9 +10,7 @@ class Station(property.Property):
         """
         Call for superclass construct
         """
-        super().__init__()
-        super()._name = name
-        super()._position = position
+        super().__init__(name, position)
         super()._uid = uid
         super()._estate_value = estate_value
         super()._status = status

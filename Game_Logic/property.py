@@ -1,6 +1,6 @@
 from abc import abstractclassmethod
 import block
-from ef import EF
+# from ef import EF
 
 
 class Property(block.Block):
@@ -8,7 +8,7 @@ class Property(block.Block):
     Class Property
     """
 
-    def __init__(self):
+    def __init__(self, name, position):
         """
         Call constructor of superclass
         name(super): string
@@ -18,7 +18,7 @@ class Property(block.Block):
         status: int
         street_id: int
         """
-        super().__init__()
+        super().__init__(name, position)
         self._uid = int()
         self._estate_value = int()
         self._status = int()
