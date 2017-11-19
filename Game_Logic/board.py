@@ -6,15 +6,19 @@ class board:
     """
     Board class
     """
-    def __init__(self, street_list, two_block_street, three_block_street):
+    def __init__(self, street_list, two_block_street, three_block_street, block_list):
         self._street_list = street_list
         self._two_block_street = two_block_street
         self._three_block_street = three_block_street
         self._chest = cardpile.CardPile.__init__()
         self._oppertunity = cardpile.CardPile.__init__()
+        self._block_list = block_list
 
     def new_board(self):
         pass
+    
+    def get_block(self, position):
+        return self._block_list[position]
 
     def change_street_order(self):
         num_three_block_street = len(self._three_block_street)
