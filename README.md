@@ -1,12 +1,19 @@
 # EpicMonopoly
 A novel developed monopoly based on web: EpicMonopoly 
 
+Game Logic development:
+
+- [x] Game logic
+- [x] Json design
+- [ ] Demo
+- [ ] Communications 
+
 Server structure: 
 
 - [ ] Web server: nginx
 - [ ] Database: mongoDB
 - [ ] Application server: tornado
-- [ ] Cache server: redis
+- [ ] Cache server: redis(Shelved)
 
 ## Details
 
