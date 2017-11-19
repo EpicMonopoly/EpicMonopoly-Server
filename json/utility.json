@@ -1,0 +1,14 @@
+{
+	"name": "futian",
+	"block_id": 23,
+	"position": 12,
+	"uid": 123456789,
+	"estate_value": 123456789,
+	"status": 1, // Sold: 1, Unsold: 2, Mortgage: 3
+	"street_id": 12,
+	"mortgage_value": 123456789,
+	"payment": [
+		{"utility_number": 1, "rate": 2},
+		{"utility_number": 2, "rate": 4}
+	]
+}
