@@ -6,7 +6,7 @@ class Asset(block.Block):
     """
     Class Asset
     """
-    def __init__(self, name, position, uid, estate_value, status, mortgage_rate=0.5):
+    def __init__(self, name, block_id, position, uid, estate_value, status, mortgage_rate=0.5):
         """
         Call constructor of superclass
         name(super): string
@@ -16,7 +16,7 @@ class Asset(block.Block):
         status: int
         street_id: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
         self._uid = uid
         self._estate_value = estate_value
         self._status = status

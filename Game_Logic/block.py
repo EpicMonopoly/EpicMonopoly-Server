@@ -45,13 +45,13 @@ class Go(Block):
     """
     Subclass(Block): Go
     """
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
         import operation
@@ -62,13 +62,13 @@ class Go_To_Jail(Block):
     """
     Subclass(Block): Go_To_Jail
     """
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
         """
@@ -86,13 +86,13 @@ class In_Jail(Block):
     """
     Subclass(Block): In_jail
     """
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
         pass
@@ -102,13 +102,13 @@ class Free_Parking(Block):
     """
     Subclass(Block): Free_Parking
     """
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor 
         :param name: string
         :param position: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
         pass

@@ -7,8 +7,8 @@ class CardPile(block.Block):
     CardPile class
     """
 
-    def __init__(self, name, position):
-        super().__init__(name, position)
+    def __init__(self, name, block_id, position):
+        super().__init__(name, block_id, position)
         self._cards = []
 
     def append_card(self, card):
@@ -27,13 +27,13 @@ class Community_Chest(CardPile):
     Subclass(CardPile): Community_Chest
     """
 
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
 
     def display(self, gamer, data_dict, dice_result):
         """
@@ -54,13 +54,13 @@ class Chance(CardPile):
     Subclass(CardPile): Chance
     """
 
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, position)
+        super().__init__(name, block_id, position)
 
     def display(self, gamer, data_dict, dice_result):
         chest_list = data_dict["chest_list"]

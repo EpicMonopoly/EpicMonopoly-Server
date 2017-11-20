@@ -6,11 +6,11 @@ class Station(asset.Asset):
     Class Station
     """
 
-    def __init__(self, name, position, uid, estate_value, status):
+    def __init__(self, name, block_id, position, uid, estate_value, status):
         """
         Call for superclass construct
         """
-        super().__init__(name, position, uid, estate_value, status)
+        super().__init__(name, block_id, position, uid, estate_value, status)
 
     def payment(self, station_num):
         """

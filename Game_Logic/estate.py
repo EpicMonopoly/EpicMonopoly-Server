@@ -7,13 +7,13 @@ class Estate(asset.Asset):
     Class estate
     """
 
-    def __init__(self, name, position, uid, estate_value, status, street_id, house_value):
+    def __init__(self, name, block_id, position, uid, estate_value, status, street_id, house_value):
         """
         Call for superclass construct
         Init _houseNum and _houseValue
         :param house_value: The value of single house
         """
-        super().__init__(name, position, uid, estate_value, status)
+        super().__init__(name, block_id, position, uid, estate_value, status)
         self._street_id = street_id
         self._house_num = 0
         self._house_value = house_value
