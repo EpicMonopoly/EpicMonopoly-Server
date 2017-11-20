@@ -32,15 +32,6 @@ class Estate(asset.Asset):
     def house_value(self):
         return self._house_value
 
-    # @property
-    # def hotel_num(self):
-    #     return self._hotel_num
-
-    # @hotel_num.setter
-    # def hotel_num(self, hotel_num=1):
-    #     if self._hotel_num == 0 and hotel_num == 1:
-    #         self._hotel_num += hotel_num
-
     @property
     def value(self):
         return self._estate_value + (self._house_num * self._house_value)
@@ -52,10 +43,6 @@ class Estate(asset.Asset):
     @property  # getPosition
     def street_id(self):
         return self._street_id
-
-    @street_id.setter  # setPosition
-    def street_id(self, street_id):
-        self._street_id = street_id
 
     @property
     def payment(self):

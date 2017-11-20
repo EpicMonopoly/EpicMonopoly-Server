@@ -44,8 +44,6 @@ def clearing(gamer, amount_left):
 def trade():
     pass
 
-
-
 def broken(gamer):
     pass
 
@@ -55,7 +53,7 @@ def mortgage_asset(gamer, data):
     for cur_asset in gamer.properties:
         print("No.%d %s"%(cur_asset.block_id, cur_asset.name))
         asset_number_list.append(cur_asset.block_id)
-    asset_number = int(input("Please enter the number you want to mortgage"))    
+    asset_number = int(input("Please enter the number you want to mortgage"))
     if asset_number == -1:
         return 0
     else:

@@ -150,9 +150,50 @@ def roll(gamer):
     current_block.display(player, data_dict)
     return a, b, end_flag
 
+def own_all_block(gamer):
+    block_number = [0 for x in range(9)]
+    own_street = []
+    for cur_asset in gamer.properties:
+        if isinstance(cur_asset, estate.Estate):
+            block_number[cur_asset.street_id] = block_number[cur_asset.street_id] + 1
+    for i in range(9):
+        if block_number[i] == 3:
+            own_street.append(i)
+    if block_number[1] == 2:
+        own_street.append(1)
+    if block_number[8] == 2:
+        own_street.append(8)
+    return own_street
+
 
 def construct_building(gamer):
-    pass
+    own_street = own_all_block(gamer)
+    print("Valid building list")
+    asset_number_list = []
+    for cur_asset in gamer.properties:
+        if isinstance(cur_asset, estate.Estate):
+            if cur_asset.street_id in own_street:
+                print("No.%d %s" %(cur_asset.block_id, cur_asset.name))
+                asset_number_list.append(cur_asset.block_id)
+    asset_number = int(input("Please enter the number you want to mortgage"))
+    if asset_number == -1:
+        return 0
+    else:
+        if asset_number not in asset_number_list:
+            print("Invalid input")
+            return 0
+    for cur_asset in gamer.properties:
+        if cur_asset.block_id == asset_number:
+            if cur_asset.house_num == 6:
+                print("Cannot built more house!")
+                return 0
+            payment = cur_asset.house_value
+            if payment > gamer.cash:
+                print("Do not have enough money")
+                return 0
+            operation.pay(gamer, data["epic_bank"], payment)
+            cur_asset.house_num(cur_asset.house_num + 1)
+            print("%s built one house in %s" %(gamer.name, cur_asset.name))
 
 def turn(gamer):
     """
