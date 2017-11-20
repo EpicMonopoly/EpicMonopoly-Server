@@ -1,5 +1,9 @@
 import role
 import bank
+import estate
+import station
+import utility
+import property
 
 
 class Player(role.Role):
@@ -55,17 +59,17 @@ class Player(role.Role):
     def utility_num(self):
         return self._utility_num
 
-    # @utility_num.setter
-    # def utility_num(self, utility_num):
-    #     self._utility_num = utility_num
+    @utility_num.setter
+    def utility_num(self, utility_num):
+        self._utility_num = utility_num
 
     @property
     def station_num(self):
         return self._station_num
 
-    # @station_num.setter
-    # def station_num(self, station_num):
-    #     self._station_num = station_num
+    @station_num.setter
+    def station_num(self, station_num):
+        self._station_num = station_num
 
     @role.Role.cash.setter
     def pay(self, amount):
@@ -73,6 +77,45 @@ class Player(role.Role):
     
     def gain(self, amount):
         self._cash = self._cash + amount
+    
+    def add_property(self, new_property):
+        """
+        Add property to player
+        :type new_property: property.Property
+        """
+        if isinstance(new_property, estate.Estate):
+            self._properties.add(new_property)
+            new_property.owner(self.id)
+        elif isinstance(new_property, station.Station):
+            self._properties.add(new_property)
+            new_property.owner(self.id)
+            self._station_num = self._station_num + 1
+        elif isinstance(new_property, utility.Utility):
+            self._properties.add(new_property)
+            new_property.owner(self.id)
+            self._utility_num = self._utility_num + 1
+        else:
+            pass
+    
+    def remove_property(self, old_property):
+        """
+        docstring here
+            :param self: 
+            :type old_property: property.Property
+        """
+        if isinstance(new_property, estate.Estate):
+            self._properties.remove(old_property)
+            new_property.owner(self.id)
+        elif isinstance(new_property, station.Station):
+            self._properties.remove(old_property)
+            new_property.owner(self.id)
+            self._station_num = self._station_num - 1
+        elif isinstance(new_property, utility.Utility):
+            self._properties.remove(old_property)
+            new_property.owner(self.id)
+            self._utility_num = self._utility_num - 1
+        else:
+            pass
 
     def move(self, steps, position=None):
         """
@@ -87,39 +130,4 @@ class Player(role.Role):
             self._position += steps
         else:
             self._position = position
-
-    def trade_property(self, properties, from_role, to_role):
-        """
-        Trade for other players or bank, here is just to sell
-        :type properties: set
-        :type from_role: Player
-        :type to_role: Player or Bank
-        :param properties: a set of Property
-        :param from_role: Role
-        :param to_role: Role
-        :return boolean: Trade successfully or not
-        """
-        from_role.remove_property(properties)
-        to_role.add_property(properties)
-        return True
-
-    # def pay(self, amount, from_role, to_role):
-    #     """
-    #     Trade cash between players or bank
-    #     :type from_role: Player
-    #     :type to_role: Player or Bank
-    #     :param amount: amount of cash to be traded
-    #     :param from_role: Player or Bank
-    #     :param to_role: Player or Bank
-    #     :return boolean: Trade finished or error
-    #     """
-    #     if from_role._cash >= amount:
-    #         from_role._cash(-amount)
-    #         if isinstance(to_role, Player):
-    #             to_role._cash(amount)
-    #             return True
-    #         if isinstance(to_role, bank.Bank):
-    #             return True
-    #     else:
-    #         return False
 

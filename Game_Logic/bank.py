@@ -116,29 +116,37 @@ class Bank(role.Role):
     #     :return:
     #     """
 
-    def trade_property(self, properties, from_role, to_role):
+    def add_property(self, new_property):
         """
-        Trade for other players or bank, here is just to sell
-        :type properties: set
-        :type from_role: Bank
-        :type to_role: Player
-        :param properties: a set of Property
-        :param from_role: Role
-        :param to_role: Role
-        :return boolean: Trade successfully or not
+        Add property to player
+        :type new_property: property.Property
         """
-        from_role.remove_property(properties)
-        to_role.add_property(properties)
-        return True
-
-    def pay(self, amount, to_role):
+        if isinstance(new_property, estate.Estate):
+            self._properties.add(new_property)
+            new_property.owner(self.id)
+        elif isinstance(new_property, station.Station):
+            self._properties.add(new_property)
+            new_property.owner(self.id)
+        elif isinstance(new_property, utility.Utility):
+            self._properties.add(new_property)
+            new_property.owner(self.id)
+        else:
+            pass
+    
+    def remove_property(self, old_property):
         """
-        Trade cash between players or bank
-        :type to_role: player.Player
-        :type amount: int
-        :param amount: amount of cash to be traded
-        :param to_role: Player who receive the cash
-        :return boolean: Trade finished or error
+        docstring here
+            :param self: 
+            :type old_property: property.Property
         """
-        to_role._cash(amount)
-        return True
+        if isinstance(new_property, estate.Estate):
+            self._properties.remove(old_property)
+            new_property.owner(self.id)
+        elif isinstance(new_property, station.Station):
+            self._properties.remove(old_property)
+            new_property.owner(self.id)
+        elif isinstance(new_property, utility.Utility):
+            self._properties.remove(old_property)
+            new_property.owner(self.id)
+        else:
+            pass

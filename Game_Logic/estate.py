@@ -86,7 +86,7 @@ class Estate(Property):
         """
         pass
 
-    def display(self, gamer, data_dict):
+    def display(self, gamer, data_dict, dice_result):
         """
         Display description
         :type player_dict: dict
@@ -121,6 +121,7 @@ class Estate(Property):
                         break
                     else:
                         opertation.pay(gamer, bank, price)
+                        opertation.trade_property(self, bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))
                         break
