@@ -33,3 +33,10 @@ Block type:
     3. estate.Estate
     4. station.Station
     5. utility.Utility
+
+data_dict:
+    0: chess_board
+    1: player_dict
+    2: epic_bank
+    3: chest_list
+    4: chance_list
