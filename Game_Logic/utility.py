@@ -5,15 +5,11 @@ class Utility(property.Property):
     """
     Class Utility
     """
-    def __init__(self, name, position, uid, estate_value, status, street_id):
+    def __init__(self, name, position, uid, estate_value, status):
         """
         Call superclass construct method
         """
-        super().__init__(name, position)
-        super()._uid = uid
-        super()._estate_value = estate_value
-        super()._status = status
-        super()._street_id = street_id
+        super().__init__(name, position, uid, estate_value, status)
 
     def payment(self, utility_num, dice_result):
         if utility_num == 1:

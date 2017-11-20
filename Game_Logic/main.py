@@ -23,27 +23,33 @@ def init_game():
     """
     # generate a map
     block_list_data = json_reader('Data/block_data.json')
+    station_list_data = json_reader('Data/station_data.json')
+    utility_list_data = json_reader('Data/utility_data.json')
+    estate_list_data = json_reader('Data/estate_data.json')
+    chest_list_data = json_reader('Data/chest_data.json')
+    chance_list_data = json_reader('Data/chance_data.json')
     block_list = []
+    station_list = []
+    utility_list = []
+    estate_list = []
     for b in block_list_data:
         if b['block_type'] == 0:  # ["Go", "Go to jail", "In Jail", "Free Parking"]
             block_list.append(block.Block(b['name'], b['position']))
         elif b['block_type'] == 1:  # ["Community Chest", "Chance"]
             block_list.append(cardpile.CardPile(b['name'], b['position']))
         elif b['block_type'] == 2:  # ["Income Tax", "Super Tax"]
-            block_list.append(tax.Tax(b['name'], b['position']))
-        elif b['block_type'] == 3:  # estate.Estate
-            block_list.append(estate.Estate(b['name'], b['position'], 0, 0, 0, 0, 0))
-        elif b['block_type'] == 4:  # station.Station
-            block_list.append(station.Station(b['name'], b['position'], 0, 0, 0, 0))
-        elif b['block_type'] == 5:  # utility.Utility
-            block_list.append(utility.Utility(b['name'], b['position'], 0, 0, 0, 0))
+            block_list.append(tax.Tax(b['name'], b['position'], 0.17))
         else:
-            raise TypeError("Block type doesn't exists.")
+            pass
         block_list.append(b)
-    print(block_list_data)
-    for b in block_list:
-        print(type(b))
-    chess_board = board.Board([], [], [], block_list)
+    for s in station_list_data:  # name, position, uid, estate_value, status, street_id
+        station_list.append(station.Station(s['name'], s['position'], s['uid'], s['estate_value'], s['status']))
+    for u in utility_list_data:  # name, position, uid, estate_value, status, street_id
+        utility_list.append(utility.Utility(u['name'], u['position'], u['uid'], u['estate_value'], u['status']))
+    for e in estate_list_data:
+        estate_list.append(estate.Estate(e['name'], e['position'], e['uid'], e['estate_value'], e['status'], 0, 200))
+
+    chess_board = board.Board([], [], [], block_list, [], [])
 
     # initialize players
     player_list_data = json_reader('Data/player_list.json')

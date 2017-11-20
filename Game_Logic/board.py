@@ -6,12 +6,20 @@ class Board:
     """
     Board class
     """
-    def __init__(self, street_list, two_block_street, three_block_street, block_list):
+    def __init__(self, street_list, two_block_street, three_block_street, block_list, chest, chance):
+        """
+        :param street_list:
+        :param two_block_street:
+        :param three_block_street:
+        :param block_list:
+        :param chest:
+        :param chance:
+        """
         self._street_list = street_list
         self._two_block_street = two_block_street
         self._three_block_street = three_block_street
-        self._chest = cardpile.CardPile()
-        self._chance = cardpile.CardPile()
+        self._chest = chest
+        self._chance = chance
         self._block_list = block_list
 
     # TODO: generate a new board

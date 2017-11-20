@@ -12,11 +12,8 @@ class Estate(Property):
         Init _houseNum and _houseValue
         :param house_value: The value of single house
         """
-        super().__init__(name, position)
-        super()._uid = uid
-        super()._estate_value = estate_value
-        super()._status = status
-        super()._street_id = street_id
+        super().__init__(name, position, uid, estate_value, status)
+        self._street_id = street_id
         self._house_num = 0
         self._house_value = house_value
         self._hotel_num = 0

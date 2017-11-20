@@ -8,7 +8,7 @@ class Property(block.Block):
     Class Property
     """
 
-    def __init__(self, name, position):
+    def __init__(self, name, position, uid, estate_value, status, mortgage_rate=0.5):
         """
         Call constructor of superclass
         name(super): string
@@ -19,11 +19,10 @@ class Property(block.Block):
         street_id: int
         """
         super().__init__(name, position)
-        self._uid = int()
-        self._estate_value = int()
-        self._status = int()
-        self._street_id = int()
-        self.mortgage_rate = 0.5
+        self._uid = uid
+        self._estate_value = estate_value
+        self._status = status
+        self.mortgage_rate = mortgage_rate
 
     @property  # setOwner
     def owner(self):
