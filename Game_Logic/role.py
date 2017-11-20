@@ -21,7 +21,7 @@ class Role(metaclass=ABCMeta):
         self._properties = set()  # Property[]
 
     @property  # getUid
-    def owner(self):
+    def id(self):
         return self._uid
 
     @property  # getName

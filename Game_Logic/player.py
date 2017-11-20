@@ -68,8 +68,11 @@ class Player(role.Role):
     #     self._station_num = station_num
 
     @role.Role.cash.setter
-    def cash(self, amount):
-        self._cash += amount
+    def pay(self, amount):
+        self._cash = self._cash - amount
+    
+    def gain(self, amount):
+        self._cash = self._cash + amount
 
     def move(self, steps, position=None):
         """
@@ -100,23 +103,23 @@ class Player(role.Role):
         to_role.add_property(properties)
         return True
 
-    def pay(self, amount, from_role, to_role):
-        """
-        Trade cash between players or bank
-        :type from_role: Player
-        :type to_role: Player or Bank
-        :param amount: amount of cash to be traded
-        :param from_role: Player or Bank
-        :param to_role: Player or Bank
-        :return boolean: Trade finished or error
-        """
-        if from_role._cash >= amount:
-            from_role._cash(-amount)
-            if isinstance(to_role, Player):
-                to_role._cash(amount)
-                return True
-            if isinstance(to_role, bank.Bank):
-                return True
-        else:
-            return False
+    # def pay(self, amount, from_role, to_role):
+    #     """
+    #     Trade cash between players or bank
+    #     :type from_role: Player
+    #     :type to_role: Player or Bank
+    #     :param amount: amount of cash to be traded
+    #     :param from_role: Player or Bank
+    #     :param to_role: Player or Bank
+    #     :return boolean: Trade finished or error
+    #     """
+    #     if from_role._cash >= amount:
+    #         from_role._cash(-amount)
+    #         if isinstance(to_role, Player):
+    #             to_role._cash(amount)
+    #             return True
+    #         if isinstance(to_role, bank.Bank):
+    #             return True
+    #     else:
+    #         return False
 

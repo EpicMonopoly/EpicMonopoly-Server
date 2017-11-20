@@ -1,5 +1,6 @@
 from property import Property
 from ef import EF
+import opertation
 
 
 class Estate(Property):
@@ -16,8 +17,8 @@ class Estate(Property):
         self._street_id = street_id
         self._house_num = 0
         self._house_value = house_value
-        self._hotel_num = 0
-        self._hotel_value = 4 * house_value
+        # self._hotel_num = 0
+        # self._hotel_value = 4 * house_value
 
     @property
     def house_num(self):
@@ -31,14 +32,14 @@ class Estate(Property):
     def house_value(self):
         return self._house_value
 
-    @property
-    def hotel_num(self):
-        return self._hotel_num
+    # @property
+    # def hotel_num(self):
+    #     return self._hotel_num
 
-    @hotel_num.setter
-    def hotel_num(self, hotel_num=1):
-        if self._hotel_num == 0 and hotel_num == 1:
-            self._hotel_num += hotel_num
+    # @hotel_num.setter
+    # def hotel_num(self, hotel_num=1):
+    #     if self._hotel_num == 0 and hotel_num == 1:
+    #         self._hotel_num += hotel_num
 
     @property
     def value(self):
@@ -47,24 +48,83 @@ class Estate(Property):
     @property
     def mortgage_value(self):
         return self.value * self.mortgage_rate
-      
+
     @property
     def payment(self):
-        return self.value
+        """
+        Calculate the payment of the house
+        Return:
+            :payment: int
+        """
+        if self.house_num == 0:
+            return self.value * 0.1
+        elif self.house_num == 1:
+            return self.value * 0.15
+        elif self.house_num == 2:
+            return self.value * 0.2
+        elif self.house_num == 3:
+            return self.value * 0.25
+        elif self.house_num == 4:
+            return self.value * 0.3
+        elif self.house_num == 5:
+            return self.value * 0.4
+        elif self.house_num == 6:
+            return self.value * 0.5
+        else:
+            # Should not be here
+            raise ValueError("Ivalid house number")
+            return 0
 
     # TODO: implement the method
-    # def change_house_value(self, EF):
-    #     """
-    #     Change house value according to EF
-    #     :type EF: float
-    #     :param EF: economy factor
-    #     :return: None
-    #     """
-
-    # TODO: implementation this abstract method
-    def display(self):
+    def change_house_value(self, EF):
         """
-        Display description
-        :return:
+        Change house value according to EF
+        :type EF: float
+        :param EF: economy factor
+        :return: None
         """
         pass
+
+    def display(self, player, data_dic):
+        """
+        Display description
+        :type player_dict: dict
+        :return:
+        """
+        player_dic = data_dic['player_dic']
+        if self._status == 1:
+            # Some body own it
+            owner_id = self.owner()
+            owner = player_dic[owner_id]
+            if owner_id == player.id:
+                # Owner pass this estate
+                print("%s own %s" %(player.name, self.name))
+            else:
+                # Other pass this estate
+                payment = self.payment
+                opertation.pay(player, owner, payment)
+        elif self._status == -1:
+            # Nobody own
+            while True:
+                print("Nobody own %s do you want to buy it?")
+                print("1: Buy it")
+                print("2: Do not buy it")
+                choice = int(input("Please enter the number of your decision:"))
+                if choice == 1:
+                    price = self.value
+                    if price > player.cash:
+                        print("You do not have enough money")
+                        break
+                    else:
+                        
+                elif choice == 2:
+                    break
+                else:
+                    pass
+        elif self._status == 0:
+            # In mortgage
+            pass
+        else:
+            pass
+            
+        

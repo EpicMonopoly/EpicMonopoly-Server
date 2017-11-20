@@ -11,6 +11,9 @@ import station
 import utility
 from json_io import json_reader, json_writer
 
+# global player_dic
+global data_dic
+
 
 def init_game():
     """
@@ -53,11 +56,13 @@ def init_game():
 
     # initialize players
     player_list_data = json_reader('Data/player_list.json')
-    player_list = []  # type player.Player
+    # player_list = []  # type player.Player
+    player_dic = {}
     for i in range(len(player_list_data)):
         p = player.Player(player_list_data[i]['id'], player_list_data[i]['name'], player_list_data[i]['cash'],
                           player_list_data[i]['alliance'])
-        player_list.append(p)
+        player_dic[player_list_data[i]['id']] = p
+    data_dic["player_dic"] = player_dic
 
     # initialize bank
     epic_bank = bank.Bank('99', 'EpicBank')
@@ -92,9 +97,8 @@ def roll(player):
     player.move(step)
     end_position = player.position
     current_block = chess_board.get_block(end_position)
-    current_block.display()
+    current_block.display(player, data_dic)
     return a, b, end_flag
-
 
 def construct_building():
     pass
@@ -135,7 +139,8 @@ def turn(player):
         else:
             print("Invalid choice")
 
+def broken(player, amount_need):
+    pass
 
 if __name__ == "__main__":
     chess_board, players, epic_bank = init_game()
-    # turn(None)
