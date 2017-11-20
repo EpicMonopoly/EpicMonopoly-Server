@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractclassmethod
+import opertation
 
 
 class Block(metaclass=ABCMeta):
@@ -49,7 +50,7 @@ class Go(Block):
         super().__init__(name, position)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        opertation.pay(bank, gamer, 200)
 
 class Go_To_Jail(Block):
     """

@@ -130,6 +130,7 @@ def roll(gamer):
     :int: The number of second dice
     :bool: The station of end_flag
     """
+    # Whether pass Go
     print("Rolling")
     a = random.randint(1, 6)
     b = random.randint(1, 6)

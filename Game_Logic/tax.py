@@ -1,4 +1,6 @@
 import block
+import player
+import opertation
 
 
 class Tax(block.Block):
@@ -34,7 +36,17 @@ class Income_Tax(Tax):
         super().__init__(name, position, rate)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        """
+        docstring here
+            :type gamer: player.Player
+            :param gamer: 
+            :param data_dict: 
+            :param dice_result: 
+        """
+        bank = data_dict['epic_bank']
+        payment = gamer.cash * self.rate
+        opertation.pay(gamer, bank, payment)
+        print("%s pay %d for tax" %(gamer.name, payment))
 
 class Super_Tax(Tax):
     """
@@ -49,4 +61,14 @@ class Super_Tax(Tax):
         super().__init__(name, position, rate)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        """
+        docstring here
+            :type gamer: player.Player
+            :param gamer: 
+            :param data_dict: 
+            :param dice_result: 
+        """
+        bank = data_dict['epic_bank']
+        payment = gamer.calculat_asset_value() * self.rate
+        opertation.pay(gamer, bank, payment)
+        print("%s pay %d for tax" %(gamer.name, payment))

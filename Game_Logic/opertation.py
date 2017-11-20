@@ -7,21 +7,22 @@ import player
 
 def pay(payer, gainer, payment):
     """
-    docstring here
+    Paying
         :param payer: Payer
         :param gainer: Gainer
         :param payment: Amount
     """
     cash_A = payer.cash
     if cash_A < payment:
-        # payer broken
+        payment_left = payment - cash_A
+
         pass
     else:
         payer.pay(payment)
         gainer.gain(payment)
         print("%s pay %d to %s" % (payer.name, payment, gainer.name))
 
-def trade_property(self, new_property, from_role, to_role):
+def trade_property(new_property, from_role, to_role):
     """
     Trade for other players or bank
     :type to_role: role.Role
@@ -33,4 +34,14 @@ def trade_property(self, new_property, from_role, to_role):
     """
     from_role.remove_property(new_property)
     to_role.add_property(new_property)
-        
+
+def clearing(gamer, amount_left):
+    """
+    docstring here
+        :param gamer: 
+        :param amount_left: 
+    """
+    pass
+
+def broken(gamer):
+    pass

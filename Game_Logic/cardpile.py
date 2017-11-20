@@ -1,4 +1,6 @@
 import block
+import player
+import random
 
 
 class CardPile(block.Block):
@@ -32,7 +34,18 @@ class Community_Chest(CardPile):
         super().__init__(name, position)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        """
+        docstring here
+            :type gamer: player.Player
+            :param gamer: 
+            :param data_dict: 
+            :param dice_result: 
+        """
+        chance_list = data_dict["chance_list"]
+        length_change_list = len(chance_list)
+        random_card = chance_list[random.randint(0, length_change_list)]
+        random_card.play()
+
 
 class Chance(CardPile):
     """
@@ -47,4 +60,7 @@ class Chance(CardPile):
         super().__init__(name, position)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        chest_list = data_dict["chest_list"]
+        length_chest_list = len(chest_list)
+        random_card = chest_list[random.randint(0, length_chest_list)]
+        random_card.play()

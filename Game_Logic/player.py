@@ -55,28 +55,33 @@ class Player(role.Role):
     def cur_status(self, cur_status):
         self._cur_status = cur_status
 
-    @property  # changeUtilityNum
+    @property
     def utility_num(self):
         return self._utility_num
 
-    @utility_num.setter
-    def utility_num(self, utility_num):
-        self._utility_num = utility_num
+    # @utility_num.setter
+    # def utility_num(self, utility_num):
+    #     self._utility_num = utility_num
 
     @property
     def station_num(self):
         return self._station_num
 
-    @station_num.setter
-    def station_num(self, station_num):
-        self._station_num = station_num
+    # @station_num.setter
+    # def station_num(self, station_num):
+    #     self._station_num = station_num
 
-    @role.Role.cash.setter
     def pay(self, amount):
         self._cash = self._cash - amount
     
     def gain(self, amount):
         self._cash = self._cash + amount
+
+    def calculat_asset_value(self):
+        total_asset_value = self.cash
+        for p in self.properties:
+            total_asset_value = total_asset_value + p.value
+        return total_asset_value
     
     def add_property(self, new_property):
         """
