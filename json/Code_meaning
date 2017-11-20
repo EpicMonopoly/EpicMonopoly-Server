@@ -40,3 +40,8 @@ data_dict:
     2: epic_bank
     3: chest_list
     4: chance_list
+
+player_status:
+    -1: broken/dead/out of game
+    0: In jail
+    1: Active

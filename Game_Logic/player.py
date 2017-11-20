@@ -26,6 +26,7 @@ class Player(role.Role):
         self._cur_status = 1
         self._utility_num = 0
         self._station_num = 0
+        self._in_jail = 0
 
     @property  # getAlliance
     def alliance(self):
@@ -52,32 +53,37 @@ class Player(role.Role):
         return self._cur_status
 
     @cur_status.setter  # changeStatus
-    def cur_status(self, cur_status):
-        self._cur_status = cur_status
+    def cur_status(self, change_status):
+        self._cur_status = change_status
 
-    @property  # changeUtilityNum
+    @property
     def utility_num(self):
         return self._utility_num
 
-    @utility_num.setter
-    def utility_num(self, utility_num):
-        self._utility_num = utility_num
+    def count_in_jail(self):
+        if self._in_jail < 2:
+            self._in_jail = self._in_jail + 1
+            return False
+        else:
+            self._in_jail = 0
+            return True
 
     @property
     def station_num(self):
         return self._station_num
 
-    @station_num.setter
-    def station_num(self, station_num):
-        self._station_num = station_num
-
-    @role.Role.cash.setter
     def pay(self, amount):
         self._cash = self._cash - amount
-    
+
     def gain(self, amount):
         self._cash = self._cash + amount
-    
+
+    def calculat_asset_value(self):
+        total_asset_value = self.cash
+        for p in self.properties:
+            total_asset_value = total_asset_value + p.value
+        return total_asset_value
+
     def add_property(self, new_property):
         """
         Add property to player
@@ -99,7 +105,7 @@ class Player(role.Role):
             self._utility_num = self._utility_num + 1
         else:
             pass
-    
+
     def remove_property(self, old_property):
         """
         docstring here
@@ -136,4 +142,3 @@ class Player(role.Role):
             self._position += steps
         else:
             self._position = position
-

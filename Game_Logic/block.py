@@ -1,4 +1,6 @@
 from abc import ABCMeta, abstractclassmethod
+import opertation
+import player
 
 
 class Block(metaclass=ABCMeta):
@@ -32,5 +34,75 @@ class Block(metaclass=ABCMeta):
     def position(self, position):
         self._position = position
 
-    def display(self):
+    @abstractclassmethod
+    def display(self, gamer, data_dict, dice_result):
         pass
+
+class Go(Block):
+    """
+    Subclass(Block): Go
+    """
+    def __init__(self, name, position):
+        """
+        Constructor 
+            :param name: string
+            :param position: int
+        """
+        super().__init__(name, position)
+    
+    def display(self, gamer, data_dict, dice_result):
+        opertation.pay(bank, gamer, 200)
+
+class Go_To_Jail(Block):
+    """
+    Subclass(Block): Go_To_Jail
+    """
+    def __init__(self, name, position):
+        """
+        Constructor 
+            :param name: string
+            :param position: int
+        """
+        super().__init__(name, position)
+    
+    def display(self, gamer, data_dict, dice_result):
+        """
+        docstring here
+            :type gamer: player.Player
+            :param gamer: 
+            :param data_dict: 
+            :param dice_result: 
+        """
+        gamer.move(steps=0, position=10)
+        gamer.cur_status(0)
+
+class In_Jail(Block):
+    """
+    Subclass(Block): In_jail
+    """
+    def __init__(self, name, position):
+        """
+        Constructor 
+            :param name: string
+            :param position: int
+        """
+        super().__init__(name, position)
+    
+    def display(self, gamer, data_dict, dice_result):
+        pass
+
+class Free_Parking(Block):
+    """
+    Subclass(Block): Free_Parking
+    """
+    def __init__(self, name, position):
+        """
+        Constructor 
+            :param name: string
+            :param position: int
+        """
+        super().__init__(name, position)
+    
+    def display(self, gamer, data_dict, dice_result):
+        pass
+    
