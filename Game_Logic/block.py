@@ -6,7 +6,7 @@ class Block(metaclass=ABCMeta):
     Abstract class: Block
     """
 
-    def __init__(self, name, position):
+    def __init__(self, name, block_id, position):
         """
         Constructor
         initialize variable:
@@ -14,6 +14,7 @@ class Block(metaclass=ABCMeta):
         position: int
         """
         self._name = name
+        self._block_id = block_id
         self._position = position
 
     @property
@@ -23,6 +24,10 @@ class Block(metaclass=ABCMeta):
     @name.setter
     def name(self, name):
         self._name = name
+    
+    @property
+    def block_id(self):
+        return self._block_id
 
     @property
     def position(self):

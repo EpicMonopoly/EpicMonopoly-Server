@@ -140,6 +140,6 @@ class Player(role.Role):
         position: None if normally move on map otherwise set the position
         """
         if not position:
-            self._position += steps
+            self._position = (self._position + steps)%40
         else:
             self._position = position

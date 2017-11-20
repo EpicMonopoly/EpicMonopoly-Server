@@ -13,13 +13,13 @@ class Bank(role.Role):
         cur_hotel: int
         """
         super().__init__(uid, name, 0)
-        self._loan_list = []
+        self._loan_dict = {}
         self._cur_house = 32
         self._cur_hotel = 12
 
     @property
     def loan_list(self):
-        return self._loan_list
+        return self._loan_dict
 
     @property
     def cur_house(self):
@@ -29,34 +29,37 @@ class Bank(role.Role):
     def cur_hotel(self):
         return self._cur_hotel
 
-    def mortgage(self, from_role, assets):
-        """
-        Mortgage the assets of Player
-        :type from_role: player.Player
-        :type assets: list
-        :param from_role: player
-        :param assets: a set of assets
-        :return: True or not of this mortgage
-        """
-        import station
-        import utility
-        import estate
-        mortgage_value = 0
-        if assets:
-            for asset in assets:
-                if isinstance(asset, station.Station):
-                    mortgage_value += asset.mortgage_value
-                    self._loan_list.append(asset)
-                elif isinstance(asset, utility.Utility):
-                    mortgage_value += asset.mortgage_value
-                    self._loan_list.append(asset)
-                elif isinstance(asset, estate.Estate):
-                    mortgage_value += asset.mortgage_value
-                    self._loan_list.append(asset)
-            from_role.cash(mortgage_value)
-            return True
-        else:
-            return False
+    def add_loan_dict(self, asset_id, amount):
+        self._loan_dict
+
+    # def mortgage(self, from_role, assets):
+    #     """
+    #     Mortgage the assets of Player
+    #     :type from_role: player.Player
+    #     :type assets: list
+    #     :param from_role: player
+    #     :param assets: a set of assets
+    #     :return: True or not of this mortgage
+    #     """
+    #     import station
+    #     import utility
+    #     import estate
+    #     mortgage_value = 0
+    #     if assets:
+    #         for asset in assets:
+    #             if isinstance(asset, station.Station):
+    #                 mortgage_value += asset.mortgage_value
+    #                 self._loan_list.append(asset)
+    #             elif isinstance(asset, utility.Utility):
+    #                 mortgage_value += asset.mortgage_value
+    #                 self._loan_list.append(asset)
+    #             elif isinstance(asset, estate.Estate):
+    #                 mortgage_value += asset.mortgage_value
+    #                 self._loan_list.append(asset)
+    #         from_role.cash(mortgage_value)
+    #         return True
+    #     else:
+    #         return False
 
     def repayment(self, from_role, assets):
         """
@@ -75,13 +78,13 @@ class Bank(role.Role):
             for a in assets:
                 if isinstance(a, station.Station):
                     repay_value += a.mortgage_value
-                    self._loan_list.append(a)
+                    self._loan_dict.append(a)
                 elif isinstance(a, utility.Utility):
                     repay_value += a.mortgage_value
-                    self._loan_list.append(a)
+                    self._loan_dict.append(a)
                 elif isinstance(a, estate.Estate):
                     repay_value += a.mortgage_value
-                    self._loan_list.append(a)
+                    self._loan_dict.append(a)
             from_role.cash(repay_value)
             return True
         else:

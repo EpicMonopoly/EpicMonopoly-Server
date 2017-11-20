@@ -26,12 +26,18 @@ def init_game():
     :return: map, players list and bank
     """
     # generate a map
-    block_list_data = json_reader('Data/block_data.json')
-    station_list_data = json_reader('Data/station_data.json')
-    utility_list_data = json_reader('Data/utility_data.json')
-    estate_list_data = json_reader('Data/estate_data.json')
-    chest_list_data = json_reader('Data/chest_data.json')
-    chance_list_data = json_reader('Data/chance_data.json')
+    # block_list_data = json_reader('Data/block_data.json')
+    # station_list_data = json_reader('Data/station_data.json')
+    # utility_list_data = json_reader('Data/utility_data.json')
+    # estate_list_data = json_reader('Data/estate_data.json')
+    # chest_list_data = json_reader('Data/chest_data.json')
+    # chance_list_data = json_reader('Data/chance_data.json')
+    block_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/block_data.json')
+    station_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/station_data.json')
+    utility_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/utility_data.json')
+    estate_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/estate_data.json')
+    chest_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chest_data.json')
+    chance_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chance_data.json')
     block_list = []
     station_list = []
     utility_list = []
@@ -57,7 +63,7 @@ def init_game():
     chess_board = board.Board([], [], [], block_list, [], [])
 
     # initialize players
-    player_dict_data = json_reader('Data/player_list.json')
+    player_dict_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/player_list.json')
     player_dict = {}
     for i in range(len(player_dict_data)):
         p = player.Player(player_dict_data[i]['id'], player_dict_data[i]['name'], player_dict_data[i]['cash'],
@@ -66,7 +72,7 @@ def init_game():
 
     # initialize bank
     epic_bank = bank.Bank('99', 'EpicBank')
-    json_writer('Data/bank_data.json', {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
+    json_writer('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/bank_data.json', {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
 
     # initialize chest
     chest_list = []
@@ -115,11 +121,6 @@ def init_game():
     data_dict['chance_list'] = chance_list
     return data_dict
 
-
-def trade():
-    pass
-
-
 def roll(gamer):
     """
     Roll a dice
@@ -140,6 +141,9 @@ def roll(gamer):
         end_flag = True
     print("Dice number is", a, b)
     step = a + b
+    current_gamer_position = gamer.position
+    if current_gamer_position + step > 40:
+        opertation.pay(data_dict['epic_bank'], gamer, 200)
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'].get_block(end_position)
@@ -147,13 +151,8 @@ def roll(gamer):
     return a, b, end_flag
 
 
-def construct_building():
+def construct_building(gamer):
     pass
-
-
-def mortgage_asset():
-    pass
-
 
 def turn(gamer):
     """
@@ -171,13 +170,13 @@ def turn(gamer):
         choice = int(input("Please enter the number of your decision:"))
         print(choice)
         if choice == 1:
-            trade()
+            operation.trade()
         elif choice == 2:
             dice_a, dice_b, end_flag = roll(gamer)
         elif choice == 3:
-            construct_building()
+            construct_building(gamer)
         elif choice == 4:
-            mortgage_asset()
+            operation.mortgage_asset()
         elif choice == 5:
             if end_flag is True:
                 break
@@ -186,12 +185,7 @@ def turn(gamer):
         else:
             print("Invalid choice")
 
-
-def broken(gamer, amount_need):
-    pass
-
-
 if __name__ == "__main__":
     data = init_game()
-    for i in data:
-        print(i)
+    for (gamer_id, gamer) in data["player_dict"].items():
+        turn(gamer)
