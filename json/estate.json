@@ -1,5 +1,5 @@
 {
-	"name": "futian",
+	"name": "Nanshan",
 	"block_id": 23,
 	"position": 12,
 	"uid": 123456789,
@@ -14,7 +14,7 @@
 		{"house_number": 2, "payment": 123456789},
 		{"house_number": 3, "payment": 123456789},
 		{"house_number": 4, "payment": 123456789},
-		{"house_number": 5, "payment": 123456789}, // One hotel
-		{"house_number": 6, "payment": 123456789} // Two hotels
+		{"house_number": 5, "payment": 123456789},
+		{"house_number": 6, "payment": 123456789}
 	]
 }
