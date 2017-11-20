@@ -24,11 +24,14 @@ Server structure:
 - Database stores game data and is used for data IO operation. Main database is mongoDB
 - Redis is not the main database but is used as a cache server for accelerating
 
-
 ## Reference
-- Baidu
+- Google
 - Monopoly 5(game)
 - MongoDB
+	- PyMongo 
 - Nginx
 - Tornado offical guide
+	- [Introduction to Tornado](https://mirrors.segmentfault.com/itt2zh/)
+	- [中文官方文档](http://www.tornadoweb.cn/documentation)
+	- [英文官方文档](http://www.tornadoweb.org/en/stable/index.html)
 - Wiki
