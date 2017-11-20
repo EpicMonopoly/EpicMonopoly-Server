@@ -40,7 +40,7 @@ class Station(asset.Asset):
         :type gamer: player.Player
         :return:
         """
-        import opertation
+        import operation
         player_dict = data_dict['player_dict']
         bank = data_dict['bank']
         if self._status == 1:
@@ -53,7 +53,7 @@ class Station(asset.Asset):
             else:
                 # Other pass this station
                 payment = self.payment(gamer.station_num)
-                opertation.pay(gamer, owner, payment)
+                operation.pay(gamer, owner, payment)
         elif self._status == -1:
             # Nobody own
             while True:
@@ -68,8 +68,8 @@ class Station(asset.Asset):
                         print("You do not have enough money")
                         break
                     else:
-                        opertation.pay(gamer, bank, price)
-                        opertation.trade_asset(self, bank, gamer)
+                        operation.pay(gamer, bank, price)
+                        operation.trade_asset(self, bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))
                         break

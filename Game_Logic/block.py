@@ -54,8 +54,8 @@ class Go(Block):
         super().__init__(name, position)
     
     def display(self, gamer, data_dict, dice_result):
-        import opertation
-        opertation.pay(data_dict['epic_bank'], gamer, 200)
+        import operation
+        operation.pay(data_dict['epic_bank'], gamer, 200)
 
 
 class Go_To_Jail(Block):

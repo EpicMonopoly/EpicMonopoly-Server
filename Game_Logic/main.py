@@ -143,7 +143,7 @@ def roll(gamer):
     step = a + b
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
-        opertation.pay(data_dict['epic_bank'], gamer, 200)
+        operation.pay(data_dict['epic_bank'], gamer, 200)
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'].get_block(end_position)
