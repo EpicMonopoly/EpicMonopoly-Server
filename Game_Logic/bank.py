@@ -1,15 +1,10 @@
 import role
-import player
-import station
-import utility
-import estate
 
 
 class Bank(role.Role):
     """
     subclass(Role): Bank
     """
-
     def __init__(self, uid, name):
         """
         Constructor
@@ -34,53 +29,59 @@ class Bank(role.Role):
     def cur_hotel(self):
         return self._cur_hotel
 
-    def mortgage(self, from_role, properties):
+    def mortgage(self, from_role, assets):
         """
-        Mortgage the properties of Player
-        :type from_role: Role
-        :type properties: set
+        Mortgage the assets of Player
+        :type from_role: player.Player
+        :type assets: list
         :param from_role: player
-        :param properties: a set of properties
+        :param assets: a set of assets
         :return: True or not of this mortgage
         """
+        import station
+        import utility
+        import estate
         mortgage_value = 0
-        if properties:
-            for p in properties:
-                if isinstance(p, station.Station):
-                    mortgage_value += p.mortgage_value
-                    self._loan_list.append(p)
-                elif isinstance(p, utility.Utility):
-                    mortgage_value += p.mortgage_value
-                    self._loan_list.append(p)
-                elif isinstance(p, estate.Estate):
-                    mortgage_value += p.mortgage_value
-                    self._loan_list.append(p)
+        if assets:
+            for asset in assets:
+                if isinstance(asset, station.Station):
+                    mortgage_value += asset.mortgage_value
+                    self._loan_list.append(asset)
+                elif isinstance(asset, utility.Utility):
+                    mortgage_value += asset.mortgage_value
+                    self._loan_list.append(asset)
+                elif isinstance(asset, estate.Estate):
+                    mortgage_value += asset.mortgage_value
+                    self._loan_list.append(asset)
             from_role.cash(mortgage_value)
             return True
         else:
             return False
 
-    def repayment(self, from_role, properties):
+    def repayment(self, from_role, assets):
         """
-        Repay the mortgaged properties
-        :type from_role: Role
-        :type properties: set
+        Repay the mortgaged assets
+        :type from_role: player.Player
+        :type assets: list
         :param from_role: player
-        :param properties: a set of properties
+        :param assets: a set of assets
         :return: True or not of this repayment
         """
+        import station
+        import utility
+        import estate
         repay_value = 0
-        if properties:
-            for p in properties:
-                if isinstance(p, station.Station):
-                    repay_value += p.mortgage_value
-                    self._loan_list.append(p)
-                elif isinstance(p, utility.Utility):
-                    repay_value += p.mortgage_value
-                    self._loan_list.append(p)
-                elif isinstance(p, estate.Estate):
-                    repay_value += p.mortgage_value
-                    self._loan_list.append(p)
+        if assets:
+            for a in assets:
+                if isinstance(a, station.Station):
+                    repay_value += a.mortgage_value
+                    self._loan_list.append(a)
+                elif isinstance(a, utility.Utility):
+                    repay_value += a.mortgage_value
+                    self._loan_list.append(a)
+                elif isinstance(a, estate.Estate):
+                    repay_value += a.mortgage_value
+                    self._loan_list.append(a)
             from_role.cash(repay_value)
             return True
         else:
@@ -89,9 +90,9 @@ class Bank(role.Role):
     def build_house(self, from_to, estate, house_num):
         """
         Build house on estate
-        :type from_to: Role
+        :type from_to: player.Player
         :type estate: Estate
-        :param from_to: Role
+        :param from_to: player
         :param estate: the estate player want to build houses on
         :param house_num: number of house the player want to build
         :return: True or not about the result
@@ -116,40 +117,47 @@ class Bank(role.Role):
     #     :return:
     #     """
 
-    def add_property(self, new_property):
+    def add_asset(self, new_asset):
         """
-        Add property to player
-        :type new_property: property.Property
+        Add asset to player
+        :type new_asset: estate.Estate, station.Station, utility.Utility
+        :param self: self
         """
-        if isinstance(new_property, estate.Estate):
-            self._properties.add(new_property)
-            new_property.owner(self.id)
-            new_property.status(-1)
-        elif isinstance(new_property, station.Station):
-            self._properties.add(new_property)
-            new_property.owner(self.id)
-            new_property.status(-1)
-        elif isinstance(new_property, utility.Utility):
-            self._properties.add(new_property)
-            new_property.owner(self.id)
-            new_property.status(-1)
+        import station
+        import utility
+        import estate
+        if isinstance(new_asset, estate.Estate):
+            self._assets.add(new_asset)
+            new_asset.owner(self.id)
+            new_asset.status(-1)
+        elif isinstance(new_asset, station.Station):
+            self._assets.add(new_asset)
+            new_asset.owner(self.id)
+            new_asset.status(-1)
+        elif isinstance(new_asset, utility.Utility):
+            self._assets.add(new_asset)
+            new_asset.owner(self.id)
+            new_asset.status(-1)
         else:
             pass
-    
-    def remove_property(self, old_property):
+
+    def remove_asset(self, old_asset):
         """
         docstring here
-            :param self: 
-            :type old_property: property.Property
+        :type old_asset: estate.Estate, station.Station, utility.Utility
+        :param self: self
         """
-        if isinstance(new_property, estate.Estate):
-            self._properties.remove(old_property)
-            new_property.owner(self.id)
-        elif isinstance(new_property, station.Station):
-            self._properties.remove(old_property)
-            new_property.owner(self.id)
-        elif isinstance(new_property, utility.Utility):
-            self._properties.remove(old_property)
-            new_property.owner(self.id)
+        import station
+        import utility
+        import estate
+        if isinstance(old_asset, estate.Estate):
+            self._assets.remove(old_asset)
+            old_asset.owner(self.id)
+        elif isinstance(old_asset, station.Station):
+            self._assets.remove(old_asset)
+            old_asset.owner(self.id)
+        elif isinstance(old_asset, utility.Utility):
+            self._assets.remove(old_asset)
+            old_asset.owner(self.id)
         else:
             pass

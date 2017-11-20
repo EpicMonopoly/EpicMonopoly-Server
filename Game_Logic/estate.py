@@ -1,9 +1,8 @@
-from property import Property
-from ef import EF
-import opertation
+import asset
+# from ef import EF
 
 
-class Estate(Property):
+class Estate(asset.Asset):
     """
     Class estate
     """
@@ -50,6 +49,14 @@ class Estate(Property):
     def mortgage_value(self):
         return self.value * self.mortgage_rate
 
+    @property  # getPosition
+    def street_id(self):
+        return self._street_id
+
+    @street_id.setter  # setPosition
+    def street_id(self, street_id):
+        self._street_id = street_id
+
     @property
     def payment(self):
         """
@@ -73,8 +80,7 @@ class Estate(Property):
             return self.value * 0.5
         else:
             # Should not be here
-            raise ValueError("Ivalid house number")
-            return 0
+            raise ValueError("Invalid house number")
 
     # TODO: implement the method
     def change_house_value(self, EF):
@@ -89,10 +95,12 @@ class Estate(Property):
     def display(self, gamer, data_dict, dice_result):
         """
         Display description
-        :type player_dict: dict
+        :param dice_result:
+        :type data_dict: dict
         :type gamer: player.Player
         :return:
         """
+        import opertation
         player_dict = data_dict['player_dict']
         bank = data_dict['epic_bank']
         if self._status == 1:
@@ -121,16 +129,16 @@ class Estate(Property):
                         break
                     else:
                         opertation.pay(gamer, bank, price)
-                        opertation.trade_property(self, bank, gamer)
+                        opertation.trade_asset(self, bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))
                         break
                 elif choice == 2:
                     break
                 else:
-                    print("Ivalid operation")
+                    print("Invalid operation")
         elif self._status == 0:
             # In mortgage
-            print("%s is in mortgaged" % (self.name))
+            print("%s is in mortgaged" % self.name)
         else:
             raise ValueError("Invalid estate status")

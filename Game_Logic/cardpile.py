@@ -1,5 +1,4 @@
 import block
-import player
 import random
 
 

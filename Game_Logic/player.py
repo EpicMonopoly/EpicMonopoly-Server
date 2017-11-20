@@ -1,9 +1,4 @@
 import role
-import bank
-import estate
-import station
-import utility
-import property
 
 
 class Player(role.Role):
@@ -78,53 +73,59 @@ class Player(role.Role):
     def gain(self, amount):
         self._cash = self._cash + amount
 
-    def calculat_asset_value(self):
+    def calculate_asset_value(self):
         total_asset_value = self.cash
-        for p in self.properties:
-            total_asset_value = total_asset_value + p.value
+        for a in self._assets:
+            total_asset_value = total_asset_value + a.value
         return total_asset_value
 
-    def add_property(self, new_property):
+    def add_asset(self, new_asset):
         """
-        Add property to player
-        :type new_property: property.Property
+        Add asset to player
+        :type new_asset: estate.Estate, station.Station, utility.Utility
         """
-        if isinstance(new_property, estate.Estate):
-            self._properties.add(new_property)
-            new_property.owner(self.id)
-            new_property.status(1)
-        elif isinstance(new_property, station.Station):
-            self._properties.add(new_property)
-            new_property.owner(self.id)
-            new_property.status(1)
+        import estate
+        import station
+        import utility
+        if isinstance(new_asset, estate.Estate):
+            self._assets.add(new_asset)
+            new_asset.owner(self.id)
+            new_asset.status(1)
+        elif isinstance(new_asset, station.Station):
+            self._assets.add(new_asset)
+            new_asset.owner(self.id)
+            new_asset.status(1)
             self._station_num = self._station_num + 1
-        elif isinstance(new_property, utility.Utility):
-            self._properties.add(new_property)
-            new_property.owner(self.id)
-            new_property.status(1)
+        elif isinstance(new_asset, utility.Utility):
+            self._assets.add(new_asset)
+            new_asset.owner(self.id)
+            new_asset.status(1)
             self._utility_num = self._utility_num + 1
         else:
             pass
 
-    def remove_property(self, old_property):
+    def remove_asset(self, old_asset):
         """
         docstring here
             :param self: 
-            :type old_property: property.Property
+            :type old_asset: estate.Estate, station.Station, utility.Utility
         """
-        if isinstance(new_property, estate.Estate):
-            self._properties.remove(old_property)
-            new_property.owner(self.id)
-            new_property.status(-1)
-        elif isinstance(new_property, station.Station):
-            self._properties.remove(old_property)
-            new_property.owner(self.id)
-            new_property.status(-1)
+        import estate
+        import station
+        import utility
+        if isinstance(old_asset, estate.Estate):
+            self._assets.remove(old_asset)
+            old_asset.owner(self.id)
+            old_asset.status(-1)
+        elif isinstance(old_asset, station.Station):
+            self._assets.remove(old_asset)
+            old_asset.owner(self.id)
+            old_asset.status(-1)
             self._station_num = self._station_num - 1
-        elif isinstance(new_property, utility.Utility):
-            self._properties.remove(old_property)
-            new_property.owner(self.id)
-            new_property.status(-1)
+        elif isinstance(old_asset, utility.Utility):
+            self._assets.remove(old_asset)
+            old_asset.owner(self.id)
+            old_asset.status(-1)
             self._utility_num = self._utility_num - 1
         else:
             pass

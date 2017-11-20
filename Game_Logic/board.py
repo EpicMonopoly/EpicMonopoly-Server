@@ -1,5 +1,4 @@
 import random
-import cardpile
 
 
 class Board:

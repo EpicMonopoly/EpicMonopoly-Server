@@ -1,12 +1,10 @@
 from abc import ABCMeta, abstractmethod
-from property import Property
 
 
 class Role(metaclass=ABCMeta):
     """
     Abstract class: Role
     """
-
     def __init__(self, uid, name, cash):
         """
         Constructor of Role
@@ -18,7 +16,7 @@ class Role(metaclass=ABCMeta):
         self._uid = uid
         self._name = name
         self._cash = cash
-        self._properties = set()  # Property[]
+        self._assets = set()  # Property[]
 
     @property  # getUid
     def id(self):
@@ -38,23 +36,23 @@ class Role(metaclass=ABCMeta):
 
     @property  # getProperties
     def properties(self):
-        return self._properties
-    
+        return self._assets
+
     @abstractmethod
-    def add_property(self, new_property):
+    def add_asset(self, new_asset):
         """
         Add property to properties
-        :type new_property: Property
-        :param new_property: Property
+        :type new_asset: asset.Asset
+        :param new_asset: assets
         """
         pass
 
     @abstractmethod
-    def remove_property(self, properties):
+    def remove_asset(self, assets):
         """
-        Remove property from properties
-        :type properties: set
-        :param properties: properties set
-        :return boolean: True if succeed while False if properties is empty
+        Remove asset from assets
+        :type assets: list
+        :param assets: assets
+        :return boolean: True if succeed while False if asset is empty
         """
         pass

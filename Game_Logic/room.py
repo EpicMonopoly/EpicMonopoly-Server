@@ -1,13 +1,12 @@
-import board
-import bank
-
 WAIT = 1
 START = 2
 END = 3
 
 
 class Room:
-
+    """
+    Room class
+    """
     def __init__(self, room_id, board, bank):
         """
         Constructor

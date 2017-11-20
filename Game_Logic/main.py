@@ -141,8 +141,8 @@ def roll(gamer):
     print("Dice number is", a, b)
     step = a + b
     gamer.move(step)
-    end_position = player.position
-    current_block = chess_board.get_block(end_position)
+    end_position = gamer.position
+    current_block = data_dict['chess_board'].get_block(end_position)
     current_block.display(player, data_dict)
     return a, b, end_flag
 
@@ -151,7 +151,7 @@ def construct_building():
     pass
 
 
-def mortgage_property():
+def mortgage_asset():
     pass
 
 
@@ -166,7 +166,7 @@ def turn(gamer):
         print("1: Trade with others")
         print("2: Roll dices")
         print("3: Construct building")
-        print("4: Mortgage property")
+        print("4: Mortgage asset")
         print("5: End turn")
         choice = int(input("Please enter the number of your decision:"))
         print(choice)
@@ -177,7 +177,7 @@ def turn(gamer):
         elif choice == 3:
             construct_building()
         elif choice == 4:
-            mortgage_property()
+            mortgage_asset()
         elif choice == 5:
             if end_flag is True:
                 break

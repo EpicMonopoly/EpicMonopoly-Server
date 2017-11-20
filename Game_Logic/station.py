@@ -1,7 +1,7 @@
-import property
+import asset
 
 
-class Station(property.Property):
+class Station(asset.Asset):
     """
     Class Station
     """
@@ -36,10 +36,11 @@ class Station(property.Property):
     def display(self, gamer, data_dict, dice_result):
         """
         Display description
-        :type player_dict: dict
+        :type data_dict: dict
         :type gamer: player.Player
         :return:
         """
+        import opertation
         player_dict = data_dict['player_dict']
         bank = data_dict['bank']
         if self._status == 1:
@@ -56,7 +57,7 @@ class Station(property.Property):
         elif self._status == -1:
             # Nobody own
             while True:
-                print("Nobody own %s do you want to buy it?" %(self.name))
+                print("Nobody own %s do you want to buy it?" % self.name)
                 print("1: Buy it")
                 print("2: Do not buy it")
                 choice = int(
@@ -68,16 +69,16 @@ class Station(property.Property):
                         break
                     else:
                         opertation.pay(gamer, bank, price)
-                        opertation.trade_property(self, bank, gamer)
+                        opertation.trade_asset(self, bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))
                         break
                 elif choice == 2:
                     break
                 else:
-                    print("Ivalid operation")
+                    print("Invalid operation")
         elif self._status == 0:
             # In mortgage
-            print("%s is in mortgaged" % (self.name))
+            print("%s is in mortgaged" % self.name)
         else:
             raise ValueError("Invalid estate status")
