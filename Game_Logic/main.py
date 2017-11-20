@@ -42,7 +42,7 @@ def init_game():
         elif b['block_type'] == 1:  # ["Community Chest", "Chance"]
             block_list.append(cardpile.CardPile(b['name'], b['position']))
         elif b['block_type'] == 2:  # ["Income Tax", "Super Tax"]
-            block_list.append(tax.Tax(b['name'], b['position'], 0.17))
+            block_list.append(tax.Tax(b['name'], b['position'], 0.10))
         else:
             pass
         block_list.append(b)

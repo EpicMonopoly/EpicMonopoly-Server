@@ -18,3 +18,33 @@ class CardPile(block.Block):
     # TODO: implement display
     def display(self):
         pass
+
+class Community_Chest(CardPile):
+    """
+    Subclass(CardPile): Community_Chest
+    """
+    def __init__(self, name, position):
+        """
+        Constructor 
+            :param name: string
+            :param position: int
+        """
+        super().__init__(name, position)
+    
+    def display(self, gamer, data_dict, dice_result):
+        pass
+
+class Chance(CardPile):
+    """
+    Subclass(CardPile): Chance
+    """
+    def __init__(self, name, position):
+        """
+        Constructor 
+            :param name: string
+            :param position: int
+        """
+        super().__init__(name, position)
+    
+    def display(self, gamer, data_dict, dice_result):
+        pass
