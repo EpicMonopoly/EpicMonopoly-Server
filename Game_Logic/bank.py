@@ -124,12 +124,15 @@ class Bank(role.Role):
         if isinstance(new_property, estate.Estate):
             self._properties.add(new_property)
             new_property.owner(self.id)
+            new_property.status(-1)
         elif isinstance(new_property, station.Station):
             self._properties.add(new_property)
             new_property.owner(self.id)
+            new_property.status(-1)
         elif isinstance(new_property, utility.Utility):
             self._properties.add(new_property)
             new_property.owner(self.id)
+            new_property.status(-1)
         else:
             pass
     

@@ -86,13 +86,16 @@ class Player(role.Role):
         if isinstance(new_property, estate.Estate):
             self._properties.add(new_property)
             new_property.owner(self.id)
+            new_property.status(1)
         elif isinstance(new_property, station.Station):
             self._properties.add(new_property)
             new_property.owner(self.id)
+            new_property.status(1)
             self._station_num = self._station_num + 1
         elif isinstance(new_property, utility.Utility):
             self._properties.add(new_property)
             new_property.owner(self.id)
+            new_property.status(1)
             self._utility_num = self._utility_num + 1
         else:
             pass
@@ -106,13 +109,16 @@ class Player(role.Role):
         if isinstance(new_property, estate.Estate):
             self._properties.remove(old_property)
             new_property.owner(self.id)
+            new_property.status(-1)
         elif isinstance(new_property, station.Station):
             self._properties.remove(old_property)
             new_property.owner(self.id)
+            new_property.status(-1)
             self._station_num = self._station_num - 1
         elif isinstance(new_property, utility.Utility):
             self._properties.remove(old_property)
             new_property.owner(self.id)
+            new_property.status(-1)
             self._utility_num = self._utility_num - 1
         else:
             pass
