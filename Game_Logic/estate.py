@@ -7,6 +7,7 @@ class Estate(Property):
     """
     Class estate
     """
+
     def __init__(self, name, position, uid, estate_value, status, street_id, house_value):
         """
         Call for superclass construct
@@ -85,46 +86,50 @@ class Estate(Property):
         """
         pass
 
-    def display(self, player, data_dic):
+    def display(self, gamer, data_dict):
         """
         Display description
         :type player_dict: dict
+        :type gamer: player.Player
         :return:
         """
-        player_dic = data_dic['player_dic']
+        player_dict = data_dict['player_dict']
+        bank = data_dict['bank']
         if self._status == 1:
             # Some body own it
             owner_id = self.owner()
-            owner = player_dic[owner_id]
-            if owner_id == player.id:
+            owner = player_dict[owner_id]
+            if owner_id == gamer.id:
                 # Owner pass this estate
-                print("%s own %s" %(player.name, self.name))
+                print("%s own %s" % (gamer.name, self.name))
             else:
                 # Other pass this estate
                 payment = self.payment
-                opertation.pay(player, owner, payment)
+                opertation.pay(gamer, owner, payment)
         elif self._status == -1:
             # Nobody own
             while True:
                 print("Nobody own %s do you want to buy it?")
                 print("1: Buy it")
                 print("2: Do not buy it")
-                choice = int(input("Please enter the number of your decision:"))
+                choice = int(
+                    input("Please enter the number of your decision:"))
                 if choice == 1:
                     price = self.value
-                    if price > player.cash:
+                    if price > gamer.cash:
                         print("You do not have enough money")
                         break
                     else:
-                        
+                        opertation.pay(gamer, bank, price)
+                        print("%s buy %s for %d" %
+                              (gamer.name, self.name, price))
+                        break
                 elif choice == 2:
                     break
                 else:
-                    pass
+                    print("Ivalid operation")
         elif self._status == 0:
             # In mortgage
-            pass
+            print("%s is in mortgaged" % (self.name))
         else:
-            pass
-            
-        
+            raise ValueError("Invalid estate status")
