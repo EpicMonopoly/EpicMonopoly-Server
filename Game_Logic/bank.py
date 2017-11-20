@@ -29,8 +29,24 @@ class Bank(role.Role):
     def cur_hotel(self):
         return self._cur_hotel
 
+    def built_house(self):
+        self._cur_house = self.cur_house - 1
+    
+    def built_hotel(self):
+        self._cur_hotel = self._cur_hotel - 1
+
+    def remove_house(self, number):
+        self._cur_house = self.cur_house + number
+    
+    def remove_hotel(self):
+        self._cur_hotel = self._cur_hotel - 1
+
     def add_loan_dict(self, asset_id, amount):
         self._loan_dict
+    
+    def remove_loan_dict(self, asset_id):
+        if asset_id in self._loan_dict.keys():
+            del self._loan_dict[asset_id]
 
     # def mortgage(self, from_role, assets):
     #     """
@@ -90,28 +106,28 @@ class Bank(role.Role):
         else:
             return False
 
-    def build_house(self, from_to, estate, house_num):
-        """
-        Build house on estate
-        :type from_to: player.Player
-        :type estate: Estate
-        :param from_to: player
-        :param estate: the estate player want to build houses on
-        :param house_num: number of house the player want to build
-        :return: True or not about the result
-        """
-        if from_to.cash >= estate.house_value * house_num:
-            if estate.house_num + house_num <= 4:
-                estate.house_num(estate.house_num + house_num)
-            elif estate.house_num + house_num == 5:
-                estate.house_num(0)
-                estate.hotel_num(1)
-            else:
-                return False
-            from_to.cash(-estate.house_value * estate.house_num)
-            return True
-        else:
-            return False
+    # def build_house(self, from_to, estate, house_num):
+    #     """
+    #     Build house on estate
+    #     :type from_to: player.Player
+    #     :type estate: Estate
+    #     :param from_to: player
+    #     :param estate: the estate player want to build houses on
+    #     :param house_num: number of house the player want to build
+    #     :return: True or not about the result
+    #     """
+    #     if from_to.cash >= estate.house_value * house_num:
+    #         if estate.house_num + house_num <= 4:
+    #             estate.house_num(estate.house_num + house_num)
+    #         elif estate.house_num + house_num == 5:
+    #             estate.house_num(0)
+    #             estate.hotel_num(1)
+    #         else:
+    #             return False
+    #         from_to.cash(-estate.house_value * estate.house_num)
+    #         return True
+    #     else:
+    #         return False
 
     # def build_hotel(self, estate):
     #     """

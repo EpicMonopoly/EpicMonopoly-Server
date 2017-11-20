@@ -167,6 +167,9 @@ def own_all_block(gamer):
 
 
 def construct_building(gamer):
+    if data["epic_bank"].cur_house == 0:
+        print("Bank out of house")
+        return 0
     own_street = own_all_block(gamer)
     print("Valid building list")
     asset_number_list = []
@@ -187,13 +190,40 @@ def construct_building(gamer):
             if cur_asset.house_num == 6:
                 print("Cannot built more house!")
                 return 0
-            payment = cur_asset.house_value
-            if payment > gamer.cash:
-                print("Do not have enough money")
-                return 0
-            operation.pay(gamer, data["epic_bank"], payment)
-            cur_asset.house_num(cur_asset.house_num + 1)
-            print("%s built one house in %s" %(gamer.name, cur_asset.name))
+            elif cur_asset.house_num == 5:
+                if data["epic_bank"].cur_hotel == 0:
+                    print("Bank out of hotel")
+                    return 0
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_hotel()
+                print("%s built one hotel in %s" %(gamer.name, cur_asset.name))
+            elif cur_asset.house_num == 4:
+                if data["epic_bank"].cur_hotel == 0:
+                    print("Bank out of hotel")
+                    return 0
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_hotel()
+                data["epic_bank"].remove_house(4)
+                print("%s built one hotel in %s" %(gamer.name, cur_asset.name))
+            else:
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_house()
+                print("%s built one house in %s" %(gamer.name, cur_asset.name))
 
 def turn(gamer):
     """
@@ -228,5 +258,9 @@ def turn(gamer):
 
 if __name__ == "__main__":
     data = init_game()
-    for (gamer_id, gamer) in data["player_dict"].items():
-        turn(gamer)
+    living_list = data["player_dict"].keys()
+    data["living_list"] = living_list
+    while len(living_list) != 1:
+        for gamer_id in living_list:
+            gamer = data["player_dict"][gamer_id]
+            turn(gamer)

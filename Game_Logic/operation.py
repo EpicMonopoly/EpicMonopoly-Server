@@ -21,8 +21,6 @@ def pay(payer, gainer, payment):
 def trade_asset(new_asset, from_role, to_role):
     """
     Trade for other players or bank
-    :type to_role: role.Role
-    :type from_role: role.Role
     :param new_asset: asset.Asset
     :param from_role: from_role
     :param to_role: to_role
@@ -44,8 +42,13 @@ def clearing(gamer, amount_left):
 def trade():
     pass
 
-def broken(gamer):
-    pass
+def broken(gamer, data):
+    data["living_list"].remove(gamer.id)
+    data["player_dict"][gamer.id].cur_status(-1)
+    for cur_asset in gamer.properties:
+        trade_asset(cur_asset, gamer, data["epic_bank"])
+        data["epic_bank"].remove_loan_dict(cur_asset.block_id)
+    print("%s bankrupt" %gamer.name)
 
 def mortgage_asset(gamer, data):
     print("Your current assets")
