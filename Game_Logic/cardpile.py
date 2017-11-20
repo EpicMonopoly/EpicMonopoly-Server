@@ -7,6 +7,7 @@ class CardPile(block.Block):
     """
     CardPile class
     """
+
     def __init__(self, name, position):
         super().__init__(name, position)
         self._cards = []
@@ -21,10 +22,12 @@ class CardPile(block.Block):
     def display(self):
         pass
 
+
 class Community_Chest(CardPile):
     """
     Subclass(CardPile): Community_Chest
     """
+
     def __init__(self, name, position):
         """
         Constructor 
@@ -32,7 +35,7 @@ class Community_Chest(CardPile):
             :param position: int
         """
         super().__init__(name, position)
-    
+
     def display(self, gamer, data_dict, dice_result):
         """
         docstring here
@@ -51,6 +54,7 @@ class Chance(CardPile):
     """
     Subclass(CardPile): Chance
     """
+
     def __init__(self, name, position):
         """
         Constructor 
@@ -58,7 +62,7 @@ class Chance(CardPile):
             :param position: int
         """
         super().__init__(name, position)
-    
+
     def display(self, gamer, data_dict, dice_result):
         chest_list = data_dict["chest_list"]
         length_chest_list = len(chest_list)
