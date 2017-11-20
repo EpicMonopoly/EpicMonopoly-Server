@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+import ef
 
 
 class Card(metaclass=ABCMeta):
@@ -27,9 +28,10 @@ class Card(metaclass=ABCMeta):
 
 
 class MoveCard(Card):
-    def __init__(self, name, description, step):
+    def __init__(self, name, card_type, description, step):
         super().__init__(name, description)
         self._destination = step
+        self._card_type = card_type
 
     @property
     def destination(self):
@@ -47,10 +49,11 @@ class MoveCard(Card):
         pass
 
 
-class PunishCard(Card):
-    def __init__(self, name, description, amount):
+class PayCard(Card):
+    def __init__(self, name, card_type, description, amount):
         super().__init__(name, description)
         self._amount = amount
+        self._card_type = card_type
 
     def play(self, from_role, to_role):
         # how to go to punish
@@ -68,10 +71,11 @@ class PunishCard(Card):
         pass
 
 
-class RewardCard(Card):
-    def __init__(self, name, description, amount):
+class CollectCard(Card):
+    def __init__(self, name, card_type, description, amount):
         super().__init__(name, description)
         self._amount = amount
+        self._card_type = card_type
 
     def play(self, from_role, to_role):
         # how to go to punish
@@ -87,3 +91,15 @@ class RewardCard(Card):
 
     def change_value(self, EF):
         pass
+
+
+class BailCard(Card):
+    def __init__(self, name, card_type, description):
+        super().__init__(name, description)
+        self._card_type = card_type
+
+    # TODO: implement this method
+    def play(self, from_role, to_role):
+        # how to go to punish
+        pass
+
