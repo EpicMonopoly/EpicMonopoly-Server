@@ -53,7 +53,12 @@ def init_game():
     chest_block_list = []
     chance_block_list = []
     tax_list = []
-    # chess_board = {}
+
+    # initialize bank
+    epic_bank = bank.Bank('99', 'EpicBank')
+    json_writer('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/bank_data.json',
+                {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
+
     for b in block_list_data["data"]:
         if b['block_type'] == 0:
             # ["Go", "Go to Jail", "In Jail", "Free Parking"]
@@ -87,15 +92,18 @@ def init_game():
         new_block = station.Station(s['name'], s['block_id'], s['position'], s['uid'], s['estate_value'],s['status'])
         station_list.append(new_block)
         block_list[new_block.position] = new_block
+        epic_bank.add_asset(new_block)
     # name, position, uid, estate_value, status, street_id
     for u in utility_list_data["data"]:
         new_block = utility.Utility(u['name'], u['block_id'], u['position'], u['uid'], u['estate_value'],u['status'])
         utility_list.append(new_block)
         block_list[new_block.position] = new_block
+        epic_bank.add_asset(new_block)
     for e in estate_list_data["data"]:
         new_block = estate.Estate(e['name'], e['block_id'], e['position'], e['uid'], e['estate_value'],e['status'], e['street_id'], e['house_value'])
         estate_list.append(new_block)
         block_list[new_block.position] = new_block
+        epic_bank.add_asset(new_block)
 
     # initialize players
     player_dict_data = json_reader(
@@ -107,11 +115,6 @@ def init_game():
                           player_dict_data[i]['alliance'])
         print(p.cash, p.id, p.name, p.alliance)
         player_dict[player_dict_data[i]['id']] = p
-    # quit()
-    # initialize bank
-    epic_bank = bank.Bank('99', 'EpicBank')
-    json_writer('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/bank_data.json',
-                {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
 
     # initialize chest cards
     chest_list = []
@@ -242,6 +245,7 @@ def construct_building(gamer):
                 print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
     asset_number = int(input("Please enter the number you want to mortgage"))
+    print()
     if asset_number == -1:
         return 0
     else:
@@ -305,7 +309,7 @@ def turn(gamer):
         print("4: Mortgage asset")
         print("5: End turn")
         choice = int(input("Please enter the number of your decision:"))
-        print(choice)
+        print()
         if choice == 1:
             operation.trade()
         elif choice == 2 and end_flag is False:
@@ -313,7 +317,7 @@ def turn(gamer):
         elif choice == 3:
             construct_building(gamer)
         elif choice == 4:
-            operation.mortgage_asset()
+            operation.mortgage_asset(gamer, data)
         elif choice == 5:
             if end_flag is True:
                 break

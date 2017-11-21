@@ -29,6 +29,9 @@ class Asset(block.Block):
     @owner.setter  # getOwner
     def owner(self, uid):
         self._uid = uid
+    
+    def change_owner(self, uid):
+        self._uid = uid
 
     @property  # getValue
     def value(self):

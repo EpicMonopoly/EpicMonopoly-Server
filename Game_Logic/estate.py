@@ -86,9 +86,6 @@ class Estate(asset.Asset):
         :param dice_result:
         :return:
         """
-        print("Display %s" %self.name)
-        print(gamer)
-        print(gamer.cash)
         player_dict = data_dict['player_dict']
         epic_bank = data_dict['epic_bank']
         if self._status == 1:
@@ -110,6 +107,7 @@ class Estate(asset.Asset):
                 print("2: Do not buy it")
                 choice = int(
                     input("Please enter the number of your decision:"))
+                print()
                 if choice == 1:
                     price = self.value
                     cur_cash = gamer.cash

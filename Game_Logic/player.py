@@ -80,17 +80,17 @@ class Player(role.Role):
         import utility
         if isinstance(new_asset, estate.Estate):
             self._assets.add(new_asset)
-            new_asset.owner(self.id)
-            new_asset.status(1)
+            new_asset.owner = self.id
+            new_asset.status = 1
         elif isinstance(new_asset, station.Station):
             self._assets.add(new_asset)
-            new_asset.owner(self.id)
-            new_asset.status(1)
+            new_asset.owner = self.id
+            new_asset.status = 1
             self._station_num = self._station_num + 1
         elif isinstance(new_asset, utility.Utility):
             self._assets.add(new_asset)
-            new_asset.owner(self.id)
-            new_asset.status(1)
+            new_asset.owner = self.id
+            new_asset.status = 1
             self._utility_num = self._utility_num + 1
         else:
             pass
@@ -106,17 +106,17 @@ class Player(role.Role):
         import utility
         if isinstance(old_asset, estate.Estate):
             self._assets.remove(old_asset)
-            old_asset.owner(self.id)
-            old_asset.status(-1)
+            old_asset.owner = -1
+            old_asset.status = -1
         elif isinstance(old_asset, station.Station):
             self._assets.remove(old_asset)
-            old_asset.owner(self.id)
-            old_asset.status(-1)
+            old_asset.owner = -1
+            old_asset.status = -1
             self._station_num = self._station_num - 1
         elif isinstance(old_asset, utility.Utility):
             self._assets.remove(old_asset)
-            old_asset.owner(self.id)
-            old_asset.status(-1)
+            old_asset.owner = -1
+            old_asset.status = -1
             self._utility_num = self._utility_num - 1
         else:
             pass

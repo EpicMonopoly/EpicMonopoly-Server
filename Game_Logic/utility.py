@@ -50,6 +50,7 @@ class Utility(asset.Asset):
                 print("2: Do not buy it")
                 choice = int(
                     input("Please enter the number of your decision:"))
+                print()
                 if choice == 1:
                     price = self.value
                     if price > gamer.cash:

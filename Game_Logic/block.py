@@ -96,7 +96,7 @@ class In_Jail(Block):
         super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        print("At in Jail")
 
 
 class Free_Parking(Block):
@@ -112,5 +112,5 @@ class Free_Parking(Block):
         super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
-        pass
+        print("At Free Parking")
 
