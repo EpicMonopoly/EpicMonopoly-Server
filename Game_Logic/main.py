@@ -27,24 +27,13 @@ def init_game():
     :return: map, players list and bank
     """
     # generate a map
-    # block_list_data = json_reader('Data/block_data.json')
-    # station_list_data = json_reader('Data/station_data.json')
-    # utility_list_data = json_reader('Data/utility_data.json')
-    # estate_list_data = json_reader('Data/estate_data.json')
-    # chest_list_data = json_reader('Data/chest_data.json')
-    # chance_list_data = json_reader('Data/chance_data.json')
-    block_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/block_data.json')
-    station_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/station_data.json')
-    utility_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/utility_data.json')
-    estate_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/estate_data.json')
-    chest_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chest_data.json')
-    chance_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chance_data.json')
+    parent_addr = os.path.abspath(os.pardir)
+    block_list_data = json_reader(os.path.join(parent_addr, 'Data/block_data.json'))
+    station_list_data = json_reader(os.path.join(parent_addr, 'Data/station_data.json'))
+    utility_list_data = json_reader(os.path.join(parent_addr, 'Data/utility_data.json'))
+    estate_list_data = json_reader(os.path.join(parent_addr, 'Data/estate_data.json'))
+    chest_list_data = json_reader(os.path.join(parent_addr, 'Data/chest_data.json'))
+    chance_list_data = json_reader(os.path.join(parent_addr, 'Data/chance_data.json'))
     block_list = [0 for x in range(40)]
     station_list = []
     utility_list = []
@@ -56,7 +45,7 @@ def init_game():
 
     # initialize bank
     epic_bank = bank.Bank('99', 'EpicBank')
-    json_writer('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/bank_data.json',
+    json_writer(os.path.join(parent_addr, 'Data/bank_data.json'),
                 {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
 
     for b in block_list_data["data"]:
@@ -115,8 +104,7 @@ def init_game():
         epic_bank.add_asset(new_block)
 
     # initialize players
-    player_dict_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/player_list.json')
+    player_dict_data = json_reader(os.path.join(parent_addr, 'Data/player_list.json'))
     player_dict = {}
     player_dict_data = player_dict_data["data"]
     for i in range(len(player_dict_data)):
