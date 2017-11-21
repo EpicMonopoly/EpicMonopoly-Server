@@ -10,8 +10,9 @@ import estate
 import station
 import utility
 import card
+import operation
 from json_io import json_reader, json_writer
-
+import os
 # global player_dic
 data_dict = {}
 
@@ -26,54 +27,51 @@ def init_game():
     :return: map, players list and bank
     """
     # generate a map
-    # block_list_data = json_reader('Data/block_data.json')
-    # station_list_data = json_reader('Data/station_data.json')
-    # utility_list_data = json_reader('Data/utility_data.json')
-    # estate_list_data = json_reader('Data/estate_data.json')
-    # chest_list_data = json_reader('Data/chest_data.json')
-    # chance_list_data = json_reader('Data/chance_data.json')
-    block_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/block_data.json')
-    station_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/station_data.json')
-    utility_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/utility_data.json')
-    estate_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/estate_data.json')
-    chest_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chest_data.json')
-    chance_list_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chance_data.json')
+    block_list_data = json_reader('Data/block_data.json')
+    station_list_data = json_reader('Data/station_data.json')
+    utility_list_data = json_reader('Data/utility_data.json')
+    estate_list_data = json_reader('Data/estate_data.json')
+    chest_list_data = json_reader('Data/chest_data.json')
+    chance_list_data = json_reader('Data/chance_data.json')
     block_list = []
     station_list = []
     utility_list = []
     estate_list = []
+    corner_list = []
+    chest_block_list = []
+    chance_block_list = []
+    tax_list = []
     for b in block_list_data:
-        if b['block_type'] == 0:  # ["Go", "Go to jail", "In Jail", "Free Parking"]
-            block_list.append(block.Block(b['name'], b['position']))
-        elif b['block_type'] == 1:  # ["Community Chest", "Chance"]
-            block_list.append(cardpile.CardPile(b['name'], b['position']))
-        elif b['block_type'] == 2:  # ["Income Tax", "Super Tax"]
-            block_list.append(tax.Tax(b['name'], b['position'], 0.10))
-        else:
-            pass
+        if b['block_type'] == 0:  # ["Go", "Go to Jail", "In Jail", "Free Parking"]
+            corner_list.append(block.Block(b['name'], b['block_id'], b['position']))
+        elif b['name'] == "Community Chest":  # "Community Chest"
+            chest_block_list.append(cardpile.CardPile(b['name'], b['block_id'], b['position']))
+        elif b['name'] == "Chance":  # "Chance"
+            chance_block_list.append(cardpile.CardPile(b['name'], b['block_id'], b['position']))
+        elif b['block_type'] == 3:  # ["Income Tax", "Super Tax"]
+            tax_list.append(tax.Tax(b['name'], b['block_id'], b['position'], 0.10))
         block_list.append(b)
     for s in station_list_data:  # name, position, uid, estate_value, status, street_id
-        station_list.append(station.Station(s['name'], s['position'], s['uid'], s['estate_value'], s['status']))
+        station_list.append(station.Station(s['name'], s['block_id'], s['position'], s['uid'], s['estate_value'],
+                                            s['status']))
     for u in utility_list_data:  # name, position, uid, estate_value, status, street_id
-        utility_list.append(utility.Utility(u['name'], u['position'], u['uid'], u['estate_value'], u['status']))
+        utility_list.append(utility.Utility(u['name'], u['block_id'], u['position'], u['uid'], u['estate_value'],
+                                            u['status']))
     for e in estate_list_data:
-        estate_list.append(estate.Estate(e['name'], e['position'], e['uid'], e['estate_value'], e['status'], 0, 200))
-
-    # initialize chess board
-    chess_board = board.Board([], [], [], block_list, [], [])
-
+        estate_list.append(estate.Estate(e['name'], e['block_id'], e['position'], e['uid'], e['estate_value'],
+                                         e['status'], 0, 200))
+    for corner in corner_list:
+        print(corner.name)
     # initialize players
-    player_dict_data = json_reader('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/player_list.json')
+    player_dict_data = json_reader('Data/player_list.json')
     player_dict = {}
     for i in range(len(player_dict_data)):
         p = player.Player(player_dict_data[i]['id'], player_dict_data[i]['name'], player_dict_data[i]['cash'],
                           player_dict_data[i]['alliance'])
         player_dict[player_dict_data[i]['id']] = p
-
     # initialize bank
     epic_bank = bank.Bank('99', 'EpicBank')
-    json_writer('/home/caesar/Documents/Code/EpicMonopoly-Server/Data/bank_data.json', {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
-
+    json_writer('Data/bank_data.json', {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
     # initialize chest
     chest_list = []
     for chest in chest_list_data:
@@ -92,6 +90,7 @@ def init_game():
         #                                     chest['steps']))
         elif chest['card_type'] == 5:  # Bailcard
             chest_list.append(card.BailCard(chest['card_id'], chest['card_type'], chest['description']))
+    # initialize chance
     chance_list = []
     for chance in chance_list_data:
         if chance['card_type'] == 0:  # 0: Collection
@@ -111,15 +110,34 @@ def init_game():
                                              chance['steps']))
         elif chance['card_type'] == 5:  # Bailcard
             chance_list.append(card.BailCard(chance['card_id'], chance['card_type'], chance['description']))
-
-    # initialize chance
+    # initialize chess board
+    two_block_street = []
+    three_block_street = []
+    for e in estate_list:
+        print(e.street_id)
+        if e.street_id == 1 or e.street_id == 8:
+            two_block_street.append(e)
+        else:
+            three_block_street.append(e)
+    print(two_block_street)
+    chess_board_object = board.Board(two_block_street, three_block_street, station_list, utility_list, block_list,
+                                     corner_list, chest_block_list, chance_block_list, tax_list)
+    chess_board = chess_board_object.new_board()
     global data_dict
     data_dict['chess_board'] = chess_board
     data_dict['player_dict'] = player_dict
     data_dict['epic_bank'] = epic_bank
     data_dict['chest_list'] = chest_list
     data_dict['chance_list'] = chance_list
+    data_dict['station_list'] = station_list
+    data_dict['utility_list'] = utility_list
+    data_dict['estate_list'] = estate_list
+    data_dict['corner_list'] = corner_list
+    data_dict['chest_block_list'] = chest_block_list
+    data_dict['chance_block_list'] = chance_block_list
+    data_dict['tax_list'] = tax_list
     return data_dict
+
 
 def roll(gamer):
     """
@@ -149,6 +167,7 @@ def roll(gamer):
     current_block = data_dict['chess_board'].get_block(end_position)
     current_block.display(player, data_dict)
     return a, b, end_flag
+
 
 def own_all_block(gamer):
     block_number = [0 for x in range(9)]
@@ -256,11 +275,12 @@ def turn(gamer):
         else:
             print("Invalid choice")
 
+
 if __name__ == "__main__":
     data = init_game()
-    living_list = data["player_dict"].keys()
-    data["living_list"] = living_list
-    while len(living_list) != 1:
-        for gamer_id in living_list:
-            gamer = data["player_dict"][gamer_id]
-            turn(gamer)
+    # living_list = data["player_dict"].keys()
+    # data["living_list"] = living_list
+    # while len(living_list) != 1:
+    #     for gamer_id in living_list:
+    #         gamer = data["player_dict"][gamer_id]
+    #         turn(gamer)
