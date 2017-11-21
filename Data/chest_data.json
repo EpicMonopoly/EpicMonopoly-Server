@@ -3,7 +3,7 @@
   "data": [
   {
     "card_id": 0,
-    "card_type": 0,
+    "card_type": 4,
     "amount": 200,
     "description": "Advance to Go(Collect $200)"
   },
@@ -73,26 +73,26 @@
   {
     "card_id": 11,
     "card_type": 2,
-    "amount": -50,
+    "amount": 50,
     "description": "Doctor's fees(Pay $50)"
   },
   {
     "card_id": 12,
     "card_type": 2,
-    "amount": -100,
+    "amount": 100,
     "description": "Pay Hospital Fees(Pay $100)"
   },
   {
     "card_id": 13,
     "card_type": 2,
-    "amount": -50,
+    "amount": 50,
     "description": "Pay School Fees(Pay $200)"
   },
   {
     "_comment": "Pay for every own house and hotel",
     "card_id": 14,
     "card_type": 3,
-    "amount": [-40, -115],
+    "amount": [40, 115],
     "description": "You are assessed for street repairs(Pay $40 per house, $115 per hotel)"
   },
   {
