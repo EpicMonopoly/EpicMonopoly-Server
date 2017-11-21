@@ -13,9 +13,9 @@ import card
 import operation
 from json_io import json_reader, json_writer
 import os
-# global player_dic
-data_dict = {}
 
+# global data_dict
+data_dict = {}
 
 def init_game():
     """
@@ -227,6 +227,74 @@ def own_all_block(gamer):
     if block_number[8] == 2:
         own_street.append(8)
     return own_street
+
+
+
+def construct_building(gamer):
+    """
+    construction
+    """
+    if data["epic_bank"].cur_house == 0:
+        print("Bank out of house")
+        return 0
+    own_street = own_all_block(gamer)
+    print("Valid building list")
+    asset_number_list = []
+    for cur_asset in gamer.properties:
+        if isinstance(cur_asset, estate.Estate):
+            if cur_asset.street_id in own_street:
+                print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+                asset_number_list.append(cur_asset.block_id)
+    asset_number = int(input("Please enter the number you want to mortgage"))
+    print()
+    if asset_number == -1:
+        return 0
+    else:
+        if asset_number not in asset_number_list:
+            print("Invalid input")
+            return 0
+    for cur_asset in gamer.properties:
+        if cur_asset.block_id == asset_number:
+            if cur_asset.house_num == 6:
+                print("Cannot built more house!")
+                return 0
+            elif cur_asset.house_num == 5:
+                if data["epic_bank"].cur_hotel == 0:
+                    print("Bank out of hotel")
+                    return 0
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_hotel()
+                print("%s built one hotel in %s" %
+                      (gamer.name, cur_asset.name))
+            elif cur_asset.house_num == 4:
+                if data["epic_bank"].cur_hotel == 0:
+                    print("Bank out of hotel")
+                    return 0
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_hotel()
+                data["epic_bank"].remove_house(4)
+                print("%s built one hotel in %s" %
+                      (gamer.name, cur_asset.name))
+            else:
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_house()
+                print("%s built one house in %s" %
+                      (gamer.name, cur_asset.name))
 
 
 def turn(gamer):
