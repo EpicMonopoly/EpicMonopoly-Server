@@ -30,6 +30,13 @@ class Player(role.Role):
     @property
     def position(self):
         return self._position
+    @property
+    def cash(self):
+        return self._cash
+    
+    @cash.setter
+    def cash(self, amount):
+        self._cash += amount
 
     @property
     def bail_card_num(self):
