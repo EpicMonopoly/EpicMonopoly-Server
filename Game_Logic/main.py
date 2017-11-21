@@ -13,9 +13,9 @@ import card
 import operation
 from json_io import json_reader, json_writer
 import os
-# global player_dic
-data_dict = {}
 
+# global data_dict
+data_dict = {}
 
 def init_game():
     """
@@ -27,24 +27,13 @@ def init_game():
     :return: map, players list and bank
     """
     # generate a map
-    # block_list_data = json_reader('Data/block_data.json')
-    # station_list_data = json_reader('Data/station_data.json')
-    # utility_list_data = json_reader('Data/utility_data.json')
-    # estate_list_data = json_reader('Data/estate_data.json')
-    # chest_list_data = json_reader('Data/chest_data.json')
-    # chance_list_data = json_reader('Data/chance_data.json')
-    block_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/block_data.json')
-    station_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/station_data.json')
-    utility_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/utility_data.json')
-    estate_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/estate_data.json')
-    chest_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chest_data.json')
-    chance_list_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/chance_data.json')
+    block_list_data = json_reader(os.path.realpath('Data/block_data.json'))
+    station_list_data = json_reader(os.path.realpath('Data/station.json'))
+    utility_list_data = json_reader(os.path.realpath('Data/utility_data.json'))
+    estate_list_data = json_reader(os.path.realpath('Data/estate_data.json'))
+    chest_list_data = json_reader(os.path.realpath('Data/chest_data.json'))
+    chance_list_data = json_reader(os.path.realpath('Data/chance_data.json'))
+
     block_list = [0 for x in range(40)]
     station_list = []
     utility_list = []
@@ -106,8 +95,7 @@ def init_game():
         epic_bank.add_asset(new_block)
 
     # initialize players
-    player_dict_data = json_reader(
-        '/home/caesar/Documents/Code/EpicMonopoly-Server/Data/player_list.json')
+    player_dict_data = json_reader(os.path.realpath('Data/player_list.json'))
     player_dict = {}
     player_dict_data = player_dict_data["data"]
     for i in range(len(player_dict_data)):
@@ -233,6 +221,9 @@ def own_all_block(gamer):
 
 
 def construct_building(gamer):
+    """
+    construction
+    """
     if data["epic_bank"].cur_house == 0:
         print("Bank out of house")
         return 0
@@ -335,6 +326,6 @@ if __name__ == "__main__":
         for gamer_id in living_list:
             gamer = data["player_dict"][gamer_id]
             print("Now is %s turn" % gamer.name)
-            print("Gamer current cash %d" %gamer.cash)
+            print("Gamer current cash %d" % gamer.cash)
             turn(gamer)
             print()
