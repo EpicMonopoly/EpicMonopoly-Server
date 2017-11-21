@@ -1,4 +1,6 @@
-[
+{
+  "set_name": "player_list",
+  "data": [
   {
     "name": "Player1",
     "id": 100,
@@ -28,5 +30,5 @@
     },
     "alliance": "America",
     "status": 1
-  }
-]
+  }]
+}

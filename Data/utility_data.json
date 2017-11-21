@@ -1,4 +1,6 @@
-[
+{
+  "set_name": "utility_data",
+  "data": [
 	{
 		"name": "Power Station",
 		"block_id": 13,
@@ -24,5 +26,5 @@
 			{"utility_number": 1, "rate": 4},
 			{"utility_number": 2, "rate": 10}
 		]
-	}
-]
+	}]
+}

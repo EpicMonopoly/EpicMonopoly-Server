@@ -1,4 +1,6 @@
-[
+{
+  "set_name": "station_data",
+  "data": [
 	{
 		"name": "Chongqing",
 		"block_id": 17,
@@ -58,5 +60,5 @@
 			{"station_number": 3, "payment": -1},
 			{"station_number": 4, "payment": -1}
 		]
-	}
-]
+	}]
+}

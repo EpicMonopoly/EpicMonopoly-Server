@@ -1,4 +1,6 @@
-[
+{
+  "set_name": "chance_data",
+  "data": [
   {
     "card_id": 17,
     "card_type": 0,
@@ -93,5 +95,5 @@
     "card_type": 0,
     "amount": 100,
     "description": "You have won a crossword competition(Collect $100)"
-  }
-]
+  }]
+}

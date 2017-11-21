@@ -1,4 +1,6 @@
-[
+{
+    "set_name": "block_data",
+    "data": [
     {
         "name": "Go",
         "block_id": 0,
@@ -82,5 +84,5 @@
         "position": 38,
         "block_type": 3,
         "description": "Pay 10% of your current property value"
-    }
-]
+    }]
+}

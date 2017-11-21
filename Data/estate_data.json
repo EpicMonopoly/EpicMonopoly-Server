@@ -1,4 +1,6 @@
-[
+{
+  "set_name": "estate_data",
+  "data": [
 	{
 		"name": "Nanan",
 		"block_id": 18,
@@ -438,5 +440,5 @@
 			{"house_number": 5, "payment": -1},
 			{"house_number": 6, "payment": -1}
 		]
-	}
-]
+	}]
+}

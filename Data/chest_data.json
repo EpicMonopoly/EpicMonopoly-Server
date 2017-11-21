@@ -1,4 +1,6 @@
-[
+{
+  "set_name": "chest_data",
+  "data": [
   {
     "card_id": 0,
     "card_type": 0,
@@ -104,5 +106,5 @@
     "card_id": 16,
     "card_type": 5,
     "description": "This card may be kept until needed, or sold"
-  }
-]
+  }]
+}
