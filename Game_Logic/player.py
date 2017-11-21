@@ -31,10 +31,6 @@ class Player(role.Role):
     def position(self):
         return self._position
 
-    # @position.setter
-    # def position(self, position):
-    #     self._position = position
-
     @property
     def bail_card_num(self):
         return self._bail_card_num
@@ -74,7 +70,7 @@ class Player(role.Role):
         self._cash = self._cash + amount
 
     def calculate_asset_value(self):
-        total_asset_value = self.cash
+        total_asset_value = self._cash
         for a in self._assets:
             total_asset_value = total_asset_value + a.value
         return total_asset_value
@@ -140,6 +136,6 @@ class Player(role.Role):
         position: None if normally move on map otherwise set the position
         """
         if not position:
-            self._position = (self._position + steps)%40
+            self._position = (self._position + steps) % 40
         else:
             self._position = position

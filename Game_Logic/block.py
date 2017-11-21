@@ -37,6 +37,7 @@ class Block(metaclass=ABCMeta):
     def position(self, position):
         self._position = position
 
+    @abstractclassmethod
     def display(self, gamer, data_dict, dice_result):
         pass
 

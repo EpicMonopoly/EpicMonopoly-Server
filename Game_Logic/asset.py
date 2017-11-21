@@ -58,5 +58,5 @@ class Asset(block.Block):
     def payment(self):
         return self._estate_value
 
-    def display(self):
+    def display(self, gamer, data_dict, dice_result):
         pass

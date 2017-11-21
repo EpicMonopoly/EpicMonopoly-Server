@@ -83,8 +83,6 @@ class Estate(asset.Asset):
         """
         Display description
         :param dice_result:
-        :type data_dict: dict
-        :type gamer: player.Player
         :return:
         """
         import operation
@@ -104,7 +102,7 @@ class Estate(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                print("Nobody own %s do you want to buy it?")
+                print("Nobody own %s do you want to buy it?" % self.name)
                 print("1: Buy it")
                 print("2: Do not buy it")
                 choice = int(

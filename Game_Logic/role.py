@@ -5,6 +5,7 @@ class Role(metaclass=ABCMeta):
     """
     Abstract class: Role
     """
+
     def __init__(self, uid, name, cash):
         """
         Constructor of Role

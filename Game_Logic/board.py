@@ -31,14 +31,15 @@ class Board:
         :return: a board
         """
         chess_board_dict = {}
-        two_block_street = copy.copy(self._two_block_street)
-        three_block_street = copy.copy(self._three_block_street)
-        station_list = copy.copy(self._station_list)
-        utility_list = copy.copy(self._utility_list)
-        corner_list = copy.copy(self._corner_list)
-        chest_block_list = copy.copy(self._chest_block_list)
-        chane_block_list = copy.copy(self._chance_block_list)
-        tax_list = copy.copy(self._tax_list)
+        # for 
+        # two_block_street = copy.copy(self._two_block_street)
+        # three_block_street = copy.copy(self._three_block_street)
+        # station_list = copy.copy(self._station_list)
+        # utility_list = copy.copy(self._utility_list)
+        # corner_list = copy.copy(self._corner_list)
+        # chest_block_list = copy.copy(self._chest_block_list)
+        # chane_block_list = copy.copy(self._chance_block_list)
+        # tax_list = copy.copy(self._tax_list)
 
         # for i in (1, 3, 37, 39):  # two_block_street
         #     chess_board_dict[i] = two_block_street.pop()
@@ -93,10 +94,10 @@ class Board:
         #     elif s.name == "Super Tax":
         #         chess_board_dict[38] = s
         #         tax_list.remove(s)
-        chess_board = []
+        # chess_board = []
         # for i in range(40):
         #     chess_board.append(chess_board_dict[i])
-        return chess_board
+        # return chess_board
 
     def get_block(self, position):
         return self._block_list[position]
