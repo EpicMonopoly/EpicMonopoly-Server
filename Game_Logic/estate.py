@@ -97,6 +97,7 @@ class Estate(asset.Asset):
                 print("%s own %s" % (gamer.name, self.name))
             else:
                 # Other pass this estate
+                print("%s own %s" % (owner.name, self.name))
                 payment = self.payment
                 operation.pay(gamer, owner, payment)
         elif self._status == -1:

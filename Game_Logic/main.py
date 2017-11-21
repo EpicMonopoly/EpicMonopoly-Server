@@ -205,6 +205,7 @@ def roll(gamer):
     step = a + b
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
+        print("Passing Go, Gain 200")
         operation.pay(data_dict['epic_bank'], gamer, 200)
     gamer.move(step)
     end_position = gamer.position

@@ -72,6 +72,9 @@ def mortgage_asset(gamer, data):
             cur_asset.status = 0
             data["epic_bank"].add_loan_dict(cur_asset.block_id, return_cash)
 
+def own_all_block(gamer):
+    pass
+
 def construct_building(gamer, data):
     if data["epic_bank"].cur_house == 0:
         print("Bank out of house")

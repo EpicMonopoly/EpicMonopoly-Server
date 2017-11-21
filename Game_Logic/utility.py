@@ -40,6 +40,7 @@ class Utility(asset.Asset):
                 print("%s own %s" % (gamer.name, self.name))
             else:
                 # Other pass this station
+                print("%s own %s" % (owner.name, self.name))
                 payment = self.payment(gamer.utility_num, dice_result)
                 operation.pay(gamer, owner, payment)
         elif self._status == -1:
