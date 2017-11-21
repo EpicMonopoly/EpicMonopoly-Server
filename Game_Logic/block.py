@@ -80,7 +80,7 @@ class Go_To_Jail(Block):
             :param dice_result: 
         """
         gamer.move(steps=0, position=10)
-        gamer.cur_status(0)
+        gamer.cur_status = 0
 
 
 class In_Jail(Block):

@@ -43,6 +43,7 @@ class Income_Tax(Tax):
             :param dice_result: 
         """
         import operation
+        print("At Income Tax")
         bank = data_dict['epic_bank']
         payment = gamer.cash * self.rate
         operation.pay(gamer, bank, payment)
@@ -70,6 +71,7 @@ class Super_Tax(Tax):
             :param dice_result: 
         """
         import operation
+        print("At Super Tax")
         bank = data_dict['epic_bank']
         payment = gamer.calculate_asset_value() * self.rate
         operation.pay(gamer, bank, payment)

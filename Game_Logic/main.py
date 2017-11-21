@@ -63,24 +63,30 @@ def init_game():
         if b['block_type'] == 0:
             # ["Go", "Go to Jail", "In Jail", "Free Parking"]
             if b['name'] == "Go":
-                corner_block = block.Go(b['name'], b['block_id'], b['position'])
+                corner_block = block.Go(
+                    b['name'], b['block_id'], b['position'])
             elif b['name'] == "Go to Jail":
-                corner_block = block.Go_To_Jail(b['name'], b['block_id'], b['position'])
+                corner_block = block.Go_To_Jail(
+                    b['name'], b['block_id'], b['position'])
             elif b['name'] == "In Jail":
-                corner_block = block.In_Jail(b['name'], b['block_id'], b['position'])
+                corner_block = block.In_Jail(
+                    b['name'], b['block_id'], b['position'])
             elif b['name'] == "Free Parking":
-                corner_block = block.Free_Parking(b['name'], b['block_id'], b['position'])
+                corner_block = block.Free_Parking(
+                    b['name'], b['block_id'], b['position'])
             else:
                 pass
             block_list[corner_block.position] = corner_block
             corner_list.append(corner_block)
         elif b['name'] == "Community Chest":
             # "Community Chest"
-            new_block = cardpile.CardPile(b['name'], b['block_id'], b['position'])
+            new_block = cardpile.CardPile(
+                b['name'], b['block_id'], b['position'])
             block_list[new_block.position] = new_block
             chest_block_list.append(new_block)
         elif b['name'] == "Chance":  # "Chance"
-            new_block = cardpile.CardPile(b['name'], b['block_id'], b['position'])
+            new_block = cardpile.CardPile(
+                b['name'], b['block_id'], b['position'])
             block_list[new_block.position] = new_block
             chance_block_list.append(new_block)
         elif b['block_type'] == 3:  # ["Income Tax", "Super Tax"]
@@ -89,18 +95,21 @@ def init_game():
             tax_list.append(new_block)
     # name, position, uid, estate_value, status, street_id
     for s in station_list_data["data"]:
-        new_block = station.Station(s['name'], s['block_id'], s['position'], s['uid'], s['estate_value'],s['status'])
+        new_block = station.Station(
+            s['name'], s['block_id'], s['position'], s['uid'], s['estate_value'], s['status'])
         station_list.append(new_block)
         block_list[new_block.position] = new_block
         epic_bank.add_asset(new_block)
     # name, position, uid, estate_value, status, street_id
     for u in utility_list_data["data"]:
-        new_block = utility.Utility(u['name'], u['block_id'], u['position'], u['uid'], u['estate_value'],u['status'])
+        new_block = utility.Utility(
+            u['name'], u['block_id'], u['position'], u['uid'], u['estate_value'], u['status'])
         utility_list.append(new_block)
         block_list[new_block.position] = new_block
         epic_bank.add_asset(new_block)
     for e in estate_list_data["data"]:
-        new_block = estate.Estate(e['name'], e['block_id'], e['position'], e['uid'], e['estate_value'],e['status'], e['street_id'], e['house_value'])
+        new_block = estate.Estate(e['name'], e['block_id'], e['position'], e['uid'],
+                                  e['estate_value'], e['status'], e['street_id'], e['house_value'])
         estate_list.append(new_block)
         block_list[new_block.position] = new_block
         epic_bank.add_asset(new_block)
@@ -232,70 +241,6 @@ def own_all_block(gamer):
     return own_street
 
 
-def construct_building(gamer):
-    if data["epic_bank"].cur_house == 0:
-        print("Bank out of house")
-        return 0
-    own_street = own_all_block(gamer)
-    print("Valid building list")
-    asset_number_list = []
-    for cur_asset in gamer.properties:
-        if isinstance(cur_asset, estate.Estate):
-            if cur_asset.street_id in own_street:
-                print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
-                asset_number_list.append(cur_asset.block_id)
-    asset_number = int(input("Please enter the number you want to mortgage"))
-    print()
-    if asset_number == -1:
-        return 0
-    else:
-        if asset_number not in asset_number_list:
-            print("Invalid input")
-            return 0
-    for cur_asset in gamer.properties:
-        if cur_asset.block_id == asset_number:
-            if cur_asset.house_num == 6:
-                print("Cannot built more house!")
-                return 0
-            elif cur_asset.house_num == 5:
-                if data["epic_bank"].cur_hotel == 0:
-                    print("Bank out of hotel")
-                    return 0
-                payment = cur_asset.house_value
-                if payment > gamer.cash:
-                    print("Do not have enough money")
-                    return 0
-                operation.pay(gamer, data["epic_bank"], payment)
-                cur_asset.house_num(cur_asset.house_num + 1)
-                data["epic_bank"].built_hotel()
-                print("%s built one hotel in %s" %
-                      (gamer.name, cur_asset.name))
-            elif cur_asset.house_num == 4:
-                if data["epic_bank"].cur_hotel == 0:
-                    print("Bank out of hotel")
-                    return 0
-                payment = cur_asset.house_value
-                if payment > gamer.cash:
-                    print("Do not have enough money")
-                    return 0
-                operation.pay(gamer, data["epic_bank"], payment)
-                cur_asset.house_num(cur_asset.house_num + 1)
-                data["epic_bank"].built_hotel()
-                data["epic_bank"].remove_house(4)
-                print("%s built one hotel in %s" %
-                      (gamer.name, cur_asset.name))
-            else:
-                payment = cur_asset.house_value
-                if payment > gamer.cash:
-                    print("Do not have enough money")
-                    return 0
-                operation.pay(gamer, data["epic_bank"], payment)
-                cur_asset.house_num(cur_asset.house_num + 1)
-                data["epic_bank"].built_house()
-                print("%s built one house in %s" %
-                      (gamer.name, cur_asset.name))
-
-
 def turn(gamer):
     """
     :param gamer: players
@@ -315,7 +260,7 @@ def turn(gamer):
         elif choice == 2 and end_flag is False:
             dice_a, dice_b, end_flag = roll(gamer)
         elif choice == 3:
-            construct_building(gamer)
+            operation.construct_building(gamer, data)
         elif choice == 4:
             operation.mortgage_asset(gamer, data)
         elif choice == 5:
@@ -335,6 +280,6 @@ if __name__ == "__main__":
         for gamer_id in living_list:
             gamer = data["player_dict"][gamer_id]
             print("Now is %s turn" % gamer.name)
-            print("Gamer current cash %d" %gamer.cash)
+            print("Gamer current cash %d" % gamer.cash)
             turn(gamer)
             print()

@@ -72,7 +72,7 @@ class Bank(role.Role):
                 elif isinstance(a, estate.Estate):
                     repay_value += a.mortgage_value
                     self._loan_dict.append(a)
-            from_role.cash(repay_value)
+            from_role.gain(repay_value)
             return True
         else:
             return False

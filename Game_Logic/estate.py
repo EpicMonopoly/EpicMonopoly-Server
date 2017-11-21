@@ -90,7 +90,7 @@ class Estate(asset.Asset):
         epic_bank = data_dict['epic_bank']
         if self._status == 1:
             # Some body own it
-            owner_id = self.owner()
+            owner_id = self.owner
             owner = player_dict[owner_id]
             if owner_id == gamer.id:
                 # Owner pass this estate
