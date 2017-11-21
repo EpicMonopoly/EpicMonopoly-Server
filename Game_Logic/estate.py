@@ -1,4 +1,5 @@
 import asset
+import operation
 # from ef import EF
 
 
@@ -85,9 +86,11 @@ class Estate(asset.Asset):
         :param dice_result:
         :return:
         """
-        import operation
+        print("Display %s" %self.name)
+        print(gamer)
+        print(gamer.cash)
         player_dict = data_dict['player_dict']
-        bank = data_dict['epic_bank']
+        epic_bank = data_dict['epic_bank']
         if self._status == 1:
             # Some body own it
             owner_id = self.owner()
@@ -109,12 +112,13 @@ class Estate(asset.Asset):
                     input("Please enter the number of your decision:"))
                 if choice == 1:
                     price = self.value
-                    if price > gamer.cash:
+                    cur_cash = gamer.cash
+                    if price > cur_cash:
                         print("You do not have enough money")
                         break
                     else:
-                        operation.pay(gamer, bank, price)
-                        operation.trade_asset(self, bank, gamer)
+                        operation.pay(gamer, epic_bank, price)
+                        operation.trade_asset(self, epic_bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))
                         break

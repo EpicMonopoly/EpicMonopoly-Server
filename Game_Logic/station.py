@@ -21,11 +21,11 @@ class Station(asset.Asset):
         """
         value = self._estate_value
         if station_num == 1:
-            return (1/8) * value
+            return (1 / 8) * value
         elif station_num == 2:
-            return (1/4) * value
+            return (1 / 4) * value
         elif station_num == 3:
-            return (1/2) * value
+            return (1 / 2) * value
         elif station_num == 4:
             return value
         else:
@@ -37,7 +37,6 @@ class Station(asset.Asset):
         """
         Display description
         :type data_dict: dict
-        :type gamer: player.Player
         :return:
         """
         import operation

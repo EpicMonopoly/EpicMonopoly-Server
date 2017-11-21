@@ -63,11 +63,6 @@ class Player(role.Role):
     def station_num(self):
         return self._station_num
 
-    def pay(self, amount):
-        self._cash = self._cash - amount
-
-    def gain(self, amount):
-        self._cash = self._cash + amount
 
     def calculate_asset_value(self):
         total_asset_value = self._cash

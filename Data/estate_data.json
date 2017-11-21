@@ -4,7 +4,7 @@
 	{
 		"name": "Nanan",
 		"block_id": 18,
-		"position": 0,
+		"position": 1,
 		"uid": -1,
 		"estate_value": 60,
 		"status": -1,
@@ -104,7 +104,7 @@
 	{
 		"name": "Hanyang",
 		"block_id": 23,
-		"position": 10,
+		"position": 11,
 		"uid": -1,
 		"estate_value": 140,
 		"status": -1,

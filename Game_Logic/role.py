@@ -31,6 +31,12 @@ class Role(metaclass=ABCMeta):
     def cash(self):
         return self._cash
 
+    def pay(self, amount):
+        self._cash = self._cash - amount
+
+    def gain(self, amount):
+        self._cash = self._cash + amount
+
     # @cash.setter
     # def cash(self, value):
     #     self._cash += value

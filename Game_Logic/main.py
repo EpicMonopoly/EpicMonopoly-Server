@@ -187,7 +187,6 @@ def init_game():
 def roll(gamer):
     """
     Roll a dice
-    :type gamer: player.Player
     :param gamer: The player who roll dices
     Returns:
     :int: The number of first dice
@@ -210,7 +209,7 @@ def roll(gamer):
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'][end_position]
-    current_block.display(player, data_dict, step)
+    current_block.display(gamer, data_dict, step)
     return a, b, end_flag
 
 
@@ -295,7 +294,6 @@ def construct_building(gamer):
 
 def turn(gamer):
     """
-    :type gamer: player.Player
     :param gamer: players
     :return:
     """
@@ -333,5 +331,6 @@ if __name__ == "__main__":
         for gamer_id in living_list:
             gamer = data["player_dict"][gamer_id]
             print("Now is %s turn" % gamer.name)
+            print("Gamer current cash %d" %gamer.cash)
             turn(gamer)
             print()

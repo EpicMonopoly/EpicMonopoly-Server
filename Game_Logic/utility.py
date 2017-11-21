@@ -30,7 +30,7 @@ class Utility(asset.Asset):
         """
         import operation
         player_dict = data_dict['player_dict']
-        bank = data_dict['bank']
+        bank = data_dict['epic_bank']
         if self._status == 1:
             # Some body own it
             owner_id = self.owner()
