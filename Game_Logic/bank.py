@@ -29,6 +29,14 @@ class Bank(role.Role):
     def cur_hotel(self):
         return self._cur_hotel
 
+    @property
+    def cash(self):
+        return 9223372036854775807  # so much money
+    
+    @cash.setter
+    def cash(self):  # bank money will never run out
+        pass
+
     def built_house(self):
         self._cur_house = self.cur_house - 1
     
@@ -65,13 +73,13 @@ class Bank(role.Role):
             for a in assets:
                 if isinstance(a, station.Station):
                     repay_value += a.mortgage_value
-                    self._loan_dict.append(a)
+                    self._loan_dict[from_role.name] = a
                 elif isinstance(a, utility.Utility):
                     repay_value += a.mortgage_value
-                    self._loan_dict.append(a)
+                    self._loan_dict[from_role.name] = a
                 elif isinstance(a, estate.Estate):
                     repay_value += a.mortgage_value
-                    self._loan_dict.append(a)
+                    self._loan_dict[from_role.name] = a
             from_role.gain(repay_value)
             return True
         else:

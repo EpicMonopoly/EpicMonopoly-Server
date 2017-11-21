@@ -22,6 +22,7 @@ class Player(role.Role):
         self._utility_num = 0
         self._station_num = 0
         self._in_jail = 0
+        self._assets = []
 
     @property  # getAlliance
     def alliance(self):
@@ -30,6 +31,7 @@ class Player(role.Role):
     @property
     def position(self):
         return self._position
+
     @property
     def cash(self):
         return self._cash
@@ -70,6 +72,9 @@ class Player(role.Role):
     def station_num(self):
         return self._station_num
 
+    @property
+    def assets(self):
+        return self._assets
 
     def calculate_asset_value(self):
         total_asset_value = self._cash

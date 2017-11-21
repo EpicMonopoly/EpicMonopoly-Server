@@ -1,4 +1,5 @@
 # The main control of the game
+
 import random
 import board
 import player
@@ -16,6 +17,7 @@ import os
 
 # global data_dict
 data_dict = {}
+
 
 def init_game():
     """
@@ -230,7 +232,6 @@ def own_all_block(gamer):
     return own_street
 
 
-
 def construct_building(gamer):
     """
     construction
@@ -246,7 +247,7 @@ def construct_building(gamer):
             if cur_asset.street_id in own_street:
                 print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
-    asset_number = int(input("Please enter the number you want to mortgage"))
+    asset_number = int(input("Please enter the number you want to mortgage:"))
     print()
     if asset_number == -1:
         return 0

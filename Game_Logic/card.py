@@ -44,9 +44,11 @@ class MoveCard(Card):
         """
         self._destination = step
 
-    def play(self):
-        # how to go to destination
-        pass
+    def play(self, gamer):
+        """
+        Move player on the map to certain block
+        """
+        gamer.position = self._destination
 
 
 class PayCard(Card):
@@ -55,10 +57,41 @@ class PayCard(Card):
         self._amount = amount
         self._card_type = card_type
 
-    def play(self, from_role, to_role):
-        # how to go to punish
-        pass
-
+    def play(self, from_role, to_role=None):
+        """
+        :param from_role: a player or bank or rest players
+        :param from_role: player or bank or rest players
+        """
+        if self._card_type == 2:
+            if from_role.cash < self._amount:
+                return False
+            else:
+                from_role.cash = -self._amount
+                to_role.cash = self._amount
+                return True
+        elif self._card_type == 8:  # need to check
+            total_amount = len(to_role) * self._amount
+            if from_role.cash < total_amount:
+                return False
+            else:
+                from_role = -self._amount
+                for role in to_role:
+                    role.cash = self._amount
+                return True
+        elif self._card_type == 3:
+            import estate
+            total_amount = 0
+            for e in from_role.assets:
+                if isinstance(estate, estate.Estate):
+                    house_repair_amount = int(e.house_num % 6) * self._amount[0]
+                    hotel_repair_amount = int(e.house_num / 6) * self._amount[1]
+                    total_amount += house_repair_amount + hotel_repair_amount
+                    if from_role.cash < total_amount:
+                        return False
+                    else:
+                        from_role.cash = -total_amount
+                        return True
+                
     @property
     def amount(self):
         return self._amount
@@ -78,9 +111,25 @@ class CollectCard(Card):
         self._card_type = card_type
 
     def play(self, from_role, to_role):
-        # how to go to punish
-        pass
-
+        """
+        :param from_role: a player or bank or rest players
+        :param from_role: player or bank or rest players
+        """
+        if self._card_type == 0:
+            to_role.cash = self._amount
+            return True
+        elif self._card_type == 1:
+            total_amount = 0
+            broken_role = []
+            for role in from_role:
+                if role.cash < self._amount:
+                    broken_role.append(role)
+                else:
+                    total_amount += self._amount
+                    role.cash = -self._amount
+            to_role.cash = total_amount
+            return True, broken_role
+        
     @property
     def amount(self):
         return self._amount
@@ -98,8 +147,18 @@ class BailCard(Card):
         super().__init__(name, description)
         self._card_type = card_type
 
-    # TODO: implement this method
     def play(self, from_role, to_role):
-        # how to go to punish
-        pass
+        """
+        Baild card, can be collected by players
+        """
+        if from_role.bail_card_num == 0:
+            print("1. Keep it yourself.")
+            print("2. Sell to others.")
+            choice = int(input("Please enter the number of your decision:"))
+            if choice == 1:
+                from_role.bail_card_num = from_role.bail_card_num + 1
+            elif choice == 2:
+                # TODO: need to implement the trade
+                pass 
+
 
