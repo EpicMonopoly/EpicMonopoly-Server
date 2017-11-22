@@ -50,8 +50,13 @@ class MoveCard(Card):
         Move player on the map to certain block
         """
         print(self.description)
+        if gamer.position < self._destination:
+            print("Do not pass Go, no cash collected.")
+        else:
+            print("Passing Go, Gain 200")
+            operation.pay(data['epic_bank'], gamer, 200, data)
         gamer.move(steps=None, position=self._destination)
-
+        
 
 class PayCard(Card):
     def __init__(self, name, card_type, description, amount):
