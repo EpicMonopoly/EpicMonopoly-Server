@@ -83,7 +83,7 @@ def mortgage_asset(gamer, data):
     for cur_asset in gamer.properties:
         print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
         asset_number_list.append(cur_asset.block_id)
-    if asset_number_list is []:
+    if asset_number_list == []:
         print("None")
         return 0
     while True:
@@ -149,7 +149,7 @@ def construct_building(gamer, data):
             if cur_asset.street_id in own_street:
                 print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
-    if asset_number_list is []:
+    if asset_number_list == []:
         print("None")
         return 0
     while True:
