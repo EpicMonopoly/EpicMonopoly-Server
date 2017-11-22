@@ -1,0 +1,88 @@
+{
+    "set_name": "block_data",
+    "data": [
+    {
+        "name": "Go",
+        "block_id": 0,
+        "position": 0,
+        "block_type": 0,
+        "description": "Start Point. Can get $200"
+    },
+    {
+        "name": "Community Chest",
+        "block_id": 1,
+        "position": 2,
+        "block_type": 1,
+        "description": "Pick one card, and follow the instruction in it"
+    },
+    {
+        "name": "Income Tax",
+        "block_id": 2,
+        "position": 4,
+        "block_type": 3,
+        "description": "Pay 10% of your current cash"
+    },
+    {
+        "name": "Chance",
+        "block_id": 3,
+        "position": 7,
+        "block_type": 2,
+        "description": "Pick one card, and follow the instruction in it"
+    },
+    {
+        "name": "In Jail",
+        "block_id": 4,
+        "position": 10,
+        "block_type": 0,
+        "description": "Stay in jail for 2 turns"
+    },
+    {
+        "name": "Community Chest",
+        "block_id": 5,
+        "position": 17,
+        "block_type": 1,
+        "description": "Pick one card, and follow the instruction in it"
+    },
+    {
+        "name": "Free Parking",
+        "block_id": 6,
+        "position": 20,
+        "block_type": 0,
+        "description": "Safely park here for free"
+    },
+    {
+        "name": "Chance",
+        "block_id": 7,
+        "position": 22,
+        "block_type": 2,
+        "description": "Pick one card, and follow the instruction in it"
+    },
+    {
+        "name": "Go to Jail",
+        "block_id": 8,
+        "position": 30,
+        "block_type": 0,
+        "description": "Move to in jail. Stay for 2 turns"
+    },
+    {
+        "name": "Community Chest",
+        "block_id": 9,
+        "position": 33,
+        "block_type": 1,
+        "description": "Pick one card, and follow the instruction in it"
+    },
+    {
+        "name": "Chance",
+        "block_id": 10,
+        "position": 36,
+        "block_type": 2,
+        "description": "Pick one card, and follow the instruction in it"
+    },
+    {
+        "name": "Super Tax",
+        "block_id": 11,
+        "position": 38,
+        "block_type": 3,
+        "description": "Pay 10% of your current property value"
+    }]
+}

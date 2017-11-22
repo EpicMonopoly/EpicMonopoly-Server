@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    html {
+        background: url('static/img/in_game_background.jpg') no-repeat center center;
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/css/in_game.css">
+    <link rel="stylesheet" href="{{ static_url("chat.css") }}" type="text/css">
+    <script type="text/javascript" src="static/js/in_game.js"></script>
+    <script type="text/javascript" src="static/js/chessboard/phaser.js"></script>
+    <title>In Game</title>
+</head>
+<body>
+<div class="hidden" id="tradeWindow">
+    <a class="statusbar" onclick="hideWindow('tradeWindow')">
+        <img title="close" src="static/img/icon/close.png" style="width: 12px; height: 12px">
+    </a>
+    trading!
+</div>
+<div class="hidden" id="informationWindow">
+        <a class="statusbar" onclick="hideWindow('informationWindow')" >
+            <img title="close" src="static/img/icon/close.png" style="width: 12px; height: 12px">
+        </a>
+        There should be some information!
+</div>
+<div id="mainContainer">
+    <div id="leftPart">
+        <div id="roomInfo" style="margin: 15px; font-size: 20px; font-weight: bold">
+            <img src="static/img/icon/money.png" style="float: left; width: 55px; height: 55px; margin-right: 15px">
+            Room #666<br>  <!--TODO link to room number-->
+            <a onclick="showCfg()" id="roomCfgBtn" style="font-size: 14px; font-weight: normal; color: white;">
+                <img src="static/img/icon/info.png" style="width: 14px; height: 14px"> configuration</a>
+        </div>
+        <div id="playersList"> <!--TODO make to list?-->
+            <div id="player1" class="playerInfo">
+                <img src="static/img/avatar/icon_bug.png">Player1<br>$1500
+                <a class="tradeBtn" id="trade1" onclick="callTrade()">
+                    <img title="trade" src="static/img/icon/trade.png" style="float:right; width: 18px; height: 18px">
+                </a>
+            </div>
+            <div id="player2" class="playerInfo">
+                <img src="static/img/avatar/icon_google.png">Player2<br>$1000
+                <a class="tradeBtn" id="trade2" onclick="callTrade()">
+                    <img title="trade" src="static/img/icon/trade.png" style="float:right; width: 18px; height: 18px">
+                </a>
+            </div>
+            <div id="player3" class="playerInfo">
+                <img src="static/img/avatar/icon_aircraft.png">Player3<br>$300
+                <a class="tradeBtn" id="trade3" onclick="callTrade()">
+                    <img title="trade" src="static/img/icon/trade.png" style="float:right; width: 18px; height: 18px">
+                </a>
+            </div>
+            <div id="player4" class="playerInfo">
+                <img src="static/img/avatar/icon_github.png">Player4<br>$750
+                <a class="tradeBtn" id="trade4" onclick="callTrade()">
+                    <img title="trade" src="static/img/icon/trade.png" style="float:right; width: 18px; height: 18px">
+                </a>
+            </div>
+            <div id="player5" class="playerInfo">None</div>
+            <div id="player6" class="playerInfo">None</div>
+        </div>
+        <audio autoplay="autoplay" loop="loop" preload="auto" src="static/sound/backsound.wav">
+        你的浏览器不支持audio标签
+        </audio>
+    </div>
+    <div id="midPart" >
+            <div id="game" ></div>
+            <script type="text/javascript" src="static/js/chessboard/Game.js"></script>
+    </div>
+    <div id="rightPart">
+            <div id="record">
+                <h4 style="margin: 0">Record</h4>
+                <div id="recordContent">
+                        <div id="cmd">
+                                <div id="inbox">
+                                    {% for message in messages %}
+                                    {% module Template("message.html", message=message) %}
+                                    {% end %}
+                                </div>
+                                
+                            </div>
+                            
+                            
+                        
+                </div>
+                <div id="record_input">
+                        <form action="/a/message/new" method="post" id="messageform">
+                            <table>
+                                <tr>
+                                    <td><input type="text" name="body" id="message"></td>
+                                    <td style="padding-left:5px">
+                                        <input type="submit" value="{{ _(" Post") }}">
+                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                        {% module xsrf_form_html() %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+                    <script src="{{ static_url("chat.js") }}" type="text/javascript"></script>
+            </div>
+            <div id="states">
+                <h4 style="margin: 0">States</h4>
+                <table id="stateContent" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td>House in bank</td><td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Hotels in bank</td><td>4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+</body>
+<script type="text/javascript" defer>
+var recordContent = document.getElementById("recordContent");
+recordContent.scrollTop = recordContent.scrollHeight;
+</script>
+</html>
