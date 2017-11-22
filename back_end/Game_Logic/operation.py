@@ -1,3 +1,7 @@
+import uuid
+import chatdemo
+
+
 # operations
 def pay(payer, gainer, payment, data):
     """
@@ -209,3 +213,19 @@ def construct_building(gamer, data):
                 data["epic_bank"].built_house()
                 print("%s built one house in %s" %
                       (gamer.name, cur_asset.name))
+
+
+def wait_choice():
+    choice = chatdemo.global_Choice.get_choice()
+    while choice == -1:
+        choice = chatdemo.global_Choice.get_choice()
+    return choice
+
+
+def push2all(line):
+    message = {
+        "id": str(uuid.uuid4()),
+        "body": line,
+    }
+    # message["html"] = tornado.escape.to_basestring(.render_string("message.html", message=message))
+    chatdemo.global_message_buffer.new_messages([message])

@@ -1,5 +1,4 @@
 # The main control of the game
-
 import random
 import board
 import player
@@ -14,9 +13,11 @@ import card
 import operation
 from json_io import json_reader, json_writer
 import os
+import threading
+import chatdemo
 
-# global data_dict
-data_dict = {}
+# global data
+data = {}
 
 
 def init_game():
@@ -185,20 +186,20 @@ def init_game():
     chess_board_object = board.Board(two_block_street, three_block_street, station_list, utility_list, block_list,
                                      corner_list, chest_block_list, chance_block_list, tax_list)
 
-    global data_dict
-    data_dict['chess_board'] = block_list
-    data_dict['player_dict'] = player_dict
-    data_dict['epic_bank'] = epic_bank
-    data_dict['chest_list'] = chest_list
-    data_dict['chance_list'] = chance_list
-    data_dict['station_list'] = station_list
-    data_dict['utility_list'] = utility_list
-    data_dict['estate_list'] = estate_list
-    data_dict['corner_list'] = corner_list
-    data_dict['chest_block_list'] = chest_block_list
-    data_dict['chance_block_list'] = chance_block_list
-    data_dict['tax_list'] = tax_list
-    return data_dict
+    global data
+    data['chess_board'] = block_list
+    data['player_dict'] = player_dict
+    data['epic_bank'] = epic_bank
+    data['chest_list'] = chest_list
+    data['chance_list'] = chance_list
+    data['station_list'] = station_list
+    data['utility_list'] = utility_list
+    data['estate_list'] = estate_list
+    data['corner_list'] = corner_list
+    data['chest_block_list'] = chest_block_list
+    data['chance_block_list'] = chance_block_list
+    data['tax_list'] = tax_list
+    return data
 
 
 def roll(gamer):
@@ -220,14 +221,14 @@ def roll(gamer):
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
         print("Passing Go, Gain 200")
-        operation.pay(data_dict['epic_bank'], gamer, 200, data_dict)
+        operation.pay(data['epic_bank'], gamer, 200, data)
     gamer.move(step)
     end_position = gamer.position
-    current_block = data_dict['chess_board'][end_position]
+    current_block = data['chess_board'][end_position]
     if isinstance(current_block, block.Go_To_Jail):
         end_flag = True
     print("At %s" % current_block.name)
-    current_block.display(gamer, data_dict, step)
+    current_block.display(gamer, data, step)
     return a, b, end_flag
 
 
@@ -260,6 +261,7 @@ def turn(gamer):
     :param gamer: players
     :return:
     """
+    global data
     end_flag = False
     while True:
         print("1: Trade with others")
@@ -292,7 +294,7 @@ def turn(gamer):
             print("Invalid choice")
 
 
-if __name__ == "__main__":
+def game_main():
     data = init_game()
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
@@ -343,3 +345,13 @@ if __name__ == "__main__":
             else:
                 pass
             print()
+
+
+if __name__ == "__main__":
+    threads = []
+    t1 = threading.Thread(target=chatdemo.main, args=())
+    t2 = threading.Thread(target=game_main, args=())
+    threads.append(t1)
+    threads.append(t2)
+    for t in threads:
+        t.start()
