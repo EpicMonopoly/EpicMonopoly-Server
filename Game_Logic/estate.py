@@ -41,8 +41,9 @@ class Estate(asset.Asset):
     def mortgage_value(self):
         return self.value * self.mortgage_rate
 
-    @property  # getPosition
+    @property
     def street_id(self):
+        # getPosition
         return self._street_id
 
     @property
@@ -53,19 +54,19 @@ class Estate(asset.Asset):
             :payment: int
         """
         if self.house_num == 0:
-            return self.value * 0.1
+            return int(self.value * 0.1)
         elif self.house_num == 1:
-            return self.value * 0.15
+            return int(self.value * 0.15)
         elif self.house_num == 2:
-            return self.value * 0.2
+            return int(self.value * 0.2)
         elif self.house_num == 3:
-            return self.value * 0.25
+            return int(self.value * 0.25)
         elif self.house_num == 4:
-            return self.value * 0.3
+            return int(self.value * 0.3)
         elif self.house_num == 5:
-            return self.value * 0.4
+            return int(self.value * 0.4)
         elif self.house_num == 6:
-            return self.value * 0.5
+            return int(self.value * 0.5)
         else:
             # Should not be here
             raise ValueError("Invalid house number")
@@ -104,6 +105,7 @@ class Estate(asset.Asset):
             # Nobody own
             while True:
                 print("Nobody own %s do you want to buy it?" % self.name)
+                print("Price: %d" % self.value)
                 print("1: Buy it")
                 print("2: Do not buy it")
                 while True:

@@ -44,7 +44,7 @@ class Community_Chest(CardPile):
         """
         chance_list = data["chance_list"]
         length_change_list = len(chance_list)
-        random_card = chance_list[random.randint(0, length_change_list)]
+        random_card = chance_list[random.randint(0, length_change_list - 1)]
         random_card.play(gamer, data)
 
 

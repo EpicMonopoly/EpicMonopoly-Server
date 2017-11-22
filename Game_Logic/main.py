@@ -360,7 +360,7 @@ def turn(gamer):
 
 if __name__ == "__main__":
     data = init_game()
-    living_list = data["player_dict"].keys()
+    living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     while len(living_list) != 1:
         for gamer_id in living_list:

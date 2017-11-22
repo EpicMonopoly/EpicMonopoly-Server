@@ -62,7 +62,8 @@ class MessageBuffer(object):
 
     def new_messages(self, room, messages):
         self.create_new_room(room)
-        logging.info("Sending new message to %r listeners", len(self.room[room]['waiters']))
+        logging.info("Sending new message to %r listeners",
+                     len(self.room[room]['waiters']))
         for future in self.room[room]['waiters']:
             future.set_result(messages)
         self.room[room]['waiters'] = set()
@@ -86,7 +87,8 @@ class MainHandler(tornado.web.RequestHandler):
         room = self.get_argument("room", None)
         if room:
             global_message_buffer.create_new_room(room)
-            self.render("index.html", messages=global_message_buffer.room[room]['cache'], room=room)
+            self.render(
+                "index.html", messages=global_message_buffer.room[room]['cache'], room=room)
 
 
 class MessageNewHandler(tornado.web.RequestHandler):
@@ -114,7 +116,8 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
         self.room = self.get_argument("room", None)
         # Save the future returned by wait_for_messages so we can cancel
         # it in wait_for_messages
-        self.future = global_message_buffer.wait_for_messages(self.room, cursor=cursor)
+        self.future = global_message_buffer.wait_for_messages(
+            self.room, cursor=cursor)
         messages = yield self.future
         if self.request.connection.stream.closed():
             return
@@ -137,13 +140,13 @@ def main():
             (r"/room", MainHandler),
             (r"/a/message/new", MessageNewHandler),
             (r"/a/message/updates", MessageUpdatesHandler),
-            ],
+        ],
         cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
         xsrf_cookies=False,
         debug=options.debug,
-        )
+    )
     app.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
 
