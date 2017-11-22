@@ -64,6 +64,7 @@ class Player(role.Role):
             self._in_jail = self._in_jail + 1
             return False
         else:
+            self._cur_status = 1
             self._in_jail = 0
             return True
 

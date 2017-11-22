@@ -211,9 +211,7 @@ def roll(gamer):
     :bool: The station of end_flag
     """
     # Whether pass Go
-    print("Rolling")
-    a = random.randint(1, 6)
-    b = random.randint(1, 6)
+    a, b = roll_dice()
     if a == b:
         end_flag = False
     else:
@@ -230,6 +228,13 @@ def roll(gamer):
     print("At %s" % current_block.name)
     current_block.display(gamer, data_dict, step)
     return a, b, end_flag
+
+
+def roll_dice():
+    print("Rolling")
+    a = random.randint(1, 6)
+    b = random.randint(1, 6)
+    return a, b
 
 
 def own_all_block(gamer):
@@ -294,5 +299,16 @@ if __name__ == "__main__":
             gamer = data["player_dict"][gamer_id]
             print("Now is %s turn" % gamer.name)
             print("Gamer current cash %d" % gamer.cash)
-            turn(gamer)
+            if gamer.cur_status == 0:
+                print("%s are in jail", gamer.name)
+                a, b = roll_dice()
+                if a == b:
+                    gamer.cur_status = 1
+                    gamer._in_jail = 0
+                else:
+                    gamer.count_in_jail()
+            elif gamer.cur_status == 1:
+                turn(gamer)
+            else:
+                pass
             print()
