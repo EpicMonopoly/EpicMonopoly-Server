@@ -100,7 +100,7 @@ def construct_building(gamer, data):
         print("None")
         return 0
     while True:
-        input_str = input("Please enter the number you want to built a house")
+        input_str = input("Please enter the number you want to built a house:")
         try:
             asset_number = int(input_str)
             break
