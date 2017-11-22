@@ -37,10 +37,6 @@ class Role(metaclass=ABCMeta):
     def gain(self, amount):
         self._cash = self._cash + amount
 
-    # @cash.setter
-    # def cash(self, value):
-    #     self._cash += value
-
     @property  # getProperties
     def properties(self):
         return self._assets
