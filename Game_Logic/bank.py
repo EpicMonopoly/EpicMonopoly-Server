@@ -29,12 +29,10 @@ class Bank(role.Role):
     def cur_hotel(self):
         return self._cur_hotel
 
-    @property
-    def cash(self):
-        return 9223372036854775807  # so much money
+    def pay(self):
+        pass  # bank never pays anything
     
-    @cash.setter
-    def cash(self):  # bank money will never run out
+    def gain(self):  # bank seems like gaining a lot
         pass
 
     def built_house(self):

@@ -71,9 +71,7 @@ class PayCard(Card):
             if from_role.cash < self._amount:
                 return False
             else:
-                operation.pay(from_role, to_role, self._amount)
-                # from_role.cash = -self._amount
-                # to_role.cash = self._amount
+                operation.pay(from_role, to_role, self._amount, data)
                 return True
         elif self._card_type == 8:  # need to check
             to_role = []
@@ -82,13 +80,12 @@ class PayCard(Card):
                 if role['id'] != role:
                     to_role.append(role)
             from_role = gamer
-            total_amount = len(to_role) * self._amount
+            total_amount = self._amount * len(to_role)
             if from_role.cash < total_amount:
                 return False
             else:
-                from_role = -self._amount
                 for role in to_role:
-                    role.cash = self._amount
+                    operation.pay(from_role, role, self._amount, data)
                 return True
         elif self._card_type == 3:
             import estate
@@ -102,7 +99,7 @@ class PayCard(Card):
                     if from_role.cash < total_amount:
                         return False
                     else:
-                        from_role.cash = -total_amount
+                        operation.pay(from_role, data['epic_bank'], self._amount, data)
                         return True
                 
     @property
@@ -131,7 +128,7 @@ class CollectCard(Card):
         print(self.description)
         if self._card_type == 0:
             to_role = gamer
-            to_role.cash = self._amount
+            operation.pay(data['epic_bank'], to_role, self._amount, data)
             return True
         elif self._card_type == 1:
             to_role = gamer
@@ -140,16 +137,9 @@ class CollectCard(Card):
             for role in all_role:
                 if role['id'] != role:
                     from_role.append(role)
-            total_amount = 0
-            broken_role = []
             for role in from_role:
-                if role.cash < self._amount:
-                    broken_role.append(role)
-                else:
-                    total_amount += self._amount
-                    role.cash = -self._amount
-            to_role.cash = total_amount
-            return True, broken_role
+                operation.pay(from_role, to_role, self._amount, data)
+            return True
         
     @property
     def amount(self):
