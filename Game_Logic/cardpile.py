@@ -18,7 +18,7 @@ class CardPile(block.Block):
         return self._cards.pop()
 
     # TODO: implement display
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         pass
 
 
@@ -35,18 +35,18 @@ class Community_Chest(CardPile):
         """
         super().__init__(name, block_id, position)
 
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         """
         docstring here
             :type gamer: player.Player
             :param gamer: 
-            :param data_dict: 
+            :param data: 
             :param dice_result: 
         """
-        chance_list = data_dict["chance_list"]
+        chance_list = data["chance_list"]
         length_change_list = len(chance_list)
         random_card = chance_list[random.randint(0, length_change_list)]
-        random_card.play()
+        random_card.play(gamer, data)
 
 
 class Chance(CardPile):
@@ -62,8 +62,8 @@ class Chance(CardPile):
         """
         super().__init__(name, block_id, position)
 
-    def display(self, gamer, data_dict, dice_result):
-        chest_list = data_dict["chest_list"]
+    def display(self, gamer, data, dice_result):
+        chest_list = data["chest_list"]
         length_chest_list = len(chest_list)
         random_card = chest_list[random.randint(0, length_chest_list)]
-        random_card.play()
+        random_card.play(gamer, data)

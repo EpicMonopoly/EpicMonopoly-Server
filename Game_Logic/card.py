@@ -44,10 +44,11 @@ class MoveCard(Card):
         """
         self._destination = step
 
-    def play(self, gamer):
+    def play(self, gamer, data):
         """
         Move player on the map to certain block
         """
+        print(self.description)
         gamer.position = self._destination
 
 
@@ -57,11 +58,14 @@ class PayCard(Card):
         self._amount = amount
         self._card_type = card_type
 
-    def play(self, from_role, to_role=None):
+    def play(self, gamer, data):
         """
         :param from_role: a player or bank or rest players
         :param from_role: player or bank or rest players
         """
+        to_role = None
+        from_role = gamer
+        print(self.description)
         if self._card_type == 2:
             if from_role.cash < self._amount:
                 return False
@@ -110,11 +114,14 @@ class CollectCard(Card):
         self._amount = amount
         self._card_type = card_type
 
-    def play(self, from_role, to_role):
+    def play(self, gamer, data):
         """
         :param from_role: a player or bank or rest players
         :param from_role: player or bank or rest players
         """
+        from_role = gamer
+        to_role = None
+        print(self.description)
         if self._card_type == 0:
             to_role.cash = self._amount
             return True
@@ -147,14 +154,23 @@ class BailCard(Card):
         super().__init__(name, description)
         self._card_type = card_type
 
-    def play(self, from_role, to_role):
+    def play(self, gamer, data):
         """
         Baild card, can be collected by players
         """
+        from_role = gamer
+        to_role = None
+        print(self.description)
         if from_role.bail_card_num == 0:
             print("1. Keep it yourself.")
             print("2. Sell to others.")
-            choice = int(input("Please enter the number of your decision:"))
+            while True:
+                input_str = input("Please enter the number of your decision:")
+                try:
+                    choice = int(input_str)
+                    break
+                except ValueError:
+                    print("Please enter a number. Enter -1 to quit")
             if choice == 1:
                 from_role.bail_card_num = from_role.bail_card_num + 1
             elif choice == 2:

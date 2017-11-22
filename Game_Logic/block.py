@@ -56,7 +56,6 @@ class Go(Block):
     
     def display(self, gamer, data_dict, dice_result):
         import operation
-        print("At Go")
         operation.pay(data_dict['epic_bank'], gamer, 200)
 
 
@@ -80,7 +79,6 @@ class Go_To_Jail(Block):
             :param data_dict: 
             :param dice_result: 
         """
-        print("At Go To Jail. Move to Jail")
         gamer.move(steps=0, position=10)
         gamer.cur_status = 0
 
@@ -98,7 +96,7 @@ class In_Jail(Block):
         super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
-        print("At in Jail")
+        pass
 
 
 class Free_Parking(Block):
@@ -114,5 +112,5 @@ class Free_Parking(Block):
         super().__init__(name, block_id, position)
     
     def display(self, gamer, data_dict, dice_result):
-        print("At Free Parking")
+        pass
 

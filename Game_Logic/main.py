@@ -71,17 +71,23 @@ def init_game():
             corner_list.append(corner_block)
         elif b['name'] == "Community Chest":
             # "Community Chest"
-            new_block = cardpile.CardPile(
+            new_block = cardpile.Community_Chest(
                 b['name'], b['block_id'], b['position'])
             block_list[new_block.position] = new_block
             chest_block_list.append(new_block)
         elif b['name'] == "Chance":  # "Chance"
-            new_block = cardpile.CardPile(
+            new_block = cardpile.Chance(
                 b['name'], b['block_id'], b['position'])
             block_list[new_block.position] = new_block
             chance_block_list.append(new_block)
-        elif b['block_type'] == 3:  # ["Income Tax", "Super Tax"]
-            new_block = tax.Tax(b['name'], b['block_id'], b['position'], 0.10)
+        elif b['block_type'] == 3:
+            # ["Income Tax", "Super Tax"]
+            if b['name'] == "Income Tax":
+                new_block = tax.Income_Tax(b['name'], b['block_id'], b['position'], 0.10)
+            elif b['name'] == "Super Tax":
+                new_block = tax.Super_Tax(b['name'], b['block_id'], b['position'], 0.10)
+            else:
+                pass
             block_list[new_block.position] = new_block
             tax_list.append(new_block)
     # name, position, uid, estate_value, status, street_id
@@ -212,6 +218,7 @@ def roll(gamer):
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'][end_position]
+    print("At %s" %current_block.name)
     current_block.display(gamer, data_dict, step)
     return a, b, end_flag
 
@@ -247,7 +254,13 @@ def construct_building(gamer):
             if cur_asset.street_id in own_street:
                 print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
-    asset_number = int(input("Please enter the number you want to mortgage:"))
+    while True:
+        input_str = input("Please enter the number you want to mortgage:")
+        try:
+            asset_number = int(input_str)
+            break
+        except ValueError:
+            print("Please enter a number. Enter -1 to quit")
     print()
     if asset_number == -1:
         return 0
@@ -311,7 +324,13 @@ def turn(gamer):
         print("3: Construct building")
         print("4: Mortgage asset")
         print("5: End turn")
-        choice = int(input("Please enter the number of your decision:"))
+        while True:
+            input_str = input("Please enter the number of your decision:")
+            try:
+                choice = int(input_str)
+                break
+            except ValueError:
+                print("Please enter a number.")
         print()
         if choice == 1:
             operation.trade()

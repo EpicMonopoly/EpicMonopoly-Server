@@ -106,8 +106,13 @@ class Estate(asset.Asset):
                 print("Nobody own %s do you want to buy it?" % self.name)
                 print("1: Buy it")
                 print("2: Do not buy it")
-                choice = int(
-                    input("Please enter the number of your decision:"))
+                while True:
+                    input_str = input("Please enter the number of your decision:")
+                    try:
+                        choice = int(input_str)
+                        break
+                    except ValueError:
+                        print("Please enter a number.")
                 print()
                 if choice == 1:
                     price = self.value

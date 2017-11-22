@@ -22,7 +22,6 @@ class Player(role.Role):
         self._utility_num = 0
         self._station_num = 0
         self._in_jail = 0
-        self._assets = []
 
     @property  # getAlliance
     def alliance(self):

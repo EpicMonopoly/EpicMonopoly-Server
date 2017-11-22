@@ -57,7 +57,13 @@ def mortgage_asset(gamer, data):
     for cur_asset in gamer.properties:
         print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
         asset_number_list.append(cur_asset.block_id)
-    asset_number = int(input("Please enter the number you want to mortgage:"))
+    while True:
+        input_str = input("Please enter the index you want to mortgage:")
+        try:
+            asset_number = int(input_str)
+            break
+        except ValueError:
+            print("Please enter a number. Enter -1 to quit")
     print()
     if asset_number == -1:
         return 0
@@ -90,7 +96,13 @@ def construct_building(gamer, data):
     if asset_number_list is []:
         print("None")
         return 0
-    asset_number = int(input("Please enter the number you want to mortgage"))
+    while True:
+        input_str = input("Please enter the number you want to built a house")
+        try:
+            asset_number = int(input_str)
+            break
+        except ValueError:
+            print("Please enter a number. Enter -1 to quit")
     print()
     if asset_number == -1:
         return 0
