@@ -11,10 +11,7 @@ Game Logic development:
 ## TODO
 - [ ] Trade 
 - [ ] All about EF
-- [ ] operation: 
-	- [ ] clearing
-	- [ ] broken
-- [ ] board: new_board 
+- [ ] board: new_board(Shelved)
 
 Server structure: 
 
