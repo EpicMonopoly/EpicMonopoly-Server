@@ -55,6 +55,8 @@ class MoveCard(Card):
         else:
             print("Passing Go, Gain 200")
             operation.pay(data['epic_bank'], gamer, 200, data)
+        if self._destination == 30:
+            gamer.position = 0  # in jail
         gamer.move(steps=None, position=self._destination)
         
 
