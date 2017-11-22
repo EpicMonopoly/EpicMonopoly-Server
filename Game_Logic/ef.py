@@ -1,6 +1,5 @@
 # economy factor
 import random
-import datetime
 
 
 class EF:

@@ -165,18 +165,27 @@ class BailCard(Card):
                 input_str = input("Please enter the number of your decision:")
                 try:
                     choice = int(input_str)
-                    break
+                    if choice == 1 or choice == 2:
+                        break
+                    elif choice == -1:
+                        return False
+                    else:
+                        print("Invaild choice, please input again.")
                 except ValueError:
                     print("Please enter a number. Enter -1 to quit")
             if choice == 1:
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
-                    input_str = input(
-                        "Please enter the player of you want to sell the card to:")
+                    input_str = input("Please enter the player of you want to sell the card to:")
                     try:
                         choice = str(input_str)
-                        break
+                        if choice in data['player_dict'].keys() and choice != gamer.name:
+                            break
+                        elif choice == 'q':
+                            return False
+                        else:
+                            print("Invaild choice, please input again.")
                     except ValueError:
                         print("Please enter a player name. Enter q to quit")
                 to_role = data['player_dict'][choice]
