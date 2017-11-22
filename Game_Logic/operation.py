@@ -20,6 +20,17 @@ def pay(payer, gainer, payment, data):
         print("%s pay %d to %s" % (payer.name, payment, gainer.name))
 
 
+def bail(prionser, data):
+    jail = data["chess_board"][prionser.position]
+    bail_fee = jail.bail_fee
+    if prionser.cash < bail_fee:
+        print("Not enough money")
+        return False
+    else:
+        pay(prionser, data["epic_bank"], bail_fee, data)
+        return True
+
+
 def trade_asset(new_asset, from_role, to_role):
     """
     Trade for other players or bank

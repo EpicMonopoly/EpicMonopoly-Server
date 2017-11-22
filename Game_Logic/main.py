@@ -225,6 +225,8 @@ def roll(gamer):
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'][end_position]
+    if isinstance(current_block, block.Go_To_Jail):
+        end_flag = True
     print("At %s" % current_block.name)
     current_block.display(gamer, data_dict, step)
     return a, b, end_flag
@@ -300,14 +302,43 @@ if __name__ == "__main__":
             print("Now is %s turn" % gamer.name)
             print("Gamer current cash %d" % gamer.cash)
             if gamer.cur_status == 0:
-                print("%s are in jail", gamer.name)
+                # In jail
+                print("%s are in jail" % gamer.name)
                 a, b = roll_dice()
                 if a == b:
                     gamer.cur_status = 1
                     gamer._in_jail = 0
+                    turn(gamer)
                 else:
-                    gamer.count_in_jail()
+                    while True:
+                        print("1: Bail. Get out of prison.")
+                        print("2: Stay in prison.")
+                        while True:
+                            input_str = input(
+                                "Please enter the number of your decision:")
+                            try:
+                                choice = int(input_str)
+                                break
+                            except ValueError:
+                                print("Please enter a number.")
+                        print()
+                        if choice == 1:
+                            if operation.bail(gamer, data):
+                                gamer.cur_status = 1
+                                gamer._in_jail = 0
+                                turn(gamer)
+                                break
+                            else:
+                                print("Please stay in jail")
+                                gamer.count_in_jail()
+                                break
+                        elif choice == 2:
+                            gamer.count_in_jail()
+                            break
+                        else:
+                            print("Invalid choice")
             elif gamer.cur_status == 1:
+                # Normal Status
                 turn(gamer)
             else:
                 pass

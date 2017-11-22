@@ -79,6 +79,7 @@ class Go_To_Jail(Block):
             :param data: 
             :param dice_result: 
         """
+        print("Move to Jail")
         gamer.move(steps=0, position=10)
         gamer.cur_status = 0
 
@@ -94,6 +95,11 @@ class In_Jail(Block):
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._bail_fee = 50
+    
+    @property
+    def bail_fee(self):
+        return self._bail_fee
     
     def display(self, gamer, data, dice_result):
         pass

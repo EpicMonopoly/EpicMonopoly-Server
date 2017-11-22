@@ -4,7 +4,7 @@
   {
     "name": "Player1",
     "id": 100,
-    "cash": 20000,
+    "cash": 1000,
     "property":{
       "id": []
     },
@@ -14,7 +14,7 @@
   {
     "name": "Player2",
     "id": 101,
-    "cash": 20000,
+    "cash": 1000,
     "property":{
       "id": []
     },
@@ -24,7 +24,7 @@
   {
     "name": "Player3",
     "id": 102,
-    "cash": 20000,
+    "cash": 1000,
     "property":{
       "id": []
     },

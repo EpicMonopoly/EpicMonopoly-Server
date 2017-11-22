@@ -18,8 +18,6 @@ class Estate(asset.Asset):
         self._street_id = street_id
         self._house_num = 0
         self._house_value = house_value
-        # self._hotel_num = 0
-        # self._hotel_value = 4 * house_value
 
     @property
     def house_num(self):

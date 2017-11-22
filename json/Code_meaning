@@ -40,6 +40,13 @@ data_dict:
     2: epic_bank
     3: chest_list
     4: chance_list
+    5: station_list
+    6: utility_list
+    7: estate_list
+    8: corner_list
+    9: chest_block_list
+    10:chance_block_list
+    11:tax_list
 
 player_status:
     -1: broken/dead/out of game
