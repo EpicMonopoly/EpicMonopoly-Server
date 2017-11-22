@@ -18,7 +18,6 @@ import os
 # global data_dict
 data_dict = {}
 
-
 def init_game():
     """
     Initialize the game with map, players and bank

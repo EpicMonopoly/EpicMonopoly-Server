@@ -28,13 +28,14 @@ def trade_asset(new_asset, from_role, to_role):
     to_role.add_asset(new_asset)
 
 
-def clearing(gamer, amount_left):
+def clearing(gamer, amount_left, data):
     """
     docstring here
         :param gamer:
         :param amount_left:
     """
-    pass
+    # for cur_asset in gamer.assets:
+    #     pass
 
 
 def trade():
