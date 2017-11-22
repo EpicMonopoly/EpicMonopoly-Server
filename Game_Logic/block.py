@@ -38,7 +38,7 @@ class Block(metaclass=ABCMeta):
         self._position = position
 
     @abstractclassmethod
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         pass
 
 
@@ -54,9 +54,9 @@ class Go(Block):
         """
         super().__init__(name, block_id, position)
     
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         import operation
-        operation.pay(data_dict['epic_bank'], gamer, 200)
+        operation.pay(data['epic_bank'], gamer, 200, data)
 
 
 class Go_To_Jail(Block):
@@ -71,12 +71,12 @@ class Go_To_Jail(Block):
         """
         super().__init__(name, block_id, position)
     
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         """
         docstring here
             :type gamer: player.Player
             :param gamer: 
-            :param data_dict: 
+            :param data: 
             :param dice_result: 
         """
         gamer.move(steps=0, position=10)
@@ -95,7 +95,7 @@ class In_Jail(Block):
         """
         super().__init__(name, block_id, position)
     
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         pass
 
 
@@ -111,6 +111,6 @@ class Free_Parking(Block):
         """
         super().__init__(name, block_id, position)
     
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         pass
 

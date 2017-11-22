@@ -5,7 +5,7 @@ import operation
 
 class Card(metaclass=ABCMeta):
     """
-    Card class
+    Card Class
     """
     def __init__(self, name, description):
         self._name = name
@@ -76,9 +76,9 @@ class PayCard(Card):
         elif self._card_type == 8:  # need to check
             to_role = []
             all_role = data["player_dict"]
-            for role in all_role:
-                if role['id'] != role:
-                    to_role.append(role)
+            for role_id in all_role.keys():
+                if role_id != gamer.id:
+                    to_role.append(all_role[role_id])
             from_role = gamer
             total_amount = self._amount * len(to_role)
             if from_role.cash < total_amount:
@@ -93,15 +93,18 @@ class PayCard(Card):
             total_amount = 0
             for e in from_role.assets:
                 if isinstance(estate, estate.Estate):
-                    house_repair_amount = int(e.house_num % 6) * self._amount[0]
-                    hotel_repair_amount = int(e.house_num / 6) * self._amount[1]
+                    house_repair_amount = int(
+                        e.house_num % 6) * self._amount[0]
+                    hotel_repair_amount = int(
+                        e.house_num / 6) * self._amount[1]
                     total_amount += house_repair_amount + hotel_repair_amount
                     if from_role.cash < total_amount:
                         return False
                     else:
-                        operation.pay(from_role, data['epic_bank'], self._amount, data)
+                        operation.pay(
+                            from_role, data['epic_bank'], self._amount, data)
                         return True
-                
+
     @property
     def amount(self):
         return self._amount
@@ -134,13 +137,14 @@ class CollectCard(Card):
             to_role = gamer
             from_role = []
             all_role = data["player_dict"]
-            for role in all_role:
-                if role['id'] != role:
-                    from_role.append(role)
-            for role in from_role:
-                operation.pay(from_role, to_role, self._amount, data)
+            for role_id in all_role.keys():
+                if role_id != gamer.id:
+                    from_role.append(role_id)
+            for role_id in from_role:
+                payer = all_role[role_id]
+                operation.pay(payer, gamer, self._amount, data)
             return True
-        
+
     @property
     def amount(self):
         return self._amount
@@ -178,7 +182,8 @@ class BailCard(Card):
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
-                    input_str = input("Please enter the player of you want to sell the card to:")
+                    input_str = input(
+                        "Please enter the player of you want to sell the card to:")
                     try:
                         choice = str(input_str)
                         break
@@ -188,5 +193,3 @@ class BailCard(Card):
                 from_role = gamer
                 # TODO: need to implement trade
                 pass
-
-

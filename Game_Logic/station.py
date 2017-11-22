@@ -33,15 +33,15 @@ class Station(asset.Asset):
             return 0
 
     # TODO: implement display
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         """
         Display description
-        :type data_dict: dict
+        :type data: dict
         :return:
         """
         import operation
-        player_dict = data_dict['player_dict']
-        bank = data_dict['epic_bank']
+        player_dict = data['player_dict']
+        bank = data['epic_bank']
         if self._status == 1:
             # Some body own it
             owner_id = self.owner
@@ -52,8 +52,8 @@ class Station(asset.Asset):
             else:
                 # Other pass this station
                 print("%s own %s" % (owner.name, self.name))
-                payment = self.payment(gamer.station_num)
-                operation.pay(gamer, owner, payment)
+                fee = self.payment(gamer.station_num)
+                operation.pay(gamer, owner, fee, data)
         elif self._status == -1:
             # Nobody own
             while True:
@@ -74,7 +74,7 @@ class Station(asset.Asset):
                         print("You do not have enough money")
                         break
                     else:
-                        operation.pay(gamer, bank, price)
+                        operation.pay(gamer, bank, price, data)
                         operation.trade_asset(self, bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))

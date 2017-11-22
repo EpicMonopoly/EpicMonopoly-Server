@@ -6,6 +6,7 @@ class Asset(block.Block):
     """
     Class Asset
     """
+
     def __init__(self, name, block_id, position, uid, estate_value, status, mortgage_rate=0.5):
         """
         Call constructor of superclass
@@ -29,7 +30,7 @@ class Asset(block.Block):
     @owner.setter  # getOwner
     def owner(self, uid):
         self._uid = uid
-    
+
     def change_owner(self, uid):
         self._uid = uid
 
@@ -57,7 +58,6 @@ class Asset(block.Block):
     # def change_EF(self):
     #     pass
 
-    @property  # getPayment
     def payment(self):
         return self._estate_value
 

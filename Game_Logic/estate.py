@@ -80,14 +80,14 @@ class Estate(asset.Asset):
         """
         pass
 
-    def display(self, gamer, data_dict, dice_result):
+    def display(self, gamer, data, dice_result):
         """
         Display description
         :param dice_result:
         :return:
         """
-        player_dict = data_dict['player_dict']
-        epic_bank = data_dict['epic_bank']
+        player_dict = data['player_dict']
+        epic_bank = data['epic_bank']
         if self._status == 1:
             # Some body own it
             owner_id = self.owner
@@ -99,7 +99,7 @@ class Estate(asset.Asset):
                 # Other pass this estate
                 print("%s own %s" % (owner.name, self.name))
                 payment = self.payment
-                operation.pay(gamer, owner, payment)
+                operation.pay(gamer, owner, payment, data)
         elif self._status == -1:
             # Nobody own
             while True:
@@ -121,7 +121,7 @@ class Estate(asset.Asset):
                         print("You do not have enough money")
                         break
                     else:
-                        operation.pay(gamer, epic_bank, price)
+                        operation.pay(gamer, epic_bank, price, data)
                         operation.trade_asset(self, epic_bank, gamer)
                         print("%s buy %s for %d" %
                               (gamer.name, self.name, price))

@@ -1,5 +1,5 @@
 # operations
-def pay(payer, gainer, payment):
+def pay(payer, gainer, payment, data):
     """
     Paying
         :param payer: Payer
@@ -74,12 +74,14 @@ def mortgage_asset(gamer, data):
     for cur_asset in gamer.properties:
         if cur_asset.block_id == asset_number:
             return_cash = cur_asset.mortgage_value
-            pay(data["epic_bank"], gamer, return_cash)
+            pay(data["epic_bank"], gamer, return_cash, data)
             cur_asset.status = 0
             data["epic_bank"].add_loan_dict(cur_asset.block_id, return_cash)
 
+
 def own_all_block(gamer):
-    pass
+    return []
+
 
 def construct_building(gamer, data):
     import estate
@@ -124,7 +126,7 @@ def construct_building(gamer, data):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                pay(gamer, data["epic_bank"], payment)
+                pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_hotel()
                 print("%s built one hotel in %s" %
@@ -137,7 +139,7 @@ def construct_building(gamer, data):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                pay(gamer, data["epic_bank"], payment)
+                pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
@@ -148,7 +150,7 @@ def construct_building(gamer, data):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                pay(gamer, data["epic_bank"], payment)
+                pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_house()
                 print("%s built one house in %s" %

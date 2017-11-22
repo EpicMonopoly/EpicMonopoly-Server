@@ -29,10 +29,12 @@ class Bank(role.Role):
     def cur_hotel(self):
         return self._cur_hotel
 
-    def pay(self):
-        pass  # bank never pays anything
+    def pay(self, payment):
+        # bank never pays anything
+        pass
     
-    def gain(self):  # bank seems like gaining a lot
+    def gain(self, payment): 
+        # bank seems like gaining a lot
         pass
 
     def built_house(self):

@@ -18,6 +18,7 @@ import os
 # global data_dict
 data_dict = {}
 
+
 def init_game():
     """
     Initialize the game with map, players and bank
@@ -29,12 +30,18 @@ def init_game():
     """
     # generate a map
     parent_addr = os.path.abspath(os.pardir)
-    block_list_data = json_reader(os.path.join(parent_addr, 'Data/block_data.json'))
-    station_list_data = json_reader(os.path.join(parent_addr, 'Data/station_data.json'))
-    utility_list_data = json_reader(os.path.join(parent_addr, 'Data/utility_data.json'))
-    estate_list_data = json_reader(os.path.join(parent_addr, 'Data/estate_data.json'))
-    chest_list_data = json_reader(os.path.join(parent_addr, 'Data/chest_data.json'))
-    chance_list_data = json_reader(os.path.join(parent_addr, 'Data/chance_data.json'))
+    block_list_data = json_reader(os.path.join(
+        parent_addr, 'Data/block_data.json'))
+    station_list_data = json_reader(os.path.join(
+        parent_addr, 'Data/station_data.json'))
+    utility_list_data = json_reader(os.path.join(
+        parent_addr, 'Data/utility_data.json'))
+    estate_list_data = json_reader(os.path.join(
+        parent_addr, 'Data/estate_data.json'))
+    chest_list_data = json_reader(os.path.join(
+        parent_addr, 'Data/chest_data.json'))
+    chance_list_data = json_reader(os.path.join(
+        parent_addr, 'Data/chance_data.json'))
     block_list = [0 for x in range(40)]
     station_list = []
     utility_list = []
@@ -82,9 +89,11 @@ def init_game():
         elif b['block_type'] == 3:
             # ["Income Tax", "Super Tax"]
             if b['name'] == "Income Tax":
-                new_block = tax.Income_Tax(b['name'], b['block_id'], b['position'], 0.10)
+                new_block = tax.Income_Tax(
+                    b['name'], b['block_id'], b['position'], 0.10)
             elif b['name'] == "Super Tax":
-                new_block = tax.Super_Tax(b['name'], b['block_id'], b['position'], 0.10)
+                new_block = tax.Super_Tax(
+                    b['name'], b['block_id'], b['position'], 0.10)
             else:
                 pass
             block_list[new_block.position] = new_block
@@ -111,7 +120,8 @@ def init_game():
         epic_bank.add_asset(new_block)
 
     # initialize players
-    player_dict_data = json_reader(os.path.join(parent_addr, 'Data/player_list.json'))
+    player_dict_data = json_reader(os.path.join(
+        parent_addr, 'Data/player_list.json'))
     player_dict = {}
     player_dict_data = player_dict_data["data"]
     for i in range(len(player_dict_data)):
@@ -213,11 +223,11 @@ def roll(gamer):
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
         print("Passing Go, Gain 200")
-        operation.pay(data_dict['epic_bank'], gamer, 200)
+        operation.pay(data_dict['epic_bank'], gamer, 200, data_dict)
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'][end_position]
-    print("At %s" %current_block.name)
+    print("At %s" % current_block.name)
     current_block.display(gamer, data_dict, step)
     return a, b, end_flag
 
@@ -280,7 +290,7 @@ def construct_building(gamer):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                operation.pay(gamer, data["epic_bank"], payment)
+                operation.pay(gamer, data["epic_bank"], payment, data_dict)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_hotel()
                 print("%s built one hotel in %s" %
@@ -293,7 +303,7 @@ def construct_building(gamer):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                operation.pay(gamer, data["epic_bank"], payment)
+                operation.pay(gamer, data["epic_bank"], payment, data_dict)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
@@ -304,7 +314,7 @@ def construct_building(gamer):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                operation.pay(gamer, data["epic_bank"], payment)
+                operation.pay(gamer, data["epic_bank"], payment, data_dict)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_house()
                 print("%s built one house in %s" %
