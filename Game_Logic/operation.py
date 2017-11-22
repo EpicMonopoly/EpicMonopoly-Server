@@ -34,7 +34,7 @@ def bail(prionser, data):
 def trade_asset(new_asset, from_role, to_role):
     """
     Trade for other players or bank
-    :param new_asset: asset.Asset
+    :param new_asset: new_asset
     :param from_role: from_role
     :param to_role: to_role
     :return boolean: Trade successfully or not
@@ -133,15 +133,12 @@ def own_all_block(gamer):
     if all_block[1] == 2:
         own_street.append(1)
     if all_block[8] == 2:
-        own_street.append(2)
+        own_street.append(8)
     return own_street
 
 
 def construct_building(gamer, data):
     import estate
-    if data["epic_bank"].cur_house == 0:
-        print("Bank out of house")
-        return 0
     own_street = own_all_block(gamer)
     print("Valid building list")
     asset_number_list = []
@@ -181,7 +178,7 @@ def construct_building(gamer, data):
                     print("Do not have enough money")
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
-                cur_asset.house_num(cur_asset.house_num + 1)
+                cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_hotel()
                 print("%s built one hotel in %s" %
                       (gamer.name, cur_asset.name))
@@ -194,18 +191,21 @@ def construct_building(gamer, data):
                     print("Do not have enough money")
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
-                cur_asset.house_num(cur_asset.house_num + 1)
+                cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
                 print("%s built one hotel in %s" %
                       (gamer.name, cur_asset.name))
             else:
+                if data["epic_bank"].cur_house == 0:
+                    print("Bank out of house")
+                    return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
-                cur_asset.house_num(cur_asset.house_num + 1)
+                cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_house()
                 print("%s built one house in %s" %
                       (gamer.name, cur_asset.name))

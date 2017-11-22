@@ -6,7 +6,7 @@ class Bank(role.Role):
     """
     subclass(Role): Bank
     """
-    def __init__(self, uid, name):
+    def __init__(self, uid, name, house_number, hotel_number):
         """
         Constructor
         loan_list: set
@@ -15,8 +15,8 @@ class Bank(role.Role):
         """
         super().__init__(uid, name, sys.maxsize)
         self._loan_dict = {}
-        self._cur_house = 32
-        self._cur_hotel = 12
+        self._cur_house = house_number
+        self._cur_hotel = hotel_number
 
     @property
     def loan_list(self):

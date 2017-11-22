@@ -52,7 +52,7 @@ def init_game():
     tax_list = []
 
     # initialize bank
-    epic_bank = bank.Bank('99', 'EpicBank')
+    epic_bank = bank.Bank('99', 'EpicBank', 32, 12)
     json_writer(os.path.join(parent_addr, 'Data/bank_data.json'),
                 {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
 
