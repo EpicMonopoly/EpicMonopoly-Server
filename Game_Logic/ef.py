@@ -1,4 +1,4 @@
-# economy factor 
+# economy factor
 import random
 import datetime
 
@@ -7,17 +7,25 @@ class EF:
     """
     Economy factor
     """
-    def ___init___(self):
+
+    def ___init___(self, variation):
         """
         Constructor
         """
-        seed = datetime.datetime.now()
-        random.seed(seed)
-        self._seed = random.randint(0, 999999)
-    
+        self._variation = variation
+        self._ef_history = []
+
     @property
     def ef_value(self):
-        pass
+        """
+        Return current ef
+        """
+        return self._ef_history[-1]
 
-    
-    
+    def generate_ef(self):
+        """
+        Generate a new ef number
+        """
+        new_ef = random.random * 2 * self._variation
+        new_ef = new_ef - self._variation
+        self._ef_history.append(new_ef)
