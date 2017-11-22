@@ -14,6 +14,9 @@ import card
 import operation
 from json_io import json_reader, json_writer
 import os
+import chatdemo
+import threading
+import uuid
 
 # global data_dict
 data_dict = {}
@@ -52,7 +55,7 @@ def init_game():
     tax_list = []
 
     # initialize bank
-    epic_bank = bank.Bank('99', 'EpicBank', 32, 12)
+    epic_bank = bank.Bank('99', 'EpicBank')
     json_writer(os.path.join(parent_addr, 'Data/bank_data.json'),
                 {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
 
@@ -211,11 +214,14 @@ def roll(gamer):
     :bool: The station of end_flag
     """
     # Whether pass Go
-    a, b = roll_dice()
+    print("Rolling")
+    a = random.randint(1, 6)
+    b = random.randint(1, 6)
     if a == b:
         end_flag = False
     else:
         end_flag = True
+    print("Dice number is", a, b)
     step = a + b
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
@@ -224,19 +230,9 @@ def roll(gamer):
     gamer.move(step)
     end_position = gamer.position
     current_block = data_dict['chess_board'][end_position]
-    if isinstance(current_block, block.Go_To_Jail):
-        end_flag = True
     print("At %s" % current_block.name)
     current_block.display(gamer, data_dict, step)
     return a, b, end_flag
-
-
-def roll_dice():
-    print("Rolling")
-    a = random.randint(1, 6)
-    b = random.randint(1, 6)
-    print("Dice number is", a, b)
-    return a, b
 
 
 def own_all_block(gamer):
@@ -255,6 +251,81 @@ def own_all_block(gamer):
     return own_street
 
 
+def construct_building(gamer):
+    """
+    construction
+    """
+    if data["epic_bank"].cur_house == 0:
+        print("Bank out of house")
+        return 0
+    own_street = own_all_block(gamer)
+    print("Valid building list")
+    asset_number_list = []
+    for cur_asset in gamer.properties:
+        if isinstance(cur_asset, estate.Estate):
+            if cur_asset.street_id in own_street:
+                print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+                asset_number_list.append(cur_asset.block_id)
+    while True:
+        print("Please enter the number you want to mortgage: ",end='')
+        input_str = wait_choice()
+        print("####{}-----------------".format(input_str))
+        try:
+            asset_number = int(input_str)
+            break
+        except ValueError:
+            print("Please enter a number. Enter -1 to quit")
+    print()
+    if asset_number == -1:
+        return 0
+    else:
+        if asset_number not in asset_number_list:
+            print("Invalid input")
+            return 0
+    for cur_asset in gamer.properties:
+        if cur_asset.block_id == asset_number:
+            if cur_asset.house_num == 6:
+                print("Cannot built more house!")
+                return 0
+            elif cur_asset.house_num == 5:
+                if data["epic_bank"].cur_hotel == 0:
+                    print("Bank out of hotel")
+                    return 0
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment, data_dict)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_hotel()
+                print("%s built one hotel in %s" %
+                      (gamer.name, cur_asset.name))
+            elif cur_asset.house_num == 4:
+                if data["epic_bank"].cur_hotel == 0:
+                    print("Bank out of hotel")
+                    return 0
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment, data_dict)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_hotel()
+                data["epic_bank"].remove_house(4)
+                print("%s built one hotel in %s" %
+                      (gamer.name, cur_asset.name))
+            else:
+                payment = cur_asset.house_value
+                if payment > gamer.cash:
+                    print("Do not have enough money")
+                    return 0
+                operation.pay(gamer, data["epic_bank"], payment, data_dict)
+                cur_asset.house_num(cur_asset.house_num + 1)
+                data["epic_bank"].built_house()
+                print("%s built one house in %s" %
+                      (gamer.name, cur_asset.name))
+
+
 def turn(gamer):
     """
     :param gamer: players
@@ -262,13 +333,16 @@ def turn(gamer):
     """
     end_flag = False
     while True:
-        print("1: Trade with others")
-        print("2: Roll dices")
-        print("3: Construct building")
-        print("4: Mortgage asset")
-        print("5: End turn")
+        # push2all("---------------testing-------------------")
+        push2all("1: Trade with others")
+        push2all("2: Roll dices")
+        push2all("3: Construct building")
+        push2all("4: Mortgage asset")
+        push2all("5: End turn")
         while True:
-            input_str = input("Please enter the number of your decision:")
+            print("Please enter the number of your decision: ",end="")
+            input_str = wait_choice()
+            print("####{}----".format(input_str))
             try:
                 choice = int(input_str)
                 break
@@ -291,9 +365,23 @@ def turn(gamer):
         else:
             print("Invalid choice")
 
+def wait_choice():
+    choice = chatdemo.global_Choice.get_choice()
+    while choice == -1:
+        choice = chatdemo.global_Choice.get_choice()
+    return choice
 
-if __name__ == "__main__":
-    data = init_game()
+
+def push2all(line):
+    message = {
+            "id": str(uuid.uuid4()),
+            "body": line,
+        }
+    # message["html"] = tornado.escape.to_basestring(.render_string("message.html", message=message))
+    chatdemo.global_message_buffer.new_messages([message])
+
+
+def game_main():
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     while len(living_list) != 1:
@@ -301,45 +389,18 @@ if __name__ == "__main__":
             gamer = data["player_dict"][gamer_id]
             print("Now is %s turn" % gamer.name)
             print("Gamer current cash %d" % gamer.cash)
-            if gamer.cur_status == 0:
-                # In jail
-                print("%s are in jail" % gamer.name)
-                a, b = roll_dice()
-                if a == b:
-                    gamer.cur_status = 1
-                    gamer._in_jail = 0
-                    turn(gamer)
-                else:
-                    while True:
-                        print("1: Bail. Get out of prison.")
-                        print("2: Stay in prison.")
-                        while True:
-                            input_str = input(
-                                "Please enter the number of your decision:")
-                            try:
-                                choice = int(input_str)
-                                break
-                            except ValueError:
-                                print("Please enter a number.")
-                        print()
-                        if choice == 1:
-                            if operation.bail(gamer, data):
-                                gamer.cur_status = 1
-                                gamer._in_jail = 0
-                                turn(gamer)
-                                break
-                            else:
-                                print("Please stay in jail")
-                                gamer.count_in_jail()
-                                break
-                        elif choice == 2:
-                            gamer.count_in_jail()
-                            break
-                        else:
-                            print("Invalid choice")
-            elif gamer.cur_status == 1:
-                # Normal Status
-                turn(gamer)
-            else:
-                pass
+            turn(gamer)
             print()
+
+if __name__ == "__main__":
+    data = init_game()
+    # npc = chatdemo.MessageNewHandler()
+    threads = []
+    t1 = threading.Thread(target =chatdemo.main, args =())
+    t2 = threading.Thread(target=game_main, args=())
+    
+    threads.append(t1)
+    threads.append(t2)
+    for t in threads:
+        t.start()
+    
