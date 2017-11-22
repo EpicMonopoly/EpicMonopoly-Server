@@ -1,3 +1,4 @@
+import sys
 import role
 
 
@@ -12,7 +13,7 @@ class Bank(role.Role):
         cur_house: int
         cur_hotel: int
         """
-        super().__init__(uid, name, 0)
+        super().__init__(uid, name, sys.maxsize)
         self._loan_dict = {}
         self._cur_house = 32
         self._cur_hotel = 12
