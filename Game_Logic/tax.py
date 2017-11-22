@@ -18,7 +18,6 @@ class Tax(block.Block):
     def rate(self, rate):
         self._rate = rate
 
-    # TODO: implement display
     def display(self, gamer, data, dice_result):
         pass
 

@@ -20,7 +20,6 @@ class Utility(asset.Asset):
             # Should not be here
             return 0
 
-    # TODO: implement display
     def display(self, gamer, data, dice_result):
         """
         Display description

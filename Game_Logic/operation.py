@@ -28,16 +28,18 @@ def trade_asset(new_asset, from_role, to_role):
     to_role.add_asset(new_asset)
 
 
+# TODO: implement this method
 def clearing(gamer, amount_left, data):
     """
     docstring here
-        :param gamer:
-        :param amount_left:
+    :param gamer:
+    :param amount_left:
     """
     # for cur_asset in gamer.assets:
     #     pass
 
 
+# TODO: implement trade methods
 def trade():
     pass
 

@@ -17,7 +17,6 @@ class CardPile(block.Block):
     def pop_card(self):
         return self._cards.pop()
 
-    # TODO: implement display
     def display(self, gamer, data, dice_result):
         pass
 

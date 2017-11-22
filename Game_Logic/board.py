@@ -1,6 +1,7 @@
 import random
 import copy
 
+
 class Board:
     """
     Board class
@@ -25,6 +26,7 @@ class Board:
         self._chance_block_list = chance_block_list
         self._tax_list = tax_list
 
+    # TODO: implement this method
     def new_board(self):
         """
         Generate a new board
@@ -116,10 +118,10 @@ class Board:
             street_a.resort()
             street_b.resott()
         for i in range(3):
-            int_a = random.randint(num_three_block_street)
-            int_b = random.randint(num_three_block_street)
+            int_a = random.randint(0, num_three_block_street)
+            int_b = random.randint(0, num_three_block_street)
             while int_a == int_b:
-                int_b = random.randint(num_three_block_street)
+                int_b = random.randint(0, num_three_block_street)
             street_a = self._three_block_street[int_a]
             street_b = self._three_block_street[int_b]
             self._change_two_street(street_a, street_b)

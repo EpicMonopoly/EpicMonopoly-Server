@@ -38,10 +38,6 @@ class Asset(block.Block):
     def value(self):
         return self._estate_value
 
-    # @property
-    # def value(self, estate_value):
-    #     self._estate_value = estate_value
-
     @property  # getStatus
     def status(self):
         return self._status
