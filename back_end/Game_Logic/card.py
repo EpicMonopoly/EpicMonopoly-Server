@@ -50,11 +50,11 @@ class MoveCard(Card):
         """
         Move player on the map to certain block
         """
-        print(self.description)
+        operation.push2all(self.description)
         if gamer.position < self._destination:
-            print("Do not pass Go, no cash collected.")
+            operation.push2all("Do not pass Go, no cash collected.")
         else:
-            print("Passing Go, Gain 200")
+            operation.push2all("Passing Go, Gain 200")
             operation.pay(data['epic_bank'], gamer, 200, data)
         if self._destination == 10:
             # in jail
@@ -73,7 +73,7 @@ class PayCard(Card):
         :param from_role: a player or bank or rest players
         :param data: global game data
         """
-        print(self.description)
+        operation.push2all(self.description)
         if self._card_type == 2:
             to_role = data['epic_bank']
             from_role = gamer
@@ -125,7 +125,7 @@ class CollectCard(Card):
         :param from_role: a player or bank or rest players
         :param from_role: player or bank or rest players
         """
-        print(self.description)
+        operation.push2all(self.description)
         if self._card_type == 0:
             to_role = gamer
             operation.pay(data['epic_bank'], to_role, self._amount, data)
@@ -162,12 +162,13 @@ class BailCard(Card):
         Baild card, can be collected by players
         """
         to_role = gamer
-        print(self.description)
+        operation.push2all(self.description)
         if to_role.bail_card_num == 0:
-            print("1. Keep it yourself.")
-            print("2. Sell to others.")
+            operation.push2all("1. Keep it yourself.")
+            operation.push2all("2. Sell to others.")
             while True:
-                input_str = input("Please enter the number of your decision:")
+                operation.push2all("Please enter the number of your decision:")
+                input_str = operation.wait_choice()
                 try:
                     choice = int(input_str)
                     if choice == 1 or choice == 2:
@@ -175,15 +176,15 @@ class BailCard(Card):
                     elif choice == -1:
                         return False
                     else:
-                        print("Invaild choice, please input again.")
+                        operation.push2all("Invaild choice, please input again.")
                 except ValueError:
-                    print("Please enter a number. Enter -1 to quit")
+                    operation.push2all("Please enter a number. Enter -1 to quit")
             if choice == 1:
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
-                    input_str = input(
-                        "Please enter the player of you want to sell the card to:")
+                    operation.push2all("Please enter the player of you want to sell the card to:")
+                    input_str = operation.wait_choice()
                     try:
                         choice = str(input_str)
                         if choice in data['player_dict'].keys() and choice != gamer.name:
@@ -191,9 +192,9 @@ class BailCard(Card):
                         elif choice == 'q':
                             return False
                         else:
-                            print("Invaild choice, please input again.")
+                            operation.push2all("Invaild choice, please input again.")
                     except ValueError:
-                        print("Please enter a player name. Enter q to quit")
+                        operation.push2all("Please enter a player name. Enter q to quit")
                 to_role = data['player_dict'][choice]
                 from_role = gamer
                 # TODO: need to implement trade

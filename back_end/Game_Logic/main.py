@@ -128,7 +128,8 @@ def init_game():
     for i in range(len(player_dict_data)):
         p = player.Player(player_dict_data[i]['id'], player_dict_data[i]['name'], player_dict_data[i]['cash'],
                           player_dict_data[i]['alliance'])
-        print(p.cash, p.id, p.name, p.alliance)
+        out_put_line = "%d %d %s %s" % (p.cash, p.id, p.name, p.alliance)
+        operation.push2all(out_put_line)
         player_dict[player_dict_data[i]['id']] = p
 
     # initialize chest cards
@@ -220,23 +221,23 @@ def roll(gamer):
     step = a + b
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
-        print("Passing Go, Gain 200")
+        operation.push2all("Passing Go, Gain 200")
         operation.pay(data['epic_bank'], gamer, 200, data)
     gamer.move(step)
     end_position = gamer.position
     current_block = data['chess_board'][end_position]
     if isinstance(current_block, block.Go_To_Jail):
         end_flag = True
-    print("At %s" % current_block.name)
+    operation.push2all("At %s" % current_block.name)
     current_block.display(gamer, data, step)
     return a, b, end_flag
 
 
 def roll_dice():
-    print("Rolling")
+    operation.push2all("Rolling")
     a = random.randint(1, 6)
     b = random.randint(1, 6)
-    print("Dice number is", a, b)
+    operation.push2all("Dice number is %d %d" % (a, b))
     return a, b
 
 
@@ -264,19 +265,20 @@ def turn(gamer):
     global data
     end_flag = False
     while True:
-        print("1: Trade with others")
-        print("2: Roll dices")
-        print("3: Construct building")
-        print("4: Mortgage asset")
-        print("5: End turn")
+        operation.push2all("1: Trade with others")
+        operation.push2all("2: Roll dices")
+        operation.push2all("3: Construct building")
+        operation.push2all("4: Mortgage asset")
+        operation.push2all("5: End turn")
         while True:
-            input_str = input("Please enter the number of your decision:")
+            operation.push2all("Please enter the number of your decision:")
+            input_str = operation.wait_choice()
             try:
                 choice = int(input_str)
                 break
             except ValueError:
-                print("Please enter a number.")
-        print()
+                operation.push2all("Please enter a number.")
+        operation.push2all(" ")
         if choice == 1:
             operation.trade()
         elif choice == 2 and end_flag is False:
@@ -289,9 +291,9 @@ def turn(gamer):
             if end_flag is True:
                 break
             else:
-                print("Please roll a dice")
+                operation.push2all("Please roll a dice")
         else:
-            print("Invalid choice")
+            operation.push2all("Invalid choice")
 
 
 def game_main():
@@ -301,11 +303,11 @@ def game_main():
     while len(living_list) != 1:
         for gamer_id in living_list:
             gamer = data["player_dict"][gamer_id]
-            print("Now is %s turn" % gamer.name)
-            print("Gamer current cash %d" % gamer.cash)
+            operation.push2all("Now is %s turn" % gamer.name)
+            operation.push2all("Gamer current cash %d" % gamer.cash)
             if gamer.cur_status == 0:
                 # In jail
-                print("%s are in jail" % gamer.name)
+                operation.push2all("%s are in jail" % gamer.name)
                 a, b = roll_dice()
                 if a == b:
                     gamer.cur_status = 1
@@ -313,17 +315,17 @@ def game_main():
                     turn(gamer)
                 else:
                     while True:
-                        print("1: Bail. Get out of prison.")
-                        print("2: Stay in prison.")
+                        operation.push2all("1: Bail. Get out of prison.")
+                        operation.push2all("2: Stay in prison.")
                         while True:
-                            input_str = input(
-                                "Please enter the number of your decision:")
+                            operation.push2all("Please enter the number of your decision:")
+                            input_str = operation.wait_choice()
                             try:
                                 choice = int(input_str)
                                 break
                             except ValueError:
-                                print("Please enter a number.")
-                        print()
+                                operation.push2all("Please enter a number.")
+                        operation.push2all(" ")
                         if choice == 1:
                             if operation.bail(gamer, data):
                                 gamer.cur_status = 1
@@ -331,20 +333,20 @@ def game_main():
                                 turn(gamer)
                                 break
                             else:
-                                print("Please stay in jail")
+                                operation.push2all("Please stay in jail")
                                 gamer.count_in_jail()
                                 break
                         elif choice == 2:
                             gamer.count_in_jail()
                             break
                         else:
-                            print("Invalid choice")
+                            operation.push2all("Invalid choice")
             elif gamer.cur_status == 1:
                 # Normal Status
                 turn(gamer)
             else:
                 pass
-            print()
+            operation.push2all(" ")
 
 
 if __name__ == "__main__":
