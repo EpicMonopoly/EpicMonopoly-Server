@@ -82,6 +82,7 @@ def own_all_block(gamer):
     pass
 
 def construct_building(gamer, data):
+    import estate
     if data["epic_bank"].cur_house == 0:
         print("Bank out of house")
         return 0
@@ -123,7 +124,7 @@ def construct_building(gamer, data):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                operation.pay(gamer, data["epic_bank"], payment)
+                pay(gamer, data["epic_bank"], payment)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_hotel()
                 print("%s built one hotel in %s" %
@@ -136,7 +137,7 @@ def construct_building(gamer, data):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                operation.pay(gamer, data["epic_bank"], payment)
+                pay(gamer, data["epic_bank"], payment)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
@@ -147,7 +148,7 @@ def construct_building(gamer, data):
                 if payment > gamer.cash:
                     print("Do not have enough money")
                     return 0
-                operation.pay(gamer, data["epic_bank"], payment)
+                pay(gamer, data["epic_bank"], payment)
                 cur_asset.house_num(cur_asset.house_num + 1)
                 data["epic_bank"].built_house()
                 print("%s built one house in %s" %
