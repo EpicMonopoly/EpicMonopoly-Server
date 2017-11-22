@@ -9,7 +9,6 @@ def pay(payer, gainer, payment):
     cash_A = payer.cash
     if cash_A < payment:
         payment_left = payment - cash_A
-
         pass
     else:
         payer.pay(payment)

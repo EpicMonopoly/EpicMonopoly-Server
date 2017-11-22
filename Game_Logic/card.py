@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 import ef
+import operation
 
 
 class Card(metaclass=ABCMeta):
@@ -49,7 +50,7 @@ class MoveCard(Card):
         Move player on the map to certain block
         """
         print(self.description)
-        gamer.position = self._destination
+        gamer.move(steps=None, position=self._destination)
 
 
 class PayCard(Card):
@@ -70,8 +71,9 @@ class PayCard(Card):
             if from_role.cash < self._amount:
                 return False
             else:
-                from_role.cash = -self._amount
-                to_role.cash = self._amount
+                operation.pay(from_role, to_role, self._amount)
+                # from_role.cash = -self._amount
+                # to_role.cash = self._amount
                 return True
         elif self._card_type == 8:  # need to check
             to_role = []
