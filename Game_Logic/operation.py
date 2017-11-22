@@ -81,8 +81,9 @@ def mortgage_asset(gamer, data):
     print("Your current assets")
     asset_number_list = []
     for cur_asset in gamer.properties:
-        print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
-        asset_number_list.append(cur_asset.block_id)
+        if cur_asset.status == 1:
+            print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+            asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
         print("None")
         return 0
