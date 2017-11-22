@@ -83,6 +83,9 @@ def mortgage_asset(gamer, data):
     for cur_asset in gamer.properties:
         print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
         asset_number_list.append(cur_asset.block_id)
+    if asset_number_list is []:
+        print("None")
+        return 0
     while True:
         input_str = input("Please enter the index you want to mortgage:")
         try:
