@@ -68,11 +68,7 @@ class PayCard(Card):
         if self._card_type == 2:
             to_role = data['epic_bank']
             from_role = gamer
-            if from_role.cash < self._amount:
-                return False
-            else:
-                operation.pay(from_role, to_role, self._amount, data)
-                return True
+            operation.pay(from_role, to_role, self._amount, data)
         elif self._card_type == 8:  # need to check
             to_role = []
             all_role = data["player_dict"]
@@ -81,29 +77,18 @@ class PayCard(Card):
                     to_role.append(all_role[role_id])
             from_role = gamer
             total_amount = self._amount * len(to_role)
-            if from_role.cash < total_amount:
-                return False
-            else:
-                for role in to_role:
-                    operation.pay(from_role, role, self._amount, data)
-                return True
+            for role in to_role:
+                operation.pay(from_role, role, self._amount, data)
         elif self._card_type == 3:
             import estate
             from_role = gamer
             total_amount = 0
             for e in from_role.assets:
                 if isinstance(estate, estate.Estate):
-                    house_repair_amount = int(
-                        e.house_num % 6) * self._amount[0]
-                    hotel_repair_amount = int(
-                        e.house_num / 6) * self._amount[1]
+                    house_repair_amount = int(e.house_num % 6) * self._amount[0]
+                    hotel_repair_amount = int(e.house_num / 6) * self._amount[1]
                     total_amount += house_repair_amount + hotel_repair_amount
-                    if from_role.cash < total_amount:
-                        return False
-                    else:
-                        operation.pay(
-                            from_role, data['epic_bank'], self._amount, data)
-                        return True
+                    operation.pay(from_role, data['epic_bank'], self._amount, data)
 
     @property
     def amount(self):
@@ -132,7 +117,6 @@ class CollectCard(Card):
         if self._card_type == 0:
             to_role = gamer
             operation.pay(data['epic_bank'], to_role, self._amount, data)
-            return True
         elif self._card_type == 1:
             to_role = gamer
             from_role = []
@@ -143,7 +127,6 @@ class CollectCard(Card):
             for role_id in from_role:
                 payer = all_role[role_id]
                 operation.pay(payer, gamer, self._amount, data)
-            return True
 
     @property
     def amount(self):
