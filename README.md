@@ -8,6 +8,14 @@ Game Logic development:
 - [ ] Demo
 - [ ] Communications 
 
+## TODO
+- [ ] Trade 
+- [ ] All about EF
+- [ ] operation: 
+	- [ ] clearing
+	- [ ] broken
+- [ ] board: new_board 
+
 Server structure: 
 
 - [ ] Web server: nginx
