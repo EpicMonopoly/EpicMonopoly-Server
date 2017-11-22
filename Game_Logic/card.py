@@ -7,6 +7,7 @@ class Card(metaclass=ABCMeta):
     """
     Card Class
     """
+
     def __init__(self, name, description):
         self._name = name
         self._description = description
@@ -55,10 +56,11 @@ class MoveCard(Card):
         else:
             print("Passing Go, Gain 200")
             operation.pay(data['epic_bank'], gamer, 200, data)
-        if self._destination == 30:
-            gamer.position = 0  # in jail
+        if self._destination == 10:
+            # in jail
+            gamer.cur_status = 0
         gamer.move(steps=None, position=self._destination)
-        
+
 
 class PayCard(Card):
     def __init__(self, name, card_type, description, amount):
@@ -92,10 +94,13 @@ class PayCard(Card):
             total_amount = 0
             for e in from_role.assets:
                 if isinstance(estate, estate.Estate):
-                    house_repair_amount = int(e.house_num % 6) * self._amount[0]
-                    hotel_repair_amount = int(e.house_num / 6) * self._amount[1]
+                    house_repair_amount = int(
+                        e.house_num % 6) * self._amount[0]
+                    hotel_repair_amount = int(
+                        e.house_num / 6) * self._amount[1]
                     total_amount += house_repair_amount + hotel_repair_amount
-                    operation.pay(from_role, data['epic_bank'], self._amount, data)
+                    operation.pay(
+                        from_role, data['epic_bank'], self._amount, data)
 
     @property
     def amount(self):
@@ -177,7 +182,8 @@ class BailCard(Card):
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
-                    input_str = input("Please enter the player of you want to sell the card to:")
+                    input_str = input(
+                        "Please enter the player of you want to sell the card to:")
                     try:
                         choice = str(input_str)
                         if choice in data['player_dict'].keys() and choice != gamer.name:

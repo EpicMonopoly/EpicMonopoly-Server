@@ -216,7 +216,6 @@ def roll(gamer):
         end_flag = False
     else:
         end_flag = True
-    print("Dice number is", a, b)
     step = a + b
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
@@ -236,6 +235,7 @@ def roll_dice():
     print("Rolling")
     a = random.randint(1, 6)
     b = random.randint(1, 6)
+    print("Dice number is", a, b)
     return a, b
 
 
