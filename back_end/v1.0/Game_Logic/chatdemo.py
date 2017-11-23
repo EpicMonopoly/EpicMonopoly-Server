@@ -94,6 +94,10 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("../in_game.html", messages=global_message_buffer.cache)
 
+class LoginHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("../login_page.html", messages=global_message_buffer.cache)
+
 
 class MessageNewHandler(tornado.web.RequestHandler):
     def post(self):
@@ -145,6 +149,7 @@ def main(buffer):
     app = tornado.web.Application(
         [
             (r"/", MainHandler),
+            (r"/login", LoginHandler),
             (r"/a/message/new", MessageNewHandler),
             (r"/a/message/updates", MessageUpdatesHandler),
             ],
