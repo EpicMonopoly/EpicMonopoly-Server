@@ -22,6 +22,7 @@ class Player(role.Role):
         self._utility_num = 0
         self._station_num = 0
         self._in_jail = 0
+        self._pre_position = 0
 
     @property  # getAlliance
     def alliance(self):
@@ -142,6 +143,7 @@ class Player(role.Role):
         :param position: position to arrive(actually go into jail or something else)
         position: None if normally move on map otherwise set the position
         """
+        self._pre_position = self._position
         if not position:
             self._position = (self._position + steps) % 40
         else:
