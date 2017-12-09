@@ -5,13 +5,16 @@ Game Logic development:
 
 - [x] Game logic
 - [x] Json design
-- [ ] Demo
+- [x] Demo
 - [ ] Communications 
 
 ## TODO
 - [ ] Trade 
 - [ ] All about EF
 - [ ] board: new_board(Shelved)
+
+## Bug
+- [ ] some function in bank(add loan dict, remove loan dict, repayment)
 
 Server structure: 
 

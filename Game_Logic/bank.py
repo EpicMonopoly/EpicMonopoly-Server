@@ -48,15 +48,18 @@ class Bank(role.Role):
         self._cur_house = self.cur_house + number
     
     def remove_hotel(self):
-        self._cur_hotel = self._cur_hotel - 1
+        self._cur_hotel = self._cur_hotel + 1
 
+    # TODO
     def add_loan_dict(self, asset_id, amount):
         self._loan_dict
     
+    # TODO
     def remove_loan_dict(self, asset_id):
         if asset_id in self._loan_dict.keys():
             del self._loan_dict[asset_id]
 
+    # TODO
     def repayment(self, from_role, assets):
         """
         Repay the mortgaged assets
@@ -90,7 +93,7 @@ class Bank(role.Role):
         """
         Add asset to player
         :param self: self
-        """
+        """ 
         import station
         import utility
         import estate
