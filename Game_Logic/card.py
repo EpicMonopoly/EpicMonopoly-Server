@@ -13,7 +13,7 @@ class Card(metaclass=ABCMeta):
         self._description = description
 
     @abstractmethod
-    def play(self):
+    def play(self, gamer, data):
         pass
 
     @property

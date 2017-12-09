@@ -70,7 +70,7 @@ class Estate(asset.Asset):
             raise ValueError("Invalid house number")
 
     # TODO: implement the method
-    def change_house_value(self, EF):
+    def change_value(self, EF):
         """
         Change house value according to EF
         :type EF: float

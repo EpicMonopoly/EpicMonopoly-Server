@@ -38,7 +38,7 @@ class Role(metaclass=ABCMeta):
         self._cash = self._cash + amount
 
     @property  # getProperties
-    def properties(self):
+    def assets(self):
         return self._assets
 
     @abstractmethod
