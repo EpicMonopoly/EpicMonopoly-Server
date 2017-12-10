@@ -1,0 +1,99 @@
+import tornado.ioloop
+import tornado.web
+import tornado.websocket
+import logging
+
+from tornado.options import define, options, parse_command_line
+
+define("port", default=8888, help="run on the given port", type=int)
+
+clients = dict()
+game_log = []
+
+class Choice(object):
+    def __init__(self):
+        self.choice = -2
+        # -2 初始化值
+        self.isvalid = False
+
+    def set_choice(self, choice):
+        self.choice = choice
+        self.isvalid = True
+
+    def get_choice(self):
+        if not self.isvalid:
+            # -1无效值
+            return -1
+        else:
+            self.isvalid = False
+            return self.choice
+
+global_Choice = Choice()
+
+class IndexHandler(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    def get(self):
+        self.render("index.html")
+
+
+class MywebSocketHandler(tornado.websocket.WebSocketHandler):
+    def open(self, *args):
+        self.id = self.get_argument("Id")
+        self.stream.set_nodelay(True)
+        clients[self.id] = {"id": self.id, "object": self}
+
+    def on_message(self, message):
+        if message == "<recall>":
+            single_push(self.id)
+            return
+        logging.info("Client %s received a message : %s " % (self.id, message))
+        global_Choice.set_choice(message)
+        game_log.append((self.id, message))
+
+    def on_close(self):
+        if self.id in clients:
+            del clients[self.id]
+            logging.info("Client %s is closed." % (self.id))
+
+    def check_origin(self, origin):
+        return True
+
+
+app = tornado.web.Application({
+    (r"/", IndexHandler),
+    (r"/websocket", MywebSocketHandler),
+})
+
+import threading
+import time
+
+
+def sendTime():
+    import datetime
+    while True:
+        for key in clients.keys():
+            msg = str(datetime.datetime.now())
+            clients[key]["object"].write_message(msg)
+            logging.info("Write to client %s: %s" % (key, msg))
+        time.sleep(1)
+
+def push():
+    while True:
+        server_input = input("Force push:")
+        for key in clients.keys():
+            clients[key]["object"].write_message(server_input)
+            logging.info("Write to client %s: %s" % (key, server_input))
+
+def single_push(id):
+    for i in range(len(game_log)):
+        clients[id]["object"].write_message(game_log[i][1])
+        logging.info("Write to client %s: %s" % (id, game_log[i][1]))
+
+def main():
+    parse_command_line()
+    app.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+
+
+if __name__ == "__main__":
+    main()
