@@ -1,3 +1,21 @@
 {
-    "__comment__": "Under constructing"
+    "__comment__": "Under constructing",
+    "set_name": "room_list",
+    "data": [
+    {
+        "name": "Yixixi",
+        "id": 1,
+        "owner": "Player1",
+        "player_num": 6,
+        "player_list_ref": "player_list",
+        "status": 1
+    },
+    {
+        "name": "Ahaha",
+        "id": 2,
+        "owner": "Player1",
+        "player_num": 4,
+        "player_list_ref": "player_list2",
+        "status": 0
+    }]
 }
