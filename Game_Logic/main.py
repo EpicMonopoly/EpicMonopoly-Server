@@ -268,8 +268,9 @@ def turn(gamer):
         operation.push2all("1: Trade with others")
         operation.push2all("2: Roll dices")
         operation.push2all("3: Construct building")
-        operation.push2all("4: Mortgage asset")
-        operation.push2all("5: End turn")
+        operation.push2all("4: Remove building")
+        operation.push2all("5: Mortgage asset")
+        operation.push2all("6: End turn")
         while True:
             input_str = operation.wait_choice(
                 "Please enter the number of your decision:")
@@ -280,14 +281,17 @@ def turn(gamer):
                 operation.push2all("Please enter a number.")
         operation.push2all()
         if choice == 1:
-            operation.trade()
+            # operation.trade(data, trade_data)
+            pass
         elif choice == 2 and end_flag is False:
             dice_a, dice_b, end_flag = roll(gamer)
         elif choice == 3:
             operation.construct_building(gamer, data)
         elif choice == 4:
-            operation.mortgage_asset(gamer, data)
+            operation.remove_building(gamer, data)
         elif choice == 5:
+            operation.mortgage_asset(gamer, data)
+        elif choice == 6:
             if end_flag is True:
                 break
             else:
