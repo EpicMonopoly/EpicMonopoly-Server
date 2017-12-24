@@ -20,6 +20,10 @@ class CardPile(block.Block):
     def display(self, gamer, data, dice_result):
         pass
 
+    def change_value(self, rate):
+        for card in self._cards:
+            card.change_value(rate)
+
 
 class Community_Chest(CardPile):
     """

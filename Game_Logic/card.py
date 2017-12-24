@@ -61,12 +61,18 @@ class MoveCard(Card):
             gamer.cur_status = 0
         gamer.move(steps=None, position=self._destination)
 
+    def change_value(self, rate):
+        pass
+
 
 class PayCard(Card):
     def __init__(self, name, card_type, description, amount):
         super().__init__(name, description)
         self._amount = amount
         self._card_type = card_type
+
+    def change_value(self, rate):
+        self._amount = self._amount * (1 + rate)
 
     def play(self, gamer, data):
         """
@@ -110,15 +116,15 @@ class PayCard(Card):
     def amount(self, amount):
         self._amount = amount
 
-    def change_value(self, EF):
-        pass
-
 
 class CollectCard(Card):
     def __init__(self, name, card_type, description, amount):
         super().__init__(name, description)
         self._amount = amount
         self._card_type = card_type
+
+    def change_value(self, rate):
+        pass
 
     def play(self, gamer, data):
         """
@@ -148,14 +154,14 @@ class CollectCard(Card):
     def amount(self, amount):
         self._amount = amount
 
-    def change_value(self, EF):
-        pass
-
 
 class BailCard(Card):
     def __init__(self, name, card_type, description):
         super().__init__(name, description)
         self._card_type = card_type
+
+    def change_value(self, rate):
+        pass
 
     def play(self, gamer, data):
         """
@@ -167,7 +173,8 @@ class BailCard(Card):
             operation.push2all("1. Keep it yourself.")
             operation.push2all("2. Sell to others.")
             while True:
-                input_str = operation.wait_choice("Please enter the number of your decision:")
+                input_str = operation.wait_choice(
+                    "Please enter the number of your decision:")
                 try:
                     choice = int(input_str)
                     if choice == 1 or choice == 2:
@@ -175,9 +182,11 @@ class BailCard(Card):
                     elif choice == -1:
                         return False
                     else:
-                        operation.push2all("Invaild choice, please input again.")
+                        operation.push2all(
+                            "Invaild choice, please input again.")
                 except ValueError:
-                    operation.push2all("Please enter a number. Enter -1 to quit")
+                    operation.push2all(
+                        "Please enter a number. Enter -1 to quit")
             if choice == 1:
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
@@ -191,9 +200,11 @@ class BailCard(Card):
                         elif choice == 'q':
                             return False
                         else:
-                            operation.push2all("Invaild choice, please input again.")
+                            operation.push2all(
+                                "Invaild choice, please input again.")
                     except ValueError:
-                        operation.push2all("Please enter a player name. Enter q to quit")
+                        operation.push2all(
+                            "Please enter a player name. Enter q to quit")
                 to_role = data['player_dict'][choice]
                 from_role = gamer
                 # TODO: need to implement trade

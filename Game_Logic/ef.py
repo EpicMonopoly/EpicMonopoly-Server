@@ -28,6 +28,9 @@ class EF:
         """
         return self._variation
 
+    def random_rate(self):
+        pass
+
     def generate_ef(self):
         """
         Generate a new ef number

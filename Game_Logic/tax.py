@@ -6,6 +6,7 @@ class Tax(block.Block):
     """
     Tax class
     """
+
     def __init__(self, name, block_id, position, rate):
         super().__init__(name, block_id, position)
         self._rate = rate
@@ -21,11 +22,15 @@ class Tax(block.Block):
     def display(self, gamer, data, dice_result):
         pass
 
+    def change_value(self, new_rate):
+        self._rate = self._rate * (1 + new_rate)
+
 
 class Income_Tax(Tax):
     """
     Subclass(Tax): Income_Tax
     """
+
     def __init__(self, name, block_id, position, rate):
         """
         Constructor 
@@ -33,7 +38,7 @@ class Income_Tax(Tax):
             :param position: int
         """
         super().__init__(name, block_id, position, rate)
-    
+
     def display(self, gamer, data, dice_result):
         """
         docstring here
@@ -52,6 +57,7 @@ class Super_Tax(Tax):
     """
     Subclass(Tax): Super_Tax
     """
+
     def __init__(self, name, block_id, position, rate):
         """
         Constructor 
@@ -59,7 +65,7 @@ class Super_Tax(Tax):
             :param position: int
         """
         super().__init__(name, block_id, position, rate)
-    
+
     def display(self, gamer, data, dice_result):
         """
         docstring here

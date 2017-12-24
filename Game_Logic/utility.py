@@ -6,6 +6,7 @@ class Utility(asset.Asset):
     """
     Class Utility
     """
+
     def __init__(self, name, block_id, position, uid, estate_value, status):
         """
         Call superclass construct method
@@ -21,6 +22,9 @@ class Utility(asset.Asset):
             # Should not be here
             return 0
 
+    def change_value(self, rate):
+        self._estate_value = self._estate_value * (1 + rate)
+
     def display(self, gamer, data, dice_result):
         """
         Display description
@@ -28,7 +32,7 @@ class Utility(asset.Asset):
         :type gamer: player.Player
         :return:
         """
-        import operation
+        # import operation
         player_dict = data['player_dict']
         bank = data['epic_bank']
         if self._status == 1:
@@ -46,11 +50,13 @@ class Utility(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                operation.push2all("Nobody own %s do you want to buy it?" % self.name)
+                operation.push2all(
+                    "Nobody own %s do you want to buy it?" % self.name)
                 operation.push2all("1: Buy it")
                 operation.push2all("2: Do not buy it")
                 while True:
-                    input_str = operation.wait_choice("Please enter the number of your decision:")
+                    input_str = operation.wait_choice(
+                        "Please enter the number of your decision:")
                     try:
                         choice = int(input_str)
                         break
@@ -66,7 +72,7 @@ class Utility(asset.Asset):
                         operation.pay(gamer, bank, price, data)
                         operation.trade_asset(self, bank, gamer)
                         operation.push2all("%s buy %s for %d" %
-                              (gamer.name, self.name, price))
+                                           (gamer.name, self.name, price))
                         break
                 elif choice == 2:
                     break

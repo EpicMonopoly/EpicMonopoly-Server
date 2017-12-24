@@ -69,15 +69,9 @@ class Estate(asset.Asset):
             # Should not be here
             raise ValueError("Invalid house number")
 
-    # TODO: implement the method
-    def change_value(self, EF):
-        """
-        Change house value according to EF
-        :type EF: float
-        :param EF: economy factor
-        :return: None
-        """
-        pass
+    def change_value(self, rate):
+        self._house_value = self._house_value * (1 + rate)
+        self._estate_value = self._estate_value * (1 + rate)
 
     def display(self, gamer, data, dice_result):
         """

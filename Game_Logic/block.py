@@ -59,14 +59,14 @@ class Go(Block):
             :param position: int
         """
         super().__init__(name, block_id, position)
-        self.reward_value = 200
+        self._reward_value = 200
 
     def display(self, gamer, data, dice_result):
         # import operation
-        operation.pay(data['epic_bank'], gamer, self.reward_value, data)
+        operation.pay(data['epic_bank'], gamer, self._reward_value, data)
     
     def change_value(self, rate):
-        pass
+        self._reward_value = self._reward_value * (1 + rate)
 
 
 class Go_To_Jail(Block):
@@ -94,6 +94,9 @@ class Go_To_Jail(Block):
         gamer.move(steps=0, position=10)
         gamer.cur_status = 0
 
+    def change_value(self, rate):
+        pass
+
 
 class In_Jail(Block):
     """
@@ -116,6 +119,9 @@ class In_Jail(Block):
     def display(self, gamer, data, dice_result):
         pass
 
+    def change_value(self, rate):
+        self._bail_fee = self._bail_fee * (1 + rate)
+
 
 class Free_Parking(Block):
     """
@@ -131,4 +137,7 @@ class Free_Parking(Block):
         super().__init__(name, block_id, position)
 
     def display(self, gamer, data, dice_result):
+        pass
+
+    def change_value(self, rate):
         pass

@@ -73,6 +73,11 @@ def trade():
     pass
 
 
+def update_value(data):
+    block_list = data["chess_board"]
+    # EF_rate =
+
+
 def broken(gamer, data):
     data["player_dict"][gamer.id].cur_status = -1
     data["living_list"].remove(gamer.id)
@@ -156,7 +161,8 @@ def construct_building(gamer, data):
         push2all("None")
         return 0
     while True:
-        input_str = wait_choice("Please enter the number you want to built a house:")
+        input_str = wait_choice(
+            "Please enter the number you want to built a house:")
         try:
             asset_number = int(input_str)
             break
