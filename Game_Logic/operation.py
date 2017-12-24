@@ -1,3 +1,7 @@
+import uuid
+import chatdemo
+
+
 # operations
 def pay(payer, gainer, payment, data):
     """
@@ -11,20 +15,20 @@ def pay(payer, gainer, payment, data):
         payment_left = payment - cash_A
         payer.pay(cash_A)
         gainer.gain(payment)
-        print("%s pay %d to %s" % (payer.name, payment, gainer.name))
-        print("%s out of cash" % payer.name)
+        push2all("%s pay %d to %s" % (payer.name, payment, gainer.name))
+        push2all("%s out of cash" % payer.name)
         clearing(payer, payment_left, data)
     else:
         payer.pay(payment)
         gainer.gain(payment)
-        print("%s pay %d to %s" % (payer.name, payment, gainer.name))
+        push2all("%s pay %d to %s" % (payer.name, payment, gainer.name))
 
 
 def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
     bail_fee = jail.bail_fee
     if prionser.cash < bail_fee:
-        print("Not enough money")
+        push2all("Not enough money")
         return False
     else:
         pay(prionser, data["epic_bank"], bail_fee, data)
@@ -49,7 +53,7 @@ def clearing(gamer, amount_left, data):
     :param gamer:
     :param amount_left:
     """
-    print("Start mortgage %s's assets" % gamer.name)
+    push2all("Start mortgage %s's assets" % gamer.name)
     for cur_asset in gamer.assets:
         if amount_left <= 0:
             return 0
@@ -74,32 +78,32 @@ def broken(gamer, data):
     for cur_asset in gamer.properties:
         trade_asset(cur_asset, gamer, data["epic_bank"])
         data["epic_bank"].remove_loan_dict(cur_asset.block_id)
-    print("%s bankrupt" % gamer.name)
+    push2all("%s bankrupt" % gamer.name)
 
 
 def mortgage_asset(gamer, data):
-    print("Your current assets")
+    push2all("Your current assets")
     asset_number_list = []
     for cur_asset in gamer.properties:
         if cur_asset.status == 1:
-            print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+            push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        print("None")
+        push2all("None")
         return 0
     while True:
-        input_str = input("Please enter the index you want to mortgage:")
+        input_str = wait_choice("Please enter the index you want to mortgage:")
         try:
             asset_number = int(input_str)
             break
         except ValueError:
-            print("Please enter a number. Enter -1 to quit")
-    print()
+            push2all("Please enter a number. Enter -1 to quit")
+    push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
-            print("Invalid input")
+            push2all("Invalid input")
             return 0
     for cur_asset in gamer.properties:
         if cur_asset.block_id == asset_number:
@@ -140,72 +144,95 @@ def own_all_block(gamer):
 def construct_building(gamer, data):
     import estate
     own_street = own_all_block(gamer)
-    print("Valid building list")
+    push2all("Valid building list")
     asset_number_list = []
     for cur_asset in gamer.properties:
         if isinstance(cur_asset, estate.Estate):
             if cur_asset.street_id in own_street:
-                print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+                push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        print("None")
+        push2all("None")
         return 0
     while True:
-        input_str = input("Please enter the number you want to built a house:")
+        input_str = wait_choice("Please enter the number you want to built a house:")
         try:
             asset_number = int(input_str)
             break
         except ValueError:
-            print("Please enter a number. Enter -1 to quit")
-    print()
+            push2all("Please enter a number. Enter -1 to quit")
+    push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
-            print("Invalid input")
+            push2all("Invalid input")
             return 0
     for cur_asset in gamer.properties:
         if cur_asset.block_id == asset_number:
             if cur_asset.house_num == 6:
-                print("Cannot built more house!")
+                push2all("Cannot built more house!")
                 return 0
             elif cur_asset.house_num == 5:
                 if data["epic_bank"].cur_hotel == 0:
-                    print("Bank out of hotel")
+                    push2all("Bank out of hotel")
                     return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
-                    print("Do not have enough money")
+                    push2all("Do not have enough money")
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_hotel()
-                print("%s built one hotel in %s" %
-                      (gamer.name, cur_asset.name))
+                push2all("%s built one hotel in %s" %
+                         (gamer.name, cur_asset.name))
             elif cur_asset.house_num == 4:
                 if data["epic_bank"].cur_hotel == 0:
-                    print("Bank out of hotel")
+                    push2all("Bank out of hotel")
                     return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
-                    print("Do not have enough money")
+                    push2all("Do not have enough money")
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
-                print("%s built one hotel in %s" %
-                      (gamer.name, cur_asset.name))
+                push2all("%s built one hotel in %s" %
+                         (gamer.name, cur_asset.name))
             else:
                 if data["epic_bank"].cur_house == 0:
-                    print("Bank out of house")
+                    push2all("Bank out of house")
                     return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
-                    print("Do not have enough money")
+                    push2all("Do not have enough money")
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_house()
-                print("%s built one house in %s" %
-                      (gamer.name, cur_asset.name))
+                push2all("%s built one house in %s" %
+                         (gamer.name, cur_asset.name))
+
+
+def wait_choice(line=""):
+    """
+    Wait for front end to upload data
+    """
+    push2all(line)
+    # Substitution for input method
+    return input()
+    choice = chatdemo.global_Choice.get_choice()
+    while choice == -1:
+        choice = chatdemo.global_Choice.get_choice()
+    return choice
+
+
+def push2all(line=""):
+    print(line)
+    message = {
+        "id": str(uuid.uuid4()),
+        "body": line,
+    }
+    # message["html"] = tornado.escape.to_basestring(.render_string("message.html", message=message))
+    chatdemo.global_message_buffer.new_messages([message])

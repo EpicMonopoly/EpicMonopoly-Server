@@ -45,7 +45,7 @@ class Income_Tax(Tax):
         bank = data['epic_bank']
         payment = gamer.cash * self.rate
         operation.pay(gamer, bank, payment, data)
-        print("%s pay %d for tax" % (gamer.name, payment))
+        operation.push2all("%s pay %d for tax" % (gamer.name, payment))
 
 
 class Super_Tax(Tax):
@@ -71,4 +71,4 @@ class Super_Tax(Tax):
         bank = data['epic_bank']
         payment = gamer.calculate_asset_value() * self.rate
         operation.pay(gamer, bank, payment, data)
-        print("%s pay %d for tax" % (gamer.name, payment))
+        operation.push2all("%s pay %d for tax" % (gamer.name, payment))

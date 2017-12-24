@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractclassmethod
+import operation
 
 
 class Block(metaclass=ABCMeta):
@@ -79,7 +80,7 @@ class Go_To_Jail(Block):
             :param data: 
             :param dice_result: 
         """
-        print("Move to Jail")
+        operation.push2all("Move to Jail")
         gamer.move(steps=0, position=10)
         gamer.cur_status = 0
 
