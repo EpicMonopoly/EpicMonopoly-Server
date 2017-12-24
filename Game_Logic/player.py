@@ -148,3 +148,18 @@ class Player(role.Role):
             self._position = (self._position + steps) % 40
         else:
             self._position = position
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "cash": self._cash,
+            "position": self._position,
+            "alliance": self._alliancem,
+            "bail_card_num": self._bail_card_num,
+            "cur_status": self._cur_status,
+            "utility_num": self._utility_num,
+            "station_num": self._station_num,
+            "in_jail": self._in_jail,
+            "pre_position": self._pre_position,
+        }
+        return json_data

@@ -46,6 +46,14 @@ class Block(metaclass=ABCMeta):
     def change_value(self, rate):
         pass
 
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+        }
+        return json_data
+
 
 class Go(Block):
     """
@@ -68,6 +76,15 @@ class Go(Block):
     def change_value(self, rate):
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
+
+     def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "reward_value": self._reward_value
+        }
+        return json_data
 
 
 class Go_To_Jail(Block):

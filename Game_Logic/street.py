@@ -41,3 +41,10 @@ class Street:
         random.shuffle(self._block_list)
         for block in self._block_list:
             block.position(temp_list.pop())
+
+    #TODO: need to finish
+    def getJSon(self):
+        json_data = {
+            "color": self._color
+        }
+        return json_data

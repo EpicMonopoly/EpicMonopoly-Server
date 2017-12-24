@@ -25,6 +25,15 @@ class Tax(block.Block):
     def change_value(self, new_rate):
         self._rate = self._rate * (1 + new_rate)
 
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "rete": self._rate
+        }
+        return json_data
+
 
 class Income_Tax(Tax):
     """

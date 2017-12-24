@@ -59,3 +59,11 @@ class Role(metaclass=ABCMeta):
         :return boolean: True if succeed while False if asset is empty
         """
         pass
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "cash": self._cash,
+            "assets": self._assets
+        }
+        return json_data

@@ -28,6 +28,12 @@ class Card(metaclass=ABCMeta):
     def change_value(self, rate):
         pass
 
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "description": self._description
+        }
+        return json_data
 
 class MoveCard(Card):
     def __init__(self, name, card_type, description, step):
@@ -77,6 +83,15 @@ class MoveCard(Card):
 
     def change_value(self, rate):
         pass
+
+     def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "description": self._description,
+            "destination": self._destination,
+            "card_type": self._card_type
+        }
+        return json_data
 
 
 class PayCard(Card):
@@ -130,6 +145,15 @@ class PayCard(Card):
     def amount(self, amount):
         self._amount = amount
 
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "description": self._description,
+            "amount": self._amount,
+            "card_type": self._card_type
+        }
+        return json_data
+
 
 class CollectCard(Card):
     def __init__(self, name, card_type, description, amount):
@@ -167,6 +191,15 @@ class CollectCard(Card):
     @amount.setter
     def amount(self, amount):
         self._amount = amount
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "description": self._description,
+            "amount": self._amount,
+            "card_type": self._card_type
+        }
+        return json_data
 
 
 class BailCard(Card):
@@ -227,3 +260,11 @@ class BailCard(Card):
                 from_role = gamer
                 # TODO: need to implement trade
                 pass
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "description": self._description,
+            "card_type": self._card_type
+        }
+        return json_data
