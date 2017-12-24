@@ -82,7 +82,7 @@ def update_value(data):
 def broken(gamer, data):
     data["player_dict"][gamer.id].cur_status = -1
     data["living_list"].remove(gamer.id)
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         trade_asset(cur_asset, gamer, data["epic_bank"])
         data["epic_bank"].remove_loan_dict(cur_asset.block_id)
     push2all("%s bankrupt" % gamer.name)
@@ -91,7 +91,7 @@ def broken(gamer, data):
 def mortgage_asset(gamer, data):
     push2all("Your current assets")
     asset_number_list = []
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if cur_asset.status == 1:
             push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
             asset_number_list.append(cur_asset.block_id)
@@ -112,7 +112,7 @@ def mortgage_asset(gamer, data):
         if asset_number not in asset_number_list:
             push2all("Invalid input")
             return 0
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
             return_cash = cur_asset.mortgage_value
             pay(data["epic_bank"], gamer, return_cash, data)
@@ -176,7 +176,7 @@ def construct_building(gamer, data):
         if asset_number not in asset_number_list:
             push2all("Invalid input")
             return 0
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
             if cur_asset.house_num == 6:
                 push2all("Cannot built more house!")
