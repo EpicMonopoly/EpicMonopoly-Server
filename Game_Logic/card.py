@@ -51,15 +51,29 @@ class MoveCard(Card):
         Move player on the map to certain block
         """
         operation.push2all(self.description)
-        if gamer.position < self._destination:
-            operation.push2all("Do not pass Go, no cash collected.")
-        else:
+        if isinstance(self._destination, list):
+            tmp = self._destination[0]
+            for dest in self._destination:
+                if gamer.position < dest:
+                    tmp = dest
+                    operation.push2all("Do not pass Go, no cash collected.")
+                    gamer.move(steps=None, position=tmp)
+                    break
+                else:
+                    continue
             operation.push2all("Passing Go, Gain 200")
             operation.pay(data['epic_bank'], gamer, 200, data)
-        if self._destination == 10:
-            # in jail
-            gamer.cur_status = 0
-        gamer.move(steps=None, position=self._destination)
+            gamer.move(steps=None, position=tmp)
+        else:
+            if gamer.position < self._destination:
+                operation.push2all("Do not pass Go, no cash collected.")
+            else:
+                operation.push2all("Passing Go, Gain 200")
+                operation.pay(data['epic_bank'], gamer, 200, data)
+            if self._destination == 10:
+                # in jail
+                gamer.cur_status = 0
+            gamer.move(steps=None, position=self._destination)
 
     def change_value(self, rate):
         pass
