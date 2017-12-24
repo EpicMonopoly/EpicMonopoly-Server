@@ -9,9 +9,7 @@
       "id": []
     },
     "alliance": "Asia",
-    "status": 1,
-    "position": 0,
-    "pre_position": 0
+    "status": 1
   },
   {
     "name": "Player2",
@@ -21,9 +19,7 @@
       "id": []
     },
     "alliance": "Europe",
-    "status": 1,
-    "position": 0,
-    "pre_position": 0
+    "status": 1
   },
   {
     "name": "Player3",
@@ -33,8 +29,6 @@
       "id": []
     },
     "alliance": "America",
-    "status": 1,
-    "position": 0,
-    "pre_position": 0
+    "status": 1
   }]
 }

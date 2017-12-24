@@ -1,0 +1,99 @@
+{
+  "set_name": "chance_data",
+  "data": [
+  {
+    "card_id": 17,
+    "card_type": 0,
+    "amount": 200,
+    "description": "Advance to Go(Collect $200)"
+  },
+  {
+    "card_id": 18,
+    "card_type": 4,
+    "block_id": 22,
+    "description": "Advance to Jinlu. Move to Jinlu"
+  },
+  {
+    "card_id": 19,
+    "card_type": 6,
+    "block_id": [12, 28],
+    "description": "Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown."
+  },
+  {
+    "card_id": 20,
+    "card_type": 6,
+    "block_id": [5, 15, 25, 35],
+    "description": "Advance token to the nearest Railroad. Pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank."
+  },
+  {
+    "card_id": 21,
+    "card_type": 4,
+    "block_id": 25,
+    "description": "Advance to Hankou. If you pass Go, collect $200"
+  },
+  {
+    "card_id": 22,
+    "card_type": 0,
+    "amount": 50,
+    "description": "Bank pays you dividend of $50(Collect $50)"
+  },
+  {
+    "card_id": 23,
+    "card_type": 5,
+    "description": "Get out of Jail free. This card may be kept until needed, or sold"
+  },
+  {
+    "card_id": 24,
+    "card_type": 7,
+    "steps": -3,
+    "description": "Go back 3 spaces"
+  },
+  {
+    "card_id": 25,
+    "card_type": 4,
+    "block_id": 10,
+    "description": "Go directly to Jail. Do not pass Go, do not collect $200"
+  },
+  {
+    "card_id": 26,
+    "card_type": 3,
+    "amount": [25, 100],
+    "description": "Make general repairs on all your property. For each house pay $25, for each hotel $100"
+  },
+  {
+    "card_id": 27,
+    "card_type": 2,
+    "amount": 15,
+    "description": "Pay poor tax(Pay $15)"
+  },
+  {
+    "card_id": 28,
+    "card_type": 4,
+    "block_id": 17,
+    "description": "Take a trip to Chongqing Railroad. If you pass Go collect $200"
+  },
+  {
+    "card_id": 29,
+    "card_type": 4,
+    "block_id": 19,
+    "description": "Take a walk on the Yuzhong. Advance token to Yuzhong"
+  },
+  {
+    "card_id": 30,
+    "card_type": 8,
+    "amount": 50,
+    "description": "You have been elected chairman of the board. Pay each player $50"
+  },
+   {
+    "card_id": 31,
+    "card_type": 0,
+    "amount": 150,
+    "description": "Your building loan matures(Collect $150)"
+  },
+   {
+    "card_id": 32,
+    "card_type": 0,
+    "amount": 100,
+    "description": "You have won a crossword competition(Collect $100)"
+  }]
+}

@@ -52,3 +52,7 @@ player_status:
     -1: broken/dead/out of game
     0: In jail
     1: Active
+
+room_status:
+    0: waiting
+    1: playing
