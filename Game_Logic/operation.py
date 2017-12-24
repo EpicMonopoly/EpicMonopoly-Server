@@ -1,6 +1,5 @@
 import uuid
 import chatdemo
-import ef
 
 
 # operations
@@ -75,7 +74,10 @@ def trade():
 
 def update_value(data):
     block_list = data["chess_board"]
-    # EF_rate =
+    ef = data["ef"]
+    ef.generate_ef()
+    for b in block_list:
+        b.change_value(ef.random_rate())
 
 
 def broken(gamer, data):
