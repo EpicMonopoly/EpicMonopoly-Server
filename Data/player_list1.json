@@ -4,7 +4,7 @@
   {
     "name": "Player1",
     "avatar": "avatar1",
-    "id": 100,
+    "id": "100",
     "cash": 1000,
     "property":{
       "id": []
@@ -17,7 +17,7 @@
   {
     "name": "Player2",
     "avatar": "avatar2",
-    "id": 101,
+    "id": "101",
     "cash": 1000,
     "property":{
       "id": []
@@ -30,7 +30,7 @@
   {
     "name": "Player3",
     "avatar": "avatar3",
-    "id": 102,
+    "id": "102",
     "cash": 1000,
     "property":{
       "id": []
@@ -43,7 +43,7 @@
   {
     "name": "Player4",
     "avatar": "avatar4",
-    "id": 103,
+    "id": "103",
     "cash": 1000,
     "property": {
       "id": []
@@ -56,7 +56,7 @@
   {
     "name": "Player5",
     "avatar": "avatar5",
-    "id": 104,
+    "id": "104",
     "cash": 1000,
     "property": {
       "id": []
@@ -69,7 +69,7 @@
   {
     "name": "Player6",
     "avatar": "avatar6",
-    "id": 105,
+    "id": "105",
     "cash": 1000,
     "property": {
       "id": []
