@@ -1,6 +1,6 @@
 import random
 import copy
-
+from functools import reduce
 
 class Board:
     """
@@ -26,80 +26,67 @@ class Board:
         self._chance_block_list = chance_block_list
         self._tax_list = tax_list
 
-    # TODO: implement this method
-    def new_board(self):
+    
+    def new_board(self, chess_board_dict):
         """
         Generate a new board
         :return: a board
         """
-        chess_board_dict = {}
-        # for 
-        # two_block_street = copy.copy(self._two_block_street)
-        # three_block_street = copy.copy(self._three_block_street)
-        # station_list = copy.copy(self._station_list)
-        # utility_list = copy.copy(self._utility_list)
-        # corner_list = copy.copy(self._corner_list)
-        # chest_block_list = copy.copy(self._chest_block_list)
-        # chane_block_list = copy.copy(self._chance_block_list)
-        # tax_list = copy.copy(self._tax_list)
+    
+        two_block_street = copy.copy(self._two_block_street)
+        three_block_street = copy.copy(self._three_block_street)
+        station_list = copy.copy(self._station_list)
+        utility_list = copy.copy(self._utility_list)
+        corner_list = copy.copy(self._corner_list)
+        chest_block_list = copy.copy(self._chest_block_list)
+        chane_block_list = copy.copy(self._chance_block_list)
+        tax_list = copy.copy(self._tax_list)
 
-        # for i in (1, 3, 37, 39):  # two_block_street
-        #     chess_board_dict[i] = two_block_street.pop()
-        # for j in (6, 8, 9, 11, 13, 14, 16, 18, 19, 21, 23, 24, 26, 27, 29, 31, 32, 34):
-        #     chess_board_dict[j] = three_block_street.pop()
-        # for k in (5, 15, 25, 35):  # station
-        #     chess_board_dict[k] = station_list.pop()
-        # for p in utility_list:  # utility
-        #     if p.name == "Power Station":
-        #         chess_board_dict[12] = p
-        #         utility_list.remove(p)
-        #     elif p.name == "Water Work":
-        #         chess_board_dict[28] = p
-        #         utility_list.remove(p)
-        # for l in corner_list:
-        #     if l.name == "Go":    # "Go"
-        #         chess_board_dict[0] = l
-        #         corner_list.remove(l)
-        #     elif l.name == "Go to Jail":  # "Go to Jail"
-        #         chess_board_dict[30] = l
-        #         corner_list.remove(l)
-        #     elif l.name == "In Jail":  # "In Jail"
-        #         chess_board_dict[10] = l
-        #         corner_list.remove(l)
-        #     elif l.name == "Free Parking":  # "Free Parking"
-        #         chess_board_dict[20] = l
-        #         corner_list.remove(l)
-        # for q in chest_block_list:
-        #     if q.name == "Community Chest" and 2 not in chess_board_dict:  # "Community Chest"
-        #         chess_board_dict[2] = q
-        #         chest_block_list.remove(q)
-        #     elif q.name == "Community Chest" and 17 not in chess_board_dict:  # "Community Chest"
-        #         chess_board_dict[17] = q
-        #         chest_block_list.remove(q)
-        #     elif q.name == "Community Chest" and 33 not in chess_board_dict:  # "Community Chest"
-        #         chess_board_dict[33] = q
-        #         chest_block_list.remove(q)
-        # for r in chane_block_list:
-        #     if r.name == "Chance" and 7 not in chess_board_dict:  # "Chance"
-        #         chess_board_dict[7] = r
-        #         chest_block_list.remove(r)
-        #     elif q.name == "Chance" and 22 not in chess_board_dict:  # "Chance"
-        #         chess_board_dict[22] = r
-        #         chest_block_list.remove(r)
-        #     elif q.name == "Chance" and 36 not in chess_board_dict:  # "Chance"
-        #         chess_board_dict[36] = r
-        #         chest_block_list.remove(r)
-        # for s in tax_list:
-        #     if s.name == "Income Tax":
-        #         chess_board_dict[4] = s
-        #         tax_list.remove(s)
-        #     elif s.name == "Super Tax":
-        #         chess_board_dict[38] = s
-        #         tax_list.remove(s)
-        # chess_board = []
-        # for i in range(40):
-        #     chess_board.append(chess_board_dict[i])
-        # return chess_board
+        two_block_street_1_index = [1, 3]
+        two_block_street_8_index = [37, 39]
+        three_block_street_2_index = [6, 8, 9]
+        three_block_street_3_index = [11, 13, 14]
+        three_block_street_4_index = [16, 18, 19]
+        three_block_street_5_index = [21, 23, 24]
+        three_block_street_6_index = [26, 27, 29]
+        three_block_street_7_index = [31, 32, 34]
+        stations_list_index = [5, 15, 25, 35]
+        utility_list_index = [12, 28]
+        # two_block_street
+        random.shuffle(two_block_street_1_index)
+        random.shuffle(two_block_street_8_index)
+        two_block_street_index_all = [two_block_street_1_index, two_block_street_8_index]
+        random.shuffle(two_block_street_index_all)
+        self._two_block_street = reduce(lambda x, y: x + y, two_block_street_index_all)
+        for i in self._two_block_street:  
+            chess_board_dict[i] = two_block_street.pop(0)
+        # three_block_street
+        random.shuffle(three_block_street_2_index)
+        random.shuffle(three_block_street_3_index)
+        random.shuffle(three_block_street_4_index)
+        random.shuffle(three_block_street_5_index)
+        random.shuffle(three_block_street_6_index)
+        random.shuffle(three_block_street_7_index)
+        three_block_street_index_all = [three_block_street_2_index, three_block_street_3_index, three_block_street_4_index, three_block_street_5_index, three_block_street_6_index, three_block_street_7_index]
+        random.shuffle(three_block_street_index_all)
+        self._three_block_street = reduce(lambda x, y: x + y, three_block_street_index_all)
+        for j in self._three_block_street:
+            chess_board_dict[j] = three_block_street.pop(0)
+        # station
+        random.shuffle(stations_list_index)
+        self._station_list = stations_list_index
+        for k in self._station_list: 
+            chess_board_dict[k] = station_list.pop(0)
+        # utility
+        random.shuffle(utility_list_index)
+        self._utility_list = utility_list_index
+        for p in self._utility_list:  # utility
+            chess_board_dict[p] = utility_list.pop(0)
+     
+        chess_board = []
+        for i in range(40):
+            chess_board.append(chess_board_dict[i])
+        return chess_board
 
     def get_block(self, position):
         return self._block_list[position]
