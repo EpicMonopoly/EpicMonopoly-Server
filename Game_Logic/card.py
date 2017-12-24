@@ -205,8 +205,12 @@ class BailCard(Card):
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
+                    #TODO: need checking
+                    operation.push2all("Players list:")
+                    for p in data['player_dict']:
+                        operation.push2all(p['name'])
                     input_str = operation.wait_choice(
-                        "Please enter the player of you want to sell the card to:")
+                        "Please enter the player of you want to sell the card to or enter 'q' to quit:")
                     try:
                         choice = str(input_str)
                         if choice in data['player_dict'].keys() and choice != gamer.name:
