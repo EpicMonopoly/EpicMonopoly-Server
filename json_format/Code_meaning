@@ -45,8 +45,9 @@ data_dict:
     7: estate_list
     8: corner_list
     9: chest_block_list
-    10:chance_block_list
-    11:tax_list
+    10: chance_block_list
+    11: tax_list
+    12: ef
 
 player_status:
     -1: broken/dead/out of game

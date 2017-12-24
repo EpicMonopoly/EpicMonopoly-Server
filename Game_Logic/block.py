@@ -67,6 +67,7 @@ class Go(Block):
     
     def change_value(self, rate):
         self._reward_value = self._reward_value * (1 + rate)
+        print("Update reward to %d" % self._reward_value)
 
 
 class Go_To_Jail(Block):

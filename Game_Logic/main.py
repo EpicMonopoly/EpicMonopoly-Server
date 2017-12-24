@@ -12,6 +12,7 @@ import station
 import utility
 import card
 import operation
+import ef
 from json_io import json_reader, json_writer
 import os
 
@@ -199,6 +200,7 @@ def init_game():
     data_dict['chest_block_list'] = chest_block_list
     data_dict['chance_block_list'] = chance_block_list
     data_dict['tax_list'] = tax_list
+    data_dict['ef'] = ef.EF(0.05)
     return data_dict
 
 
@@ -298,7 +300,12 @@ if __name__ == "__main__":
     data = init_game()
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
+    num_round = 0
+    update_period = 1
     while len(living_list) != 1:
+        if num_round % update_period == 0:
+            operation.update_value(data)
+        num_round += 1
         for gamer_id in living_list:
             gamer = data["player_dict"][gamer_id]
             operation.push2all("Now is %s turn" % gamer.name)

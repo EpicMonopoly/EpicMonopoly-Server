@@ -15,6 +15,7 @@ Game Logic development:
 
 ## Bug
 - [ ] some function in bank(add loan dict, remove loan dict, repayment)
+- [ ] something wrong with move to nearest utility card
 
 Server structure: 
 
