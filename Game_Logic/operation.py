@@ -274,6 +274,10 @@ def construct_building(gamer, data):
                          (gamer.name, cur_asset.name))
 
 
+def remove_building():
+    pass
+
+
 def wait_choice(line=""):
     """
     Wait for front end to upload data
