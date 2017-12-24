@@ -274,6 +274,42 @@ def construct_building(gamer, data):
                          (gamer.name, cur_asset.name))
 
 
+def remove_building(gamer, data):
+    import estate
+    push2all("Valid remove building list")
+    asset_number_list = []
+    for cur_asset in gamer.assets:
+        if cur_asset.state == 2:
+            asset_number_list.append(cur_asset.block_id)
+    if asset_number_list == []:
+        push2all("None")
+        return 0
+    while True:
+        input_str = wait_choice(
+            "Please enter the number you want to remove a house:")
+        try:
+            asset_number = int(input_str)
+            break
+        except ValueError:
+            push2all("Please enter a number. Enter -1 to quit")
+    push2all()
+    if asset_number == -1:
+        return 0
+    else:
+        if asset_number not in asset_number_list:
+            push2all("Invalid input")
+            return 0
+    for cur_asset in gamer.assets:
+        if cur_asset.block_id == asset_number:
+            if cur_asset.house_num > 0:
+                epic_bank = data["epic_bank"]
+                cur_asset.house_num += -1
+                pay(epic_bank, gamer, cur_asset.house_value / 2, data)
+                epic_bank.remove_house(1)
+                if cur_asset.house_num == 0:
+                    cur_asset.status == 1
+
+
 def wait_choice(line=""):
     """
     Wait for front end to upload data
