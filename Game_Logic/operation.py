@@ -67,7 +67,6 @@ def clearing(gamer, amount_left, data):
     broken(gamer, data)
 
 
-# TODO: implement trade methods
 def trade():
     pass
 
@@ -154,7 +153,7 @@ def construct_building(gamer, data):
     own_street = own_all_block(gamer)
     push2all("Valid building list")
     asset_number_list = []
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if isinstance(cur_asset, estate.Estate):
             if cur_asset.street_id in own_street:
                 push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
