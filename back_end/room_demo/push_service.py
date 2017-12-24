@@ -98,6 +98,10 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
     def on_close(self):
         if self.id in rooms[self.roomid].clients:
             rooms[self.roomid].rm_clients(self.id)
+            if not rooms[self.roomid].clients:
+                del rooms[self.roomid]
+                logging.info("Room %s is closed." %
+                         (self.roomid))
             logging.info("Room %s Client %s is closed." %
                          (self.roomid, self.id))
 
