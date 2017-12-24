@@ -51,7 +51,7 @@ class Asset(block.Block):
         return self._estate_value * self.mortgage_rate
 
     # TODO: implement changeEF method
-    def change_Value(self):
+    def change_value(self, rate):
         """
         Change ef value
         """

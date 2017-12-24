@@ -1,5 +1,6 @@
 import uuid
 import chatdemo
+import ef
 
 
 # operations

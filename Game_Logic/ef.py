@@ -21,6 +21,13 @@ class EF:
         """
         return self._ef_history[-1]
 
+    @property
+    def variation(self):
+        """
+        Return the variation of this game
+        """
+        return self._variation
+
     def generate_ef(self):
         """
         Generate a new ef number

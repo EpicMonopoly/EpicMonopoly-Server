@@ -121,7 +121,7 @@ def init_game():
 
     # initialize players
     player_dict_data = json_reader(os.path.join(
-        parent_addr, 'Data/player_list.json'))
+        parent_addr, 'Data/player_list1.json'))
     player_dict = {}
     player_dict_data = player_dict_data["data"]
     for i in range(len(player_dict_data)):

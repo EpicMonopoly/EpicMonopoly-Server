@@ -25,7 +25,7 @@ class Block(metaclass=ABCMeta):
     @name.setter
     def name(self, name):
         self._name = name
-    
+
     @property
     def block_id(self):
         return self._block_id
@@ -42,11 +42,16 @@ class Block(metaclass=ABCMeta):
     def display(self, gamer, data, dice_result):
         pass
 
+    @abstractclassmethod
+    def change_value(self, rate):
+        pass
+
 
 class Go(Block):
     """
     Subclass(Block): Go
     """
+
     def __init__(self, name, block_id, position):
         """
         Constructor 
@@ -54,16 +59,21 @@ class Go(Block):
             :param position: int
         """
         super().__init__(name, block_id, position)
-    
+        self.reward_value = 200
+
     def display(self, gamer, data, dice_result):
-        import operation
-        operation.pay(data['epic_bank'], gamer, 200, data)
+        # import operation
+        operation.pay(data['epic_bank'], gamer, self.reward_value, data)
+    
+    def change_value(self, rate):
+        pass
 
 
 class Go_To_Jail(Block):
     """
     Subclass(Block): Go_To_Jail
     """
+
     def __init__(self, name, block_id, position):
         """
         Constructor 
@@ -71,7 +81,7 @@ class Go_To_Jail(Block):
             :param position: int
         """
         super().__init__(name, block_id, position)
-    
+
     def display(self, gamer, data, dice_result):
         """
         docstring here
@@ -89,6 +99,7 @@ class In_Jail(Block):
     """
     Subclass(Block): In_jail
     """
+
     def __init__(self, name, block_id, position):
         """
         Constructor 
@@ -97,11 +108,11 @@ class In_Jail(Block):
         """
         super().__init__(name, block_id, position)
         self._bail_fee = 50
-    
+
     @property
     def bail_fee(self):
         return self._bail_fee
-    
+
     def display(self, gamer, data, dice_result):
         pass
 
@@ -110,6 +121,7 @@ class Free_Parking(Block):
     """
     Subclass(Block): Free_Parking
     """
+
     def __init__(self, name, block_id, position):
         """
         Constructor 
@@ -117,7 +129,6 @@ class Free_Parking(Block):
         :param position: int
         """
         super().__init__(name, block_id, position)
-    
+
     def display(self, gamer, data, dice_result):
         pass
-

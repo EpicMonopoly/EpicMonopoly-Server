@@ -28,16 +28,17 @@ from tornado.options import define, options, parse_command_line
 define("port", default=8888, help="run on the given port", type=int)
 define("debug", default=False, help="run in debug mode")
 
+
 class Choice(object):
     def __init__(self):
-        self.choice = -2 
+        self.choice = -2
         # -2 初始化值
         self.isvalid = False
-    
+
     def set_choice(self, choice):
         self.choice = choice
         self.isvalid = True
-    
+
     def get_choice(self):
         if not self.isvalid:
             # -1无效值
@@ -46,7 +47,9 @@ class Choice(object):
             self.isvalid = False
             return self.choice
 
+
 global_Choice = Choice()
+
 
 class MessageBuffer(object):
     def __init__(self):
@@ -90,9 +93,11 @@ class MessageBuffer(object):
 # Making this a non-singleton is left as an exercise for the reader.
 global_message_buffer = MessageBuffer()
 
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("../in_game.html", messages=global_message_buffer.cache)
+
 
 class LoginHandler(tornado.web.RequestHandler):
     def get(self):
@@ -124,7 +129,6 @@ class MessageNewHandler(tornado.web.RequestHandler):
     #         }
     #     message["html"] = tornado.escape.to_basestring(self.render_string("message.html", message=message))
     #     global_message_buffer.new_messages([message])
-        
 
 
 class MessageUpdatesHandler(tornado.web.RequestHandler):
@@ -152,13 +156,13 @@ def main(buffer):
             (r"/login", LoginHandler),
             (r"/a/message/new", MessageNewHandler),
             (r"/a/message/updates", MessageUpdatesHandler),
-            ],
+        ],
         cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
         xsrf_cookies=True,
         debug=options.debug,
-        )
+    )
     app.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
 
