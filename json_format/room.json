@@ -1,22 +1,10 @@
 {
-    "__comment__": "Under constructing",
-    "set_name": "room_list", // room list
+    "type": "room",
     "data": [
         {
-            "name": "Yixixi", // room name
-            "id": 1, //room id
-            "owner": "Player1", // owner of the room
-            "player_num": 6, //number of players
-            "player_list_ref": "player_list", // player list reference
-            "status": 1 // room status
-        },
-        {
-            "name": "Ahaha",
-            "id": 2,
-            "owner": "Player1",
-            "player_num": 4,
-            "player_list_ref": "player_list2",
-            "status": 0
+            "room_id": "56545sdfsd",
+            "owner_id": "sdff61515",
+            "status": 1
         }
     ]
 }

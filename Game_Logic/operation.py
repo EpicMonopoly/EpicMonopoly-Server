@@ -85,14 +85,14 @@ def trade(data, trade_data):
         if isinstance(asset_trade, asset.Asset) is False:
             valid_flag = False
         else:
-            if asset_index not in gamer_a._assets:
+            if asset_index not in gamer_a.assets and asset_trade.status != 1:
                 valid_flag = False
     for asset_index in gamer_b_dict["asset_give"]:
         asset_trade = data["chess_board"][asset_index]
         if isinstance(asset_trade, asset.Asset) is False:
             valid_flag = False
         else:
-            if asset_index not in gamer_b._assets:
+            if asset_index not in gamer_b.assets:
                 valid_flag = False
     if gamer_a.bail_card_num < gamer_a_dict["card_give"]:
         valid_flag = False
@@ -101,8 +101,23 @@ def trade(data, trade_data):
     if valid_flag is False:
         return False
     # Comfirm trade
-
-    pass
+    if gamer_a_dict["money_give"] != 0:
+        pay(gamer_a, gamer_b, gamer_a_dict["money_give"], data)
+    if gamer_b_dict["money_give"] != 0:
+        pay(gamer_b, gamer_a, gamer_b_dict["money_give"], data)
+    for asset_index in gamer_a_dict["asset_give"]:
+        asset_trade = data["chess_board"][asset_index]
+        trade_asset(asset_trade, gamer_a, gamer_b)
+    for asset_index in gamer_b_dict["asset_give"]:
+        asset_trade = data["chess_board"][asset_index]
+        trade_asset(asset_trade, gamer_b, gamer_a)
+    if gamer_a_dict["card_give"] != 0:
+        gamer_a.bail_card_num += -1
+        gamer_b.bail_card_num += 1
+    if gamer_b_dict["card_give"] != 0:
+        gamer_b.bail_card_num += -1
+        gamer_a.bail_card_num += 1
+    return True
 
 
 def update_value(data):
@@ -238,6 +253,7 @@ def construct_building(gamer, data):
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
+                cur_asset.status = 2
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
                 push2all("%s built one hotel in %s" %
@@ -252,6 +268,7 @@ def construct_building(gamer, data):
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
+                cur_asset.status = 2
                 data["epic_bank"].built_house()
                 push2all("%s built one house in %s" %
                          (gamer.name, cur_asset.name))
