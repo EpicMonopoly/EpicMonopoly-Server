@@ -1,4 +1,9 @@
 {
-	"house_number": 32,
-	"hotel_number": 12
+	"type": "bank",
+	"data": [
+		{
+			"house_number": 32,
+			"hotel_number": 12
+		}
+	]
 }
