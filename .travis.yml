@@ -1,0 +1,22 @@
+dist: trusty
+sudo: false
+
+# language python, including 3.5, 3.6
+language: python
+python:
+  - "3.5"  
+  - "3.6"
+  - "nightly"
+
+# install tornado module
+# install:
+#   - pip install tornado
+
+# test script
+script:
+  - cd Game_Logic
+  - echo "Enter directory Game_Logic"
+  - python3 main.py
+
+after_success:
+  - kill $(ps aux | grep python3 main.py | awk '{ print $2 }')
