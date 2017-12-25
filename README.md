@@ -10,7 +10,7 @@ Game Logic development:
 
 ## TODO
 - [ ] Trade 
-- [ ] All about EF
+- [ ]  EF
 - [ ] board: new_board(Shelved)
 
 ## Bug
