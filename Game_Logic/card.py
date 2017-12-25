@@ -35,6 +35,7 @@ class Card(metaclass=ABCMeta):
         }
         return json_data
 
+
 class MoveCard(Card):
     def __init__(self, name, card_type, description, step):
         super().__init__(name, description)
@@ -84,7 +85,7 @@ class MoveCard(Card):
     def change_value(self, rate):
         pass
 
-     def getJSon(self):
+    def getJSon(self):
         json_data = {
             "name": self._name,
             "description": self._description,
@@ -238,7 +239,7 @@ class BailCard(Card):
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
-                    #TODO: need checking
+                    # TODO: need checking
                     operation.push2all("Players list:")
                     for p in data['player_dict']:
                         operation.push2all(p['name'])

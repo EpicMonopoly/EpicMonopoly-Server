@@ -1,5 +1,6 @@
 import uuid
 import chatdemo
+msg_queue = []
 
 
 # operations

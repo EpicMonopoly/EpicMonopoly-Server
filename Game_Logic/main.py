@@ -3,7 +3,6 @@
 import os
 import random
 from collections import OrderedDict
-
 import bank
 import block
 import board
@@ -204,10 +203,9 @@ def init_game():
     data_dict['tax_list'] = tax_list
     data_dict['ef'] = ef.EF(0.05)
 
-    
-    json_writer(os.path.join(parent_addr, 'Data/board_data.json'), epic_bank.getJSon())
+    json_writer(os.path.join(parent_addr, 'Data/board_data.json'),
+                epic_bank.getJSon())
     quit()
-
 
     return data_dict
 

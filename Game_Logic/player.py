@@ -154,7 +154,7 @@ class Player(role.Role):
             "name": self._name,
             "cash": self._cash,
             "position": self._position,
-            "alliance": self._alliancem,
+            "alliance": self._alliance,
             "bail_card_num": self._bail_card_num,
             "cur_status": self._cur_status,
             "utility_num": self._utility_num,
