@@ -1,0 +1,64 @@
+{
+  "set_name": "station_data",
+  "data": [
+	{
+		"name": "Chongqing",
+		"block_id": 17,
+		"position": 5,
+		"uid": -1,
+		"estate_value": 200,
+		"status": -1,
+		"mortgage_value": -1,
+		"payment": [
+			{"station_number": 1, "payment": -1},
+			{"station_number": 2, "payment": -1},
+			{"station_number": 3, "payment": -1},
+			{"station_number": 4, "payment": -1}
+		]
+	},
+	{
+		"name": "Shanghai",
+		"block_id": 16,
+		"position": 15,
+		"uid": -1,
+		"estate_value": 200,
+		"status": -1,
+		"mortgage_value": -1,
+		"payment": [
+			{"station_number": 1, "payment": -1},
+			{"station_number": 2, "payment": -1},
+			{"station_number": 3, "payment": -1},
+			{"station_number": 4, "payment": -1}
+		]
+	},
+	{
+		"name": "Beijing",
+		"block_id": 15,
+		"position": 25,
+		"uid": -1,
+		"estate_value": 200,
+		"status": -1,
+		"mortgage_value": -1,
+		"payment": [
+			{"station_number": 1, "payment": -1},
+			{"station_number": 2, "payment": -1},
+			{"station_number": 3, "payment": -1},
+			{"station_number": 4, "payment": -1}
+		]
+	},
+	{
+		"name": "Guangzhou",
+		"block_id": 14,
+		"position": 35,
+		"uid": -1,
+		"estate_value": 200,
+		"status": -1,
+		"mortgage_value": -1,
+		"payment": [
+			{"station_number": 1, "payment": -1},
+			{"station_number": 2, "payment": -1},
+			{"station_number": 3, "payment": -1},
+			{"station_number": 4, "payment": -1}
+		]
+	}]
+}
