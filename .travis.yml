@@ -16,8 +16,8 @@ notifications:
     on_failure: always # default: always
 
 # install tornado module
-# install:
-#   - pip install tornado
+install:
+  - pip install tornado
 
 # test script
 script:
