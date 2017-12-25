@@ -17,8 +17,7 @@ import tax
 import utility
 from json_io import json_reader, json_writer
 
-# global data_dict
-data_dict = OrderedDict()
+data = None
 
 
 def init_game():
@@ -188,7 +187,7 @@ def init_game():
     chess_board_object = board.Board(two_block_street, three_block_street, station_list, utility_list, block_list,
                                      corner_list, chest_block_list, chance_block_list, tax_list)
 
-    global data_dict
+    data_dict = OrderedDict()
     data_dict['chess_board'] = block_list
     data_dict['player_dict'] = player_dict
     data_dict['epic_bank'] = epic_bank
@@ -203,14 +202,14 @@ def init_game():
     data_dict['tax_list'] = tax_list
     data_dict['ef'] = ef.EF(0.05)
 
-    json_writer(os.path.join(parent_addr, 'Data/board_data.json'),
-                epic_bank.getJSon())
-    quit()
+    # json_writer(os.path.join(parent_addr, 'Data/board_data.json'),
+    #             epic_bank.getJSon())
+    global data
+    data = data_dict
+    return data
 
-    return data_dict
 
-
-def roll(gamer):
+def roll(gamer, data):
     """
     Roll a dice
     :param gamer: The player who roll dices
@@ -229,14 +228,14 @@ def roll(gamer):
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
         operation.push2all("Passing Go, Gain 200")
-        operation.pay(data_dict['epic_bank'], gamer, 200, data_dict)
+        operation.pay(data['epic_bank'], gamer, 200, data)
     gamer.move(step)
     end_position = gamer.position
-    current_block = data_dict['chess_board'][end_position]
+    current_block = data['chess_board'][end_position]
     if isinstance(current_block, block.Go_To_Jail):
         end_flag = True
     operation.push2all("At %s" % current_block.name)
-    current_block.display(gamer, data_dict, step)
+    current_block.display(gamer, data, step)
     return a, b, end_flag
 
 
@@ -264,7 +263,13 @@ def own_all_block(gamer):
     return own_street
 
 
-def turn(gamer):
+def add_player(p):
+    global data
+    data["living_list"].append(p.id)
+    data["player_dict"][p.id] = p
+
+
+def turn(gamer, data):
     """
     :param gamer: players
     :return:
@@ -290,7 +295,7 @@ def turn(gamer):
             # operation.trade(data, trade_data)
             pass
         elif choice == 2 and end_flag is False:
-            dice_a, dice_b, end_flag = roll(gamer)
+            dice_a, dice_b, end_flag = roll(gamer, data)
         elif choice == 3:
             operation.construct_building(gamer, data)
         elif choice == 4:
@@ -306,7 +311,7 @@ def turn(gamer):
             operation.push2all("Invalid choice")
 
 
-if __name__ == "__main__":
+def start_game():
     data = init_game()
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
@@ -327,7 +332,7 @@ if __name__ == "__main__":
                 if a == b:
                     gamer.cur_status = 1
                     gamer._in_jail = 0
-                    turn(gamer)
+                    turn(gamer, data)
                 else:
                     while True:
                         operation.push2all("1: Bail. Get out of prison.")
@@ -345,7 +350,7 @@ if __name__ == "__main__":
                             if operation.bail(gamer, data):
                                 gamer.cur_status = 1
                                 gamer._in_jail = 0
-                                turn(gamer)
+                                turn(gamer, data)
                                 break
                             else:
                                 operation.push2all("Please stay in jail")
@@ -358,7 +363,11 @@ if __name__ == "__main__":
                             operation.push2all("Invalid choice")
             elif gamer.cur_status == 1:
                 # Normal Status
-                turn(gamer)
+                turn(gamer, data)
             else:
                 pass
             operation.push2all()
+
+
+if __name__ == "__main__":
+    start_game()

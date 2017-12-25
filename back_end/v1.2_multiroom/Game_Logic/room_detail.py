@@ -2,7 +2,6 @@ import multiprocessing
 import threading
 
 import game_entrance
-import push_service
 
 
 class Room_detail(object):

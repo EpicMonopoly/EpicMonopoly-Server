@@ -49,6 +49,7 @@ data_dict:
     10: chance_block_list
     11: tax_list
     12: ef
+    13: living_list
 
 player_status:
     -1: broken/dead/out of game
