@@ -1,7 +1,6 @@
 import sys
 import role
 
-
 class Bank(role.Role):
     """
     subclass(Role): Bank
@@ -132,3 +131,12 @@ class Bank(role.Role):
             old_asset.owner = -1
         else:
             pass
+
+    def getJSon(self):
+        json_data = {
+            "uid": self._uid,
+            "name": self._name,
+            "cur_house_num": self._cur_house,
+            "cur_hotel_num": self._cur_hotel
+        }
+        return json_data

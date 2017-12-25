@@ -122,7 +122,9 @@ class Board:
             block.position(street_b[index].position)
             street_b[index].position(temp)
 
-
+    #TODO: need to finish
+    def getJSon(self):
+        pass
 
 
 

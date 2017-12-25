@@ -1,23 +1,25 @@
 # The main control of the game
 
+import os
 import random
-import board
-import player
+from collections import OrderedDict
+
 import bank
 import block
-import cardpile
-import tax
-import estate
-import station
-import utility
+import board
 import card
-import operation
+import cardpile
 import ef
+import estate
+import operation
+import player
+import station
+import tax
+import utility
 from json_io import json_reader, json_writer
-import os
 
 # global data_dict
-data_dict = {}
+data_dict = OrderedDict()
 
 
 def init_game():
@@ -201,6 +203,12 @@ def init_game():
     data_dict['chance_block_list'] = chance_block_list
     data_dict['tax_list'] = tax_list
     data_dict['ef'] = ef.EF(0.05)
+
+    
+    json_writer(os.path.join(parent_addr, 'Data/board_data.json'), epic_bank.getJSon())
+    quit()
+
+
     return data_dict
 
 

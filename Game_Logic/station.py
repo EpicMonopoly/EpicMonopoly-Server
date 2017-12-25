@@ -91,3 +91,4 @@ class Station(asset.Asset):
             operation.push2all("%s is in mortgaged" % self.name)
         else:
             raise ValueError("Invalid estate status")
+

@@ -24,6 +24,14 @@ class CardPile(block.Block):
         for card in self._cards:
             card.change_value(rate)
 
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "position": self._position,
+            "block_id": self._block_id,
+        }
+        return json_data
+
 
 class Community_Chest(CardPile):
     """
@@ -51,6 +59,7 @@ class Community_Chest(CardPile):
         random_card = chance_list[random.randint(0, length_change_list - 1)]
         random_card.play(gamer, data)
 
+    
 
 class Chance(CardPile):
     """

@@ -60,3 +60,14 @@ class Asset(block.Block):
 
     def display(self, gamer, data_dict, dice_result):
         pass
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "uid": self._uid,
+            "estate_value": self._estate_value,
+            "status": self._status
+        }
+        return json_data
