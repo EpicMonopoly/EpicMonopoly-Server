@@ -1,0 +1,110 @@
+{
+  "set_name": "chest_data",
+  "data": [
+  {
+    "card_id": 0,
+    "card_type": 4,
+    "amount": 200,
+    "description": "Advance to Go(Collect $200)"
+  },
+  {
+    "card_id": 1,
+    "card_type": 0,
+    "amount": 75,
+    "description": "Bank error in your favor(Collect $75)"
+  },
+  {
+    "_comment": "The total amount need to collect from other players",
+    "card_id": 2,
+    "card_type": 1,
+    "amount": 10,
+    "description": "It is your birthday(Collect $10 from each player)"
+  },
+  {
+    "_comment": "The total amount need to collect from other players",
+    "card_id": 3,
+    "card_type": 1,
+    "amount": 50,
+    "description": "Grand Opera Night(Collect $50 from every player for opening night seats)"
+  },
+  {
+    "card_id": 4,
+    "card_type": 0,
+    "amount": 20,
+    "description": "Income Tax refund(Collect $20)"
+  },
+  {
+    "card_id": 5,
+    "card_type": 0,
+    "amount": 100,
+    "description": "Life Insurance Matures(Collect $100)"
+  },
+  {
+    "card_id": 6,
+    "card_type": 0,
+    "amount": 25,
+    "description": "Receive $25 Consultancy Fee(Collect $25)"
+  },
+  {
+    "card_id": 7,
+    "card_type": 0,
+    "amount": 10,
+    "description": "You have won second prize in a beauty contest(Collect $10)"
+  },
+  {
+    "card_id": 8,
+    "card_type": 0,
+    "amount": 100,
+    "description": "You inherit(Collect $100)"
+  },
+  {
+    "card_id": 9,
+    "card_type": 0,
+    "amount": 50,
+    "description": "From sale of stock you get(Collect $50)"
+  },
+  {
+    "card_id": 10,
+    "card_type": 0,
+    "amount": 100,
+    "description": "Holiday Fund matures(Collect $100)"
+  },
+
+  {
+    "card_id": 11,
+    "card_type": 2,
+    "amount": 50,
+    "description": "Doctor's fees(Pay $50)"
+  },
+  {
+    "card_id": 12,
+    "card_type": 2,
+    "amount": 100,
+    "description": "Pay Hospital Fees(Pay $100)"
+  },
+  {
+    "card_id": 13,
+    "card_type": 2,
+    "amount": 50,
+    "description": "Pay School Fees(Pay $200)"
+  },
+  {
+    "_comment": "Pay for every own house and hotel",
+    "card_id": 14,
+    "card_type": 3,
+    "amount": [40, 115],
+    "description": "You are assessed for street repairs(Pay $40 per house, $115 per hotel)"
+  },
+  {
+    "card_id": 15,
+    "card_type": 4,
+    "block_id": -1,
+    "description": "Go to jail. Do not pass Go, do not collect $200"
+  },
+  {
+    "_comment": "Set free from jail",
+    "card_id": 16,
+    "card_type": 5,
+    "description": "This card may be kept until needed, or sold"
+  }]
+}
