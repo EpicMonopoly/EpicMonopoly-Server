@@ -25,5 +25,5 @@ script:
   - echo "Enter directory Game_Logic"
   - nohup python3 main.py > /dev/null 2>&1 &
   - sleep 1m
-  - kill $(ps aux | grep nohup python3 main.py | awk '{ print $2 }')
+  - kill $(ps aux | grep nohup python3 main.py | awk '{ print $0 }')
 
