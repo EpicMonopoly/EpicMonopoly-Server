@@ -77,7 +77,7 @@ class Go(Block):
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
 
-     def getJSon(self):
+    def getJSon(self):
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
