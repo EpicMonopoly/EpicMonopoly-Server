@@ -1,4 +1,6 @@
 # EpicMonopoly
+[![Build Status](https://travis-ci.com/Spacebody/EpicMonopoly-Server.svg?token=MNpGaGjQxonn6yLX6TwY&branch=master)](https://travis-ci.com/Spacebody/EpicMonopoly-Server)
+
 A novel developed monopoly based on web: EpicMonopoly 
 
 Game Logic development:
@@ -6,16 +8,15 @@ Game Logic development:
 - [x] Game logic
 - [x] Json design
 - [x] Demo
-- [ ] Communications 
+- [ ] Communications(Developing) 
 
 ## TODO
 - [ ] Trade 
-- [ ]  EF
+- [ ] EF
 - [ ] board: new_board(Shelved)
 
 ## Bug
 - [ ] some function in bank(add loan dict, remove loan dict, repayment)
-- [ ] something wrong with move to nearest utility card
 
 Server structure: 
 
