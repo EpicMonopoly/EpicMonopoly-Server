@@ -34,11 +34,10 @@
             var roomid = document.getElementById("room").value;
             ws = new WebSocket("ws://test.sustech.pub:8888/websocket?Id=" + guid() + "&roomid=" + roomid);
 
-            messageContainer.innerHTML = "Welcome to EpicMonopoly!";
-            ws.send("<recall>");
-
             ws.onopen = function () {
-                ws.send("Message to send");
+                messageContainer.innerHTML = "Welcome to EpicMonopoly!";
+                // ws.send("Message to send");
+                ws.send("<recall>");
             };
             ws.onmessage = function (evt) {
                 var received_msg = evt.data;

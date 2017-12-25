@@ -47,11 +47,9 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
         self.stream.set_nodelay(True)
         if self.roomid in rooms:
             rooms[self.roomid].add_clients(self.id, self)
-            print("a2")
         else:
             rooms[self.roomid] = room_detail.Room_detail(
                 self.roomid, (self.id, self))
-            print("a3", rooms)
 
     def on_message(self, message):
         try:

@@ -1,6 +1,8 @@
 import multiprocessing
 import threading
+
 import game_entrance
+import push_service
 
 
 class Room_detail(object):
@@ -10,7 +12,6 @@ class Room_detail(object):
         if init_client is not None:
             client_id, client_self = init_client
             self.add_clients(client_id, client_self)
-            client_self.write_message("aaYou are in Room{}".format(self.roomid))
         self.game_log = []
         self.global_Choice = Choice()
         self.parent_conn, self.child_conn = multiprocessing.Pipe()
@@ -35,7 +36,6 @@ class Room_detail(object):
 
     def add_clients(self, id, client):
         self.clients[id] = {"id": id, "object": client}
-        client.write_message("00You are in Room{}".format(self.roomid))
         print("a1", self.clients)
 
     def add_log(self, id, message):
