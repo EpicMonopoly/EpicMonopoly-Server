@@ -24,9 +24,8 @@ script:
   - cd Game_Logic
   - echo "Enter directory Game_Logic"
   - nohup python3 main.py > /dev/null 2>&1 &
-  - sleep 30s
-  - echo "Running..."
+  - sleep 30s && echo "Running..."
+  
 
 after_script:
-  - kill $(ps aux | grep nohup python3 main.py | awk '{ print $0 }')
   - echo "Run successfully"
