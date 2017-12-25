@@ -1,5 +1,4 @@
 import block
-# from ef import EF
 
 
 class Asset(block.Block):
@@ -50,7 +49,6 @@ class Asset(block.Block):
     def mortgage_value(self):
         return self._estate_value * self.mortgage_rate
 
-    # TODO: implement changeEF method
     def change_value(self, rate):
         """
         Change ef value
