@@ -24,6 +24,6 @@ script:
   - cd Game_Logic
   - echo "Enter directory Game_Logic"
   - python3 main.py
-
-after_success:
   - kill $(ps aux | grep python3 main.py | awk '{ print $2 }')
+
+  
