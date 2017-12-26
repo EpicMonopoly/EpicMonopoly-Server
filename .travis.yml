@@ -21,8 +21,9 @@ install:
 
 # test script
 script:
-  - cd Game_Logic
-  - echo "Enter directory Game_Logic"
+  - cd back_end/v1.2_multiroom/Game_Logic/game_entrance.py
+  - echo "Enter directory v1.2_multiroom"
+  - echo "Test begins"
   - nohup python3 main.py > /dev/null 2>&1 &
   - sleep 30s && echo "Running..."
   
