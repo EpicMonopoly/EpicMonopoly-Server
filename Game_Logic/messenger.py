@@ -23,7 +23,8 @@ class messenger:
     def _add_new_player(self, player_info):
         import player
         import main
-        p = player.Player(player_info["id"], player_info["name"], 2000, "America")
+        p = player.Player(player_info["id"],
+                          player_info["name"], 2000, "America")
         main.add_player(p)
 
     def join_thread(self):
@@ -48,6 +49,12 @@ class messenger:
             self._add_new_player(json_obj["data"][0])
         else:
             self._msg_queue.append(json_obj)
+
+    def get_json_data(self, key_word):
+        for json_frame in self._msg_queue:
+            if json_frame["type"] == key_word:
+                return json_frame["data"]
+        return False
 
 
 if __name__ == "__main__":
