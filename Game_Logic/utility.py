@@ -57,6 +57,9 @@ class Utility(asset.Asset):
                 while True:
                     input_str = operation.wait_choice(
                         "Please enter the number of your decision:")
+                    if(True):
+                        input_data = data["msg"].get_json_data("input")
+                        input_str = input_data["request"]
                     try:
                         choice = int(input_str)
                         break

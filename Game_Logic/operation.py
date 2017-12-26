@@ -150,6 +150,9 @@ def mortgage_asset(gamer, data):
         return 0
     while True:
         input_str = wait_choice("Please enter the index you want to mortgage:")
+        if(True):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data["request"]
         try:
             asset_number = int(input_str)
             break
@@ -214,6 +217,9 @@ def construct_building(gamer, data):
     while True:
         input_str = wait_choice(
             "Please enter the number you want to built a house:")
+        if(True):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data["request"]
         try:
             asset_number = int(input_str)
             break
@@ -288,6 +294,9 @@ def remove_building(gamer, data):
     while True:
         input_str = wait_choice(
             "Please enter the number you want to remove a house:")
+        if(True):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data["request"]
         try:
             asset_number = int(input_str)
             break

@@ -3,11 +3,7 @@
     "data":[
         {
             "from_player_id": "asdas65435",
-            "request": "roll_dice" // roll_dice, mortgage, ....
-        },
-        {
-            "type": "mortgage", // morgage, trade, built.....
-            "data":[]
+            "request": 1 // the index of choice
         }
     ]
 }
