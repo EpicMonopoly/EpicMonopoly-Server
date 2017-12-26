@@ -21,10 +21,10 @@ install:
 
 # test script
 script:
-  - cd back_end/v1.2_multiroom/Game_Logic/game_entrance.py
+  - cd back_end/v1.2_multiroom/Game_Logic
   - echo "Enter directory v1.2_multiroom"
   - echo "Test begins"
-  - nohup python3 main.py > /dev/null 2>&1 &
+  - nohup python3 game_entrance.py > /dev/null 2>&1 &
   - sleep 30s && echo "Running..."
   
 
