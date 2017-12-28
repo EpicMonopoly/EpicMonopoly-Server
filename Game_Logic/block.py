@@ -67,9 +67,9 @@ class Go(Block):
             :param position: int
         """
         super().__init__(name, block_id, position)
-        self._description = description 
+        self._description = description
         self._reward_value = 200
-    
+
     @property
     def reward(self):
         return self._reward_value
@@ -77,7 +77,7 @@ class Go(Block):
     def display(self, gamer, data, dice_result):
         # import operation
         operation.pay(data['epic_bank'], gamer, self._reward_value, data)
-    
+
     def change_value(self, rate):
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
@@ -160,7 +160,7 @@ class Free_Parking(Block):
         :param position: int
         """
         super().__init__(name, block_id, position)
-        self._description = description 
+        self._description = description
 
     def display(self, gamer, data, dice_result):
         pass

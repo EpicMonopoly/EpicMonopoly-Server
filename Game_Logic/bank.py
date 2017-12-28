@@ -1,10 +1,12 @@
 import sys
 import role
 
+
 class Bank(role.Role):
     """
     subclass(Role): Bank
     """
+
     def __init__(self, uid, name, house_number, hotel_number):
         """
         Constructor
@@ -32,27 +34,27 @@ class Bank(role.Role):
     def pay(self, payment):
         # bank never pays anything
         pass
-    
-    def gain(self, payment): 
+
+    def gain(self, payment):
         # bank seems like gaining a lot
         pass
 
     def built_house(self):
         self._cur_house = self.cur_house - 1
-    
+
     def built_hotel(self):
         self._cur_hotel = self._cur_hotel - 1
 
     def remove_house(self, number):
         self._cur_house = self.cur_house + number
-    
+
     def remove_hotel(self):
         self._cur_hotel = self._cur_hotel + 1
 
     # TODO
     def add_loan_dict(self, asset_id, amount):
         self._loan_dict
-    
+
     # TODO
     def remove_loan_dict(self, asset_id):
         if asset_id in self._loan_dict.keys():
@@ -92,7 +94,7 @@ class Bank(role.Role):
         """
         Add asset to player
         :param self: self
-        """ 
+        """
         import station
         import utility
         import estate

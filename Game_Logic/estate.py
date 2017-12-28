@@ -51,19 +51,22 @@ class Estate(asset.Asset):
         Return:
             :payment: int
         """
-        if self.house_num == 0:
+        return self._get_payment(self._house_num)
+
+    def _get_payment(self, house_num):
+        if house_num == 0:
             return int(self.value * 0.1)
-        elif self.house_num == 1:
+        elif house_num == 1:
             return int(self.value * 0.15)
-        elif self.house_num == 2:
+        elif house_num == 2:
             return int(self.value * 0.2)
-        elif self.house_num == 3:
+        elif house_num == 3:
             return int(self.value * 0.25)
-        elif self.house_num == 4:
+        elif house_num == 4:
             return int(self.value * 0.3)
-        elif self.house_num == 5:
+        elif house_num == 5:
             return int(self.value * 0.4)
-        elif self.house_num == 6:
+        elif house_num == 6:
             return int(self.value * 0.5)
         else:
             # Should not be here
@@ -136,6 +139,10 @@ class Estate(asset.Asset):
             raise ValueError("Invalid estate status")
 
     def getJSon(self):
+        payment_list = []
+        for i in range(1, 7):
+            payment_list.append(
+                {"house_number": i, "payment": self._get_payment(i)})
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
@@ -145,6 +152,8 @@ class Estate(asset.Asset):
             "status": self._status,
             "street_id": self._street_id,
             "house_value": self._house_value,
-            "house_num": self._house_num
+            "house_num": self._house_num,
+            "mortgage_value": self.mortgage_value,
+            "payment": payment_list
         }
         return json_data

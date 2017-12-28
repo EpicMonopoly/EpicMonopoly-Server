@@ -18,6 +18,7 @@ import utility
 from json_io import json_reader, json_writer
 import color
 
+
 class Board:
     """
     Board class
@@ -56,23 +57,25 @@ class Board:
             parent_addr, 'Data/chest_data.json'))
         self._chance_list_data = json_reader(os.path.join(
             parent_addr, 'Data/chance_data.json'))
-        self._bank_data = json_reader(os.path.join(parent_addr, 'Data/bank_data.json'))
-        self._player_dict_data = json_reader(os.path.join(parent_addr, 'Data/player_list3.json'))
-    
+        self._bank_data = json_reader(
+            os.path.join(parent_addr, 'Data/bank_data.json'))
+        self._player_dict_data = json_reader(
+            os.path.join(parent_addr, 'Data/player_list3.json'))
 
     def _init_player(self):
         self._player_dict_data = self._player_dict_data["data"]
         for i in range(len(self._player_dict_data)):
             p = player.Player(self._player_dict_data[i]['id'], self._player_dict_data[i]['name'], self._player_dict_data[i]['cash'],
                               self._player_dict_data[i]['alliance'])
-            output_str = "{0} {1} {2} {3}".format(p.cash, p.id, p.name, p.alliance)
+            output_str = "{0} {1} {2} {3}".format(
+                p.cash, p.id, p.name, p.alliance)
             operation.push2all(output_str)
             self._player_dict[self._player_dict_data[i]['id']] = p
 
-
     def _init_bank(self):
-        self._epic_bank = bank.Bank('99', 'EpicBank', self._bank_data['data']['house_number'], self._bank_data['data']['hotel_number'])
-        
+        self._epic_bank = bank.Bank(
+            '99', 'EpicBank', self._bank_data['data']['house_number'], self._bank_data['data']['hotel_number'])
+
     def _init_block(self):
         for b in self._block_list_data["data"]:
             if b['block_type'] == 0:
@@ -141,7 +144,7 @@ class Board:
         self._estate_list = []
         for e in self._estate_list_data["data"]:
             new_block = estate.Estate(e['name'], e['block_id'], e['position'], e['uid'],
-                                    e['estate_value'], e['status'], e['street_id'], e['house_value'])
+                                      e['estate_value'], e['status'], e['street_id'], e['house_value'])
             self._estate_list.append(new_block)
             self._block_list[new_block.position] = new_block
             self._epic_bank.add_asset(new_block)
@@ -153,14 +156,14 @@ class Board:
             # 0: Collection, 1: Collect_from_players
             if chest['card_type'] == 0 or chest['card_type'] == 1:
                 self._chest_list.append(card.CollectCard(chest['card_id'], chest['card_type'], chest['description'],
-                                                chest['amount']))
+                                                         chest['amount']))
             elif chest['card_type'] == 2 or chest['card_type'] == 3:  # 2: Pay, 3: Pay_for_repair
                                                                     # or
                                                                     # chest['card_type']
                                                                     # == 8 8:
                                                                     # Pay_to_players
                 self._chest_list.append(card.PayCard(chest['card_id'], chest['card_type'], chest['description'],
-                                            chest['amount']))
+                                                     chest['amount']))
             # elif chest['card_type'] == 4 or chest['card_type'] == 6:  # 4: Move_indicate_position, 6: Move_nearby
             #     self._chest_list.append(card.MoveCard(chest['card_id'], chest['card_type'], chest['description'],
             #                                     chest['block_id']))
@@ -171,7 +174,6 @@ class Board:
                 self._chest_list.append(card.BailCard(
                     chest['card_id'], chest['card_type'], chest['description']))
 
-    
     def _init_chance(self):
         # initialize chance cards
         self._chance_list = []
@@ -180,29 +182,30 @@ class Board:
                                         # or chance['card_type'] == 1, 1:
                                         # Collect_from_players
                 self._chance_list.append(card.CollectCard(chance['card_id'], chance['card_type'], chance['description'],
-                                                    chance['amount']))
+                                                          chance['amount']))
             elif chance['card_type'] == 2 or chance['card_type'] == 3 or chance['card_type'] == 8:  # 2: Pay,
                                                                                                     # 3: Pay_for_repair
                                                                                                     # 8:
                                                                                                     # Pay_to_players
                 self._chance_list.append(card.PayCard(chance['card_id'], chance['card_type'], chance['description'],
-                                                chance['amount']))
+                                                      chance['amount']))
             # 4: Move_indicate_position, 6: Move_nearby
             elif chance['card_type'] == 4 or chance['card_type'] == 6:
                 self._chance_list.append(card.MoveCard(chance['card_id'], chance['card_type'], chance['description'],
-                                                chance['block_id']))
+                                                       chance['block_id']))
             elif chance['card_type'] == 7:  # Move
                 self._chance_list.append(card.MoveCard(chance['card_id'], chance['card_type'], chance['description'],
-                                                chance['steps']))
+                                                       chance['steps']))
             elif chance['card_type'] == 5:  # Bailcard
                 self._chance_list.append(card.BailCard(
                     chance['card_id'], chance['card_type'], chance['description']))
 
     def _init_block_street(self):
         # initialize chess board
-        selected_colors = random.choices([hex(c.value) for c in color.Color], k=8)
+        selected_colors = random.choices(
+            [hex(c.value) for c in color.Color], k=8)
         for i in range(8):
-            self._street_color[i] = selected_colors[i] 
+            self._street_color[i] = selected_colors[i]
         self._two_block_street = []
         self._three_block_street = []
         for e in self._estate_list:
@@ -213,7 +216,7 @@ class Board:
 
     def init_board(self):
         self._read_data()  # read data
-        # init all the data 
+        # init all the data
         self._init_bank()
         self._init_block()
         self._init_station()
@@ -344,4 +347,3 @@ class Board:
         json_data = {
             ""
         }
-        

@@ -48,8 +48,6 @@ class EF:
     def getJSon(self):
         json_data = {
             "variation": self._variation,
-            "ef_history": self._ef_history,
-            "cur_rate": self._cur_rate,
-            "random_rate_range": self._random_rate_range
+            "cur_rate": self._cur_rate
         }
         return json_data
