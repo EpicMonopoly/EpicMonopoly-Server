@@ -3,11 +3,11 @@ from enum import Enum, unique
 
 @unique
 class Color(Enum):
-    empty = 0xeeeeee
-    blue = 0x3399ff
-    red = 0xbb0407
-    yellow = 0xfdb515
-    purple = 0xbf3eff
-    green = 0x8dc63f
-    dark = 0x430a0a
-    pink = 0xff6666
+    EMPTY = 0xeeeeee
+    BLUE = 0x3399ff
+    RED = 0xbb0407
+    YELLOW = 0xfdb515
+    PURPLE = 0xbf3eff
+    GREEN = 0x8dc63f
+    DARK = 0x430a0a
+    PINK = 0xff6666
