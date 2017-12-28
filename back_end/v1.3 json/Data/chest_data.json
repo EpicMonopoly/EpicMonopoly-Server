@@ -1,5 +1,5 @@
 {
-  "type": "chest_data",
+  "set_name": "chest_data",
   "data": [
   {
     "card_id": 0,
@@ -85,8 +85,8 @@
   {
     "card_id": 13,
     "card_type": 2,
-    "amount": 200,
-    "description": "Pay School Fees"
+    "amount": 50,
+    "description": "Pay School Fees(Pay $200)"
   },
   {
     "_comment": "Pay for every own house and hotel",

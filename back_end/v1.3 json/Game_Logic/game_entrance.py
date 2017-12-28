@@ -18,22 +18,15 @@ from json_io import json_reader, json_writer
 
 # global data
 data = {}
-roomid = None
-conn = None
+messenger_handler = None
 
 # 设置管道，所有需要传回客户端的数据给到父进程push_service传回
 # 子进程等待的数据根据roomid统一标识传回
 
 
-def get_roomid():
-    global roomid
-    return roomid
-
-
-def get_conn():
-    global conn
-    return conn
-
+def get_messenger_handler():
+    global messenger_handler
+    return messenger_handler
 
 def init_game():
     """
@@ -311,10 +304,9 @@ def turn(gamer):
             operation.push2all("Invalid choice")
 
 
-def game_main(room_d, connection):
-    global roomid, conn
-    roomid = room_d
-    conn = connection
+def game_main(mess_h):
+    global messenger_handler
+    messenger_handler = mess_h
 
     data = init_game()
     living_list = list(data["player_dict"].keys())

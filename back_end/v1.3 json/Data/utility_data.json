@@ -1,0 +1,30 @@
+{
+  "set_name": "utility_data",
+  "data": [
+	{
+		"name": "Power Station",
+		"block_id": 13,
+		"position": 12,
+		"uid": -1,
+		"estate_value": 150,
+		"status": -1,
+		"mortgage_value": -1,
+		"payment": [
+			{"utility_number": 1, "rate": 4},
+			{"utility_number": 2, "rate": 10}
+		]
+	},
+	{
+		"name": "Water Work",
+		"block_id": 12,
+		"position": 28,
+		"uid": -1,
+		"estate_value": 150,
+		"status": -1,
+		"mortgage_value": -1,
+		"payment": [
+			{"utility_number": 1, "rate": 4},
+			{"utility_number": 2, "rate": 10}
+		]
+	}]
+}
