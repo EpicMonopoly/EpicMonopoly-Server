@@ -11,3 +11,8 @@ class Color(Enum):
     GREEN = 0x8dc63f
     DARK = 0x430a0a
     PINK = 0xff6666
+    CYAN = 0x00FFFF
+    TEAL = 0x008080
+    DEEPPINK = 0xFF1493
+    BROWN = 0xA52A2A
+    ORANGE = 0xFF4500
