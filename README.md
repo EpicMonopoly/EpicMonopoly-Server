@@ -8,17 +8,18 @@ Game Logic development:
 - [x] Game logic
 - [x] Json design
 - [x] Demo
-- [ ] Communications(Developing) 
+- [ ] Communications(Developing)
 
 ## TODO
-- [ ] Trade 
+- [ ] Trade
 - [ ] EF
-- [ ] board: new_board(Shelved)
+- [ ] Color the block
+- [ ] Json handling
 
 ## Bug
 - [ ] some function in bank(add loan dict, remove loan dict, repayment)
 
-Server structure: 
+Server structure:
 
 - [ ] Web server: nginx
 - [ ] Database: mongoDB
@@ -38,7 +39,7 @@ Server structure:
 - Google
 - Monopoly 5(game)
 - MongoDB
-	- PyMongo 
+	- PyMongo
 - Nginx
 - Tornado offical guide
 	- [Introduction to Tornado](https://mirrors.segmentfault.com/itt2zh/)
