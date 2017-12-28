@@ -1,15 +1,28 @@
 import random
 import copy
 from functools import reduce
-
+import os
+from collections import OrderedDict
+import bank
+import block
+import board
+import card
+import cardpile
+import ef
+import estate
+import operation
+import player
+import station
+import tax
+import utility
+from json_io import json_reader, json_writer
 
 class Board:
     """
     Board class
     """
 
-    def __init__(self, two_block_street, three_block_street, station_list, utility_list, block_list,
-                 corner_list, chest_block_list, chance_block_list, tax_list):
+    def __init__(self):
         """
         Initialize the board
         :param two_block_street: list
@@ -18,15 +31,214 @@ class Board:
         :param station_list: list
         :param utility_list: list
         """
-        self._two_block_street = two_block_street
-        self._three_block_street = three_block_street
-        self._station_list = station_list
-        self._utility_list = utility_list
-        self._block_list = block_list
-        self._corner_list = corner_list
-        self._chest_block_list = chest_block_list
-        self._chance_block_list = chance_block_list
-        self._tax_list = tax_list
+        self._two_block_street = []
+        self._three_block_street = []
+        self._block_list = [0 for x in range(40)]
+        self._station_list = []
+        self._utility_list = []
+        self._corner_list = []
+        self._chest_block_list = []
+        self._chance_block_list = []
+        self._tax_list = []
+        self._player_dict = {}
+        self._epic_bank = None
+        self.init_board()
+
+    def _read_data(self):
+        # generate a map
+        parent_addr = os.path.abspath(os.pardir)
+        self._block_list_data = json_reader(os.path.join(
+            parent_addr, 'Data/block_data.json'))
+        self._station_list_data = json_reader(os.path.join(
+            parent_addr, 'Data/station_data.json'))
+        self._utility_list_data = json_reader(os.path.join(
+            parent_addr, 'Data/utility_data.json'))
+        self._estate_list_data = json_reader(os.path.join(
+            parent_addr, 'Data/estate_data.json'))
+        self._chest_list_data = json_reader(os.path.join(
+            parent_addr, 'Data/chest_data.json'))
+        self._chance_list_data = json_reader(os.path.join(
+            parent_addr, 'Data/chance_data.json'))
+        self._bank_data = json_reader(os.path.join(parent_addr, 'Data/bank_data.json'))
+        self._player_dict_data = json_reader(os.path.join(parent_addr, 'Data/player_list3.json'))
+    
+
+    def _init_player(self):
+        self._player_dict_data = self._player_dict_data["data"]
+        for i in range(len(self._player_dict_data)):
+            p = player.Player(self._player_dict_data[i]['id'], self._player_dict_data[i]['name'], self._player_dict_data[i]['cash'],
+                              self._player_dict_data[i]['alliance'])
+            output_str = "{0} {1} {2} {3}".format(p.cash, p.id, p.name, p.alliance)
+            operation.push2all(output_str)
+            self._player_dict[self._player_dict_data[i]['id']] = p
+
+
+    def _init_bank(self):
+        self._epic_bank = bank.Bank('99', 'EpicBank', self._bank_data['data']['house_number'], self._bank_data['data']['hotel_number'])
+        
+    def _init_block(self):
+        for b in self._block_list_data["data"]:
+            if b['block_type'] == 0:
+                # ["Go", "Go to Jail", "In Jail", "Free Parking"]
+                if b['name'] == "Go":
+                    corner_block = block.Go(
+                        b['name'], b['block_id'], b['position'])
+                elif b['name'] == "Go to Jail":
+                    corner_block = block.Go_To_Jail(
+                        b['name'], b['block_id'], b['position'])
+                elif b['name'] == "In Jail":
+                    corner_block = block.In_Jail(
+                        b['name'], b['block_id'], b['position'])
+                elif b['name'] == "Free Parking":
+                    corner_block = block.Free_Parking(
+                        b['name'], b['block_id'], b['position'])
+                else:
+                    pass
+                self._block_list[corner_block.position] = corner_block
+                self._corner_list.append(corner_block)
+            elif b['name'] == "Community Chest":
+                # "Community Chest"
+                new_block = cardpile.Community_Chest(
+                    b['name'], b['block_id'], b['position'])
+                self._block_list[new_block.position] = new_block
+                self._chest_block_list.append(new_block)
+            elif b['name'] == "Chance":  # "Chance"
+                new_block = cardpile.Chance(
+                    b['name'], b['block_id'], b['position'])
+                self._block_list[new_block.position] = new_block
+                self._chance_block_list.append(new_block)
+            elif b['block_type'] == 3:
+                # ["Income Tax", "Super Tax"]
+                if b['name'] == "Income Tax":
+                    new_block = tax.Income_Tax(
+                        b['name'], b['block_id'], b['position'], 0.10)
+                elif b['name'] == "Super Tax":
+                    new_block = tax.Super_Tax(
+                        b['name'], b['block_id'], b['position'], 0.10)
+                else:
+                    pass
+                self._block_list[new_block.position] = new_block
+                self._tax_list.append(new_block)
+
+    def _init_station(self):
+        self._station_list = []
+        # name, position, uid, estate_value, status, street_id
+        for s in self._station_list_data["data"]:
+            new_block = station.Station(
+                s['name'], s['block_id'], s['position'], s['uid'], s['estate_value'], s['status'])
+            self._station_list.append(new_block)
+            self._block_list[new_block.position] = new_block
+            self._epic_bank.add_asset(new_block)
+
+    def _init_utility(self):
+        self._utility_list = []
+        # name, position, uid, estate_value, status, street_id
+        for u in self._utility_list_data["data"]:
+            new_block = utility.Utility(
+                u['name'], u['block_id'], u['position'], u['uid'], u['estate_value'], u['status'])
+            self._utility_list.append(new_block)
+            self._block_list[new_block.position] = new_block
+            self._epic_bank.add_asset(new_block)
+
+    def _init_estate(self):
+        self._estate_list = []
+        for e in self._estate_list_data["data"]:
+            new_block = estate.Estate(e['name'], e['block_id'], e['position'], e['uid'],
+                                    e['estate_value'], e['status'], e['street_id'], e['house_value'])
+            self._estate_list.append(new_block)
+            self._block_list[new_block.position] = new_block
+            self._epic_bank.add_asset(new_block)
+
+    def _init_chest(self):
+        # initialize chest cards
+        self._chest_list = []
+        for chest in self._chest_list_data["data"]:
+            # 0: Collection, 1: Collect_from_players
+            if chest['card_type'] == 0 or chest['card_type'] == 1:
+                self._chest_list.append(card.CollectCard(chest['card_id'], chest['card_type'], chest['description'],
+                                                chest['amount']))
+            elif chest['card_type'] == 2 or chest['card_type'] == 3:  # 2: Pay, 3: Pay_for_repair
+                                                                    # or
+                                                                    # chest['card_type']
+                                                                    # == 8 8:
+                                                                    # Pay_to_players
+                self._chest_list.append(card.PayCard(chest['card_id'], chest['card_type'], chest['description'],
+                                            chest['amount']))
+            # elif chest['card_type'] == 4 or chest['card_type'] == 6:  # 4: Move_indicate_position, 6: Move_nearby
+            #     self._chest_list.append(card.MoveCard(chest['card_id'], chest['card_type'], chest['description'],
+            #                                     chest['block_id']))
+            # elif chest['card_type'] == 7:  # Move
+            #     self._chest_list.append(card.MoveCard(chest['card_id'], chest['card_type'], chest['description'],
+            #                                     chest['steps']))
+            elif chest['card_type'] == 5:  # Bailcard
+                self._chest_list.append(card.BailCard(
+                    chest['card_id'], chest['card_type'], chest['description']))
+
+    
+    def _init_chance(self):
+        # initialize chance cards
+        self._chance_list = []
+        for chance in self._chance_list_data["data"]:
+            if chance['card_type'] == 0:  # 0: Collection
+                                        # or chance['card_type'] == 1, 1:
+                                        # Collect_from_players
+                self._chance_list.append(card.CollectCard(chance['card_id'], chance['card_type'], chance['description'],
+                                                    chance['amount']))
+            elif chance['card_type'] == 2 or chance['card_type'] == 3 or chance['card_type'] == 8:  # 2: Pay,
+                                                                                                    # 3: Pay_for_repair
+                                                                                                    # 8:
+                                                                                                    # Pay_to_players
+                self._chance_list.append(card.PayCard(chance['card_id'], chance['card_type'], chance['description'],
+                                                chance['amount']))
+            # 4: Move_indicate_position, 6: Move_nearby
+            elif chance['card_type'] == 4 or chance['card_type'] == 6:
+                self._chance_list.append(card.MoveCard(chance['card_id'], chance['card_type'], chance['description'],
+                                                chance['block_id']))
+            elif chance['card_type'] == 7:  # Move
+                self._chance_list.append(card.MoveCard(chance['card_id'], chance['card_type'], chance['description'],
+                                                chance['steps']))
+            elif chance['card_type'] == 5:  # Bailcard
+                self._chance_list.append(card.BailCard(
+                    chance['card_id'], chance['card_type'], chance['description']))
+
+    def _init_block_street(self):
+        # initialize chess board
+        self._two_block_street = []
+        self._three_block_street = []
+        for e in self._estate_list:
+            if e.street_id == 1 or e.street_id == 8:
+                self._two_block_street.append(e)
+            else:
+                self._three_block_street.append(e)
+
+    def init_board(self):
+        self._read_data()  # read data
+        # init all the data 
+        self._init_bank()
+        self._init_block()
+        self._init_station()
+        self._init_utility()
+        self._init_estate()
+        self._init_chest()
+        self._init_chance()
+        self._init_player()
+
+    def get_data(self):
+        data_dict = OrderedDict()
+        data_dict['chess_board'] = self._block_list
+        data_dict['player_dict'] = self._player_dict
+        data_dict['epic_bank'] = self._epic_bank
+        data_dict['chest_list'] = self._chest_list
+        data_dict['chance_list'] = self._chance_list
+        data_dict['station_list'] = self._station_list
+        data_dict['utility_list'] = self._utility_list
+        data_dict['estate_list'] = self._estate_list
+        data_dict['corner_list'] = self._corner_list
+        data_dict['chest_block_list'] = self._chest_block_list
+        data_dict['chance_block_list'] = self._chance_block_list
+        data_dict['tax_list'] = self._tax_list
+        data_dict['ef'] = ef.EF(0.05)
+        return data_dict
 
     def new_board(self, chess_board_dict):
         """
