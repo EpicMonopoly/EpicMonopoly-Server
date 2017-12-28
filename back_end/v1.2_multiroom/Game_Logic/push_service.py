@@ -7,10 +7,8 @@ import tornado.web
 import tornado.websocket
 from tornado.options import define, options, parse_command_line
 
-# import game_entrance
 import room_detail
 
-# import threading
 
 rooms = dict()
 
@@ -25,7 +23,7 @@ def push2all_r(line, roomid, conn):
 
 def wait_choice_r(roomid, conn):
     # child to recv
-    print("wait_choice:", roomid)
+    print("Room {} waiting choice.".format(roomid))
     iroomid, line = conn.recv()
     assert (iroomid == roomid)
     while line == -1:
@@ -47,9 +45,11 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
         self.stream.set_nodelay(True)
         if self.roomid in rooms:
             rooms[self.roomid].add_clients(self.id, self)
+            self.write_message("<NEW_PLAYER-S>")
         else:
             rooms[self.roomid] = room_detail.Room_detail(
                 self.roomid, (self.id, self))
+            self.write_message("<NEW_PLAYER-O>")
 
     def on_message(self, message):
         try:
@@ -70,7 +70,7 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
                          (self.roomid, self.id, message))
             rooms[self.roomid].global_Choice.set_choice(message)
             rooms[self.roomid].sender(message)
-            rooms[self.roomid].add_log(self.id, message)
+            rooms[self.roomid].add_log(self.id, message) 
             logging.error("This is not json.")
 
     def on_close(self):

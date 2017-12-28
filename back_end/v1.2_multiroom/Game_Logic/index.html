@@ -37,10 +37,15 @@
             ws.onopen = function () {
                 messageContainer.innerHTML = "Welcome to EpicMonopoly!";
                 // ws.send("Message to send");
-                ws.send("<recall>");
             };
             ws.onmessage = function (evt) {
                 var received_msg = evt.data;
+                if (received_msg == "<NEW_PLAYER-S>"){
+                    received_msg = "Hello new player."
+                    ws.send("<recall>");
+                }else if (received_msg == "<NEW_PLAYER-O>"){
+                    received_msg = "Hello room owner."
+                }
                 messageContainer.innerHTML = messageContainer.innerHTML + "<br/>" + received_msg;
                 record.scrollTop = record.scrollHeight;
             };

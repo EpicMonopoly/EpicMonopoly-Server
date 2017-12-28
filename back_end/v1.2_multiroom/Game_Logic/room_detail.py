@@ -13,6 +13,7 @@ class Room_detail(object):
             self.add_clients(client_id, client_self)
         self.game_log = []
         self.global_Choice = Choice()
+
         self.parent_conn, self.child_conn = multiprocessing.Pipe()
         self.p = multiprocessing.Process(
             target=game_entrance.game_main, args=(self.roomid, self.child_conn))
@@ -26,8 +27,7 @@ class Room_detail(object):
     def listener(self):
         while True:
             iroomid, line = self.parent_conn.recv()
-            # print(iroomid, ":fc:", line)
-            # print(self.clients)
+            self.add_log("NPC", line)
             assert(iroomid == self.roomid)
             for key in self.clients.keys():
                 self.get_client(key).write_message(line)

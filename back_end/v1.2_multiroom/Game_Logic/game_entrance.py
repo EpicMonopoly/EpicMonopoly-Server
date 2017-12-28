@@ -11,7 +11,6 @@ import cardpile
 import estate
 import operation
 import player
-import room_detail
 import station
 import tax
 import utility
