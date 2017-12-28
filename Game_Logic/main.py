@@ -55,7 +55,7 @@ def init_game():
     # initialize bank
     epic_bank = bank.Bank('99', 'EpicBank', 32, 12)
     json_writer(os.path.join(parent_addr, 'Data/bank_data.json'),
-                {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel})
+                {"type": "bank_data", "data": {"house_number": epic_bank.cur_house, "hotel_number": epic_bank.cur_hotel}})
 
     for b in block_list_data["data"]:
         if b['block_type'] == 0:
@@ -285,7 +285,7 @@ def turn(gamer, data):
         while True:
             input_str = operation.wait_choice(
                 "Please enter the number of your decision:")
-            if(True):
+            if(False):
                 input_data = data["msg"].get_json_data("input")
                 input_str = input_data["request"]
             try:
@@ -343,7 +343,7 @@ def start_game():
                         while True:
                             input_str = operation.wait_choice(
                                 "Please enter the number of your decision:")
-                            if(True):
+                            if(False):
                                 input_data = data["msg"].get_json_data("input")
                                 input_str = input_data["request"]
                             try:

@@ -65,7 +65,7 @@ class Station(asset.Asset):
                 operation.push2all("2: Do not buy it")
                 while True:
                     input_str = operation.wait_choice("Please enter the number of your decision:")
-                    if(True):
+                    if(False):
                         input_data = data["msg"].get_json_data("input")
                         input_str = input_data["request"]
                     try:

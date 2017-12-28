@@ -223,7 +223,7 @@ class BailCard(Card):
             while True:
                 input_str = operation.wait_choice(
                     "Please enter the number of your decision:")
-                if(True):
+                if(False):
                     input_data = data["msg"].get_json_data("input")
                     input_str = input_data["request"]
                 try:
@@ -248,7 +248,7 @@ class BailCard(Card):
                         operation.push2all(p['name'])
                     input_str = operation.wait_choice(
                         "Please enter the player of you want to sell the card to or enter 'q' to quit:")
-                    if(True):
+                    if(False):
                         input_data = data["msg"].get_json_data("input")
                         input_str = input_data["request"]
                     try:
