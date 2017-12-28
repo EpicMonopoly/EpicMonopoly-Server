@@ -52,8 +52,9 @@ def roll(gamer, data):
     step = a + b
     current_gamer_position = gamer.position
     if current_gamer_position + step > 40:
-        operation.push2all("Passing Go, Gain 200")
-        operation.pay(data['epic_bank'], gamer, 200, data)
+        go_block = data["chess_board"][0]
+        operation.pay(data['epic_bank'], gamer, go_block.reward, data)
+        operation.push2all("Passing Go, Gain %d" % go_block.reward)
     gamer.move(step)
     end_position = gamer.position
     current_block = data['chess_board'][end_position]

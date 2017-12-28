@@ -68,19 +68,25 @@ class MoveCard(Card):
                     break
                 else:
                     continue
-            operation.push2all("Passing Go, Gain 200")
-            operation.pay(data['epic_bank'], gamer, 200, data)
+            go_block = data["chess_board"][0]
+            operation.push2all("Passing Go, Gain %d" % go_block.reward)
+            operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             gamer.move(steps=None, position=tmp)
+            dest_block = data["chess_board"][tmp]
+            dest_block.display(gamer, data, 0)
         else:
             if gamer.position < self._destination:
                 operation.push2all("Do not pass Go, no cash collected.")
             else:
-                operation.push2all("Passing Go, Gain 200")
-                operation.pay(data['epic_bank'], gamer, 200, data)
+                go_block = data["chess_board"][0]
+                operation.push2all("Passing Go, Gain %d" % go_block.reward)
+                operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             if self._destination == 10:
                 # in jail
                 gamer.cur_status = 0
             gamer.move(steps=None, position=self._destination)
+            dest_block = data["chess_board"][self._destination]
+            dest_block.display(gamer, data, 0)
 
     def change_value(self, rate):
         pass

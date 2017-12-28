@@ -27,7 +27,7 @@ def pay(payer, gainer, payment, data):
 
 def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
-    bail_fee = jail.bail_fee
+    bail_fee = jail.bail_fee(prionser.in_jail_time)
     if prionser.cash < bail_fee:
         push2all("Not enough money")
         return False
@@ -123,10 +123,16 @@ def trade(data, trade_data):
 
 def update_value(data):
     block_list = data["chess_board"]
+    chest_list = data["chest_list"]
+    chance_list = data["chance_list"]
     ef = data["ef"]
     ef.generate_ef()
     for b in block_list:
         b.change_value(ef.random_rate())
+    for c in chest_list:
+        c.change_value(ef.ef_value)
+    for c in chance_list:
+        c.change_value(ef.ef_value)
 
 
 def broken(gamer, data):

@@ -68,6 +68,10 @@ class Go(Block):
         """
         super().__init__(name, block_id, position)
         self._reward_value = 200
+    
+    @property
+    def reward(self):
+        return self._reward_value
 
     def display(self, gamer, data, dice_result):
         # import operation
@@ -110,6 +114,7 @@ class Go_To_Jail(Block):
         """
         operation.push2all("Move to Jail")
         gamer.move(steps=0, position=10)
+        gamer.add_in_jail_time()
         gamer.cur_status = 0
 
     def change_value(self, rate):
@@ -130,9 +135,8 @@ class In_Jail(Block):
         super().__init__(name, block_id, position)
         self._bail_fee = 50
 
-    @property
-    def bail_fee(self):
-        return self._bail_fee
+    def bail_fee(self, time):
+        return self._bail_fee * time
 
     def display(self, gamer, data, dice_result):
         pass
