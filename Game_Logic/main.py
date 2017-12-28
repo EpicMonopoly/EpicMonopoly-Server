@@ -16,7 +16,7 @@ import station
 import tax
 import utility
 from json_io import json_reader, json_writer
-
+import color
 data = None
 
 
@@ -24,10 +24,7 @@ def init_game():
     """
     Initialize the game with map, players and bank
     """
-    # json_writer(os.path.join(parent_addr, 'Data/board_data.json'),
-    #             epic_bank.getJSon())
     global data
-    
     chess_board = board.Board()
     data = chess_board.get_data()
     

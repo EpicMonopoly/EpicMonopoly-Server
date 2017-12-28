@@ -134,9 +134,12 @@ class Bank(role.Role):
 
     def getJSon(self):
         json_data = {
-            "uid": self._uid,
-            "name": self._name,
-            "cur_house_num": self._cur_house,
-            "cur_hotel_num": self._cur_hotel
+            "type": "bank",
+            "data": [
+                {
+                    "house_num": self._cur_house,
+                    "hotel_num": self._cur_hotel
+                }
+            ]
         }
         return json_data

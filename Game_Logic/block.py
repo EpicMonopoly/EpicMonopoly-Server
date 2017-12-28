@@ -60,13 +60,14 @@ class Go(Block):
     Subclass(Block): Go
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
             :param name: string
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description 
         self._reward_value = 200
 
     def display(self, gamer, data, dice_result):
@@ -92,13 +93,14 @@ class Go_To_Jail(Block):
     Subclass(Block): Go_To_Jail
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
             :param name: string
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description
 
     def display(self, gamer, data, dice_result):
         """
@@ -121,13 +123,14 @@ class In_Jail(Block):
     Subclass(Block): In_jail
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
             :param name: string
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description
         self._bail_fee = 50
 
     @property
@@ -146,13 +149,14 @@ class Free_Parking(Block):
     Subclass(Block): Free_Parking
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
         :param name: string
         :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description 
 
     def display(self, gamer, data, dice_result):
         pass

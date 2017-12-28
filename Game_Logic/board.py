@@ -16,6 +16,7 @@ import station
 import tax
 import utility
 from json_io import json_reader, json_writer
+import color
 
 class Board:
     """
@@ -25,11 +26,6 @@ class Board:
     def __init__(self):
         """
         Initialize the board
-        :param two_block_street: list
-        :param three_block_street: list
-        :param block_list: list
-        :param station_list: list
-        :param utility_list: list
         """
         self._two_block_street = []
         self._three_block_street = []
@@ -42,6 +38,7 @@ class Board:
         self._tax_list = []
         self._player_dict = {}
         self._epic_bank = None
+        self._street_color = OrderedDict()
         self.init_board()
 
     def _read_data(self):
@@ -82,16 +79,16 @@ class Board:
                 # ["Go", "Go to Jail", "In Jail", "Free Parking"]
                 if b['name'] == "Go":
                     corner_block = block.Go(
-                        b['name'], b['block_id'], b['position'])
+                        b['name'], b['block_id'], b['position'], b['description'])
                 elif b['name'] == "Go to Jail":
                     corner_block = block.Go_To_Jail(
-                        b['name'], b['block_id'], b['position'])
+                        b['name'], b['block_id'], b['position'], b['description'])
                 elif b['name'] == "In Jail":
                     corner_block = block.In_Jail(
-                        b['name'], b['block_id'], b['position'])
+                        b['name'], b['block_id'], b['position'], b['description'])
                 elif b['name'] == "Free Parking":
                     corner_block = block.Free_Parking(
-                        b['name'], b['block_id'], b['position'])
+                        b['name'], b['block_id'], b['position'], b['description'])
                 else:
                     pass
                 self._block_list[corner_block.position] = corner_block
@@ -99,22 +96,22 @@ class Board:
             elif b['name'] == "Community Chest":
                 # "Community Chest"
                 new_block = cardpile.Community_Chest(
-                    b['name'], b['block_id'], b['position'])
+                    b['name'], b['block_id'], b['position'], b['description'])
                 self._block_list[new_block.position] = new_block
                 self._chest_block_list.append(new_block)
             elif b['name'] == "Chance":  # "Chance"
                 new_block = cardpile.Chance(
-                    b['name'], b['block_id'], b['position'])
+                    b['name'], b['block_id'], b['position'], b['description'])
                 self._block_list[new_block.position] = new_block
                 self._chance_block_list.append(new_block)
             elif b['block_type'] == 3:
                 # ["Income Tax", "Super Tax"]
                 if b['name'] == "Income Tax":
                     new_block = tax.Income_Tax(
-                        b['name'], b['block_id'], b['position'], 0.10)
+                        b['name'], b['block_id'], b['position'], b['description'], 0.10)
                 elif b['name'] == "Super Tax":
                     new_block = tax.Super_Tax(
-                        b['name'], b['block_id'], b['position'], 0.10)
+                        b['name'], b['block_id'], b['position'], b['description'], 0.10)
                 else:
                     pass
                 self._block_list[new_block.position] = new_block
@@ -203,6 +200,9 @@ class Board:
 
     def _init_block_street(self):
         # initialize chess board
+        selected_colors = random.choices([hex(c.value) for c in color.Color], k=8)
+        for i in range(8):
+            self._street_color[i] = selected_colors[i] 
         self._two_block_street = []
         self._three_block_street = []
         for e in self._estate_list:
@@ -238,6 +238,7 @@ class Board:
         data_dict['chance_block_list'] = self._chance_block_list
         data_dict['tax_list'] = self._tax_list
         data_dict['ef'] = ef.EF(0.05)
+        data_dict['street_color'] = self._street_color
         return data_dict
 
     def new_board(self, chess_board_dict):
@@ -245,7 +246,6 @@ class Board:
         Generate a new board
         :return: a board
         """
-
         two_block_street = copy.copy(self._two_block_street)
         three_block_street = copy.copy(self._three_block_street)
         station_list = copy.copy(self._station_list)
@@ -341,4 +341,7 @@ class Board:
 
     # TODO: need to finish
     def getJSon(self):
-        pass
+        json_data = {
+            ""
+        }
+        
