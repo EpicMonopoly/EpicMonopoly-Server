@@ -161,13 +161,12 @@ class Player(role.Role):
         json_data = {
             "name": self._name,
             "cash": self._cash,
+            "id": self.id,
             "position": self._position,
             "alliance": self._alliance,
             "bail_card_num": self._bail_card_num,
             "cur_status": self._cur_status,
-            "utility_num": self._utility_num,
-            "station_num": self._station_num,
-            "in_jail": self._in_jail,
             "pre_position": self._pre_position,
+            "property": list(self.assets)
         }
         return json_data

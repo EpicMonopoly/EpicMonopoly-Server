@@ -20,6 +20,9 @@ class Station(asset.Asset):
         :return: amount of payment
 
         """
+        return self._get_payment(station_num)
+
+    def _get_payment(self, station_num):
         value = self._estate_value
         if station_num == 1:
             return (1 / 8) * value
@@ -60,11 +63,13 @@ class Station(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                operation.push2all("Nobody own %s do you want to buy it?" % self.name)
+                operation.push2all(
+                    "Nobody own %s do you want to buy it?" % self.name)
                 operation.push2all("1: Buy it")
                 operation.push2all("2: Do not buy it")
                 while True:
-                    input_str = operation.wait_choice("Please enter the number of your decision:")
+                    input_str = operation.wait_choice(
+                        "Please enter the number of your decision:")
                     if(False):
                         input_data = data["msg"].get_json_data("input")
                         input_str = input_data["request"]
@@ -83,7 +88,7 @@ class Station(asset.Asset):
                         operation.pay(gamer, bank, price, data)
                         operation.trade_asset(self, bank, gamer)
                         operation.push2all("%s buy %s for %d" %
-                              (gamer.name, self.name, price))
+                                           (gamer.name, self.name, price))
                         break
                 elif choice == 2:
                     break
@@ -95,3 +100,19 @@ class Station(asset.Asset):
         else:
             raise ValueError("Invalid estate status")
 
+    def getJSon(self):
+        payment_list = []
+        for i in range(1, 5):
+            payment_list.append(
+                {"station_number": i, "payment": self._get_payment(i)})
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "uid": self._uid,
+            "estate_value": self._estate_value,
+            "status": self._status,
+            "mortgage_value": self.mortgage_value,
+            "payment": payment_list
+        }
+        return json_data
