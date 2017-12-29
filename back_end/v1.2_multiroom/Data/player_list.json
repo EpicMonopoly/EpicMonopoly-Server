@@ -1,0 +1,34 @@
+{
+  "set_name": "player_list",
+  "data": [
+  {
+    "name": "Player1",
+    "id": 100,
+    "cash": 1000,
+    "property":{
+      "id": []
+    },
+    "alliance": "Asia",
+    "status": 1
+  },
+  {
+    "name": "Player2",
+    "id": 101,
+    "cash": 1000,
+    "property":{
+      "id": []
+    },
+    "alliance": "Europe",
+    "status": 1
+  },
+  {
+    "name": "Player3",
+    "id": 102,
+    "cash": 1000,
+    "property":{
+      "id": []
+    },
+    "alliance": "America",
+    "status": 1
+  }]
+}

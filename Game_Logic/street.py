@@ -6,14 +6,14 @@ class Street:
     Street class is a struct that contain 1-3 blocks
     """
 
-    def __init__(self, color=None, block_list=None):
+    def __init__(self, street_id, color=None, block_list=None):
         """
         Construct method for Street
         :param color: color for this street
         :param block_list: block list
         """
+        self._street_id = street_id
         self._color = color
-        self._block_list = block_list
 
     @property
     def color(self):
@@ -42,9 +42,9 @@ class Street:
         for block in self._block_list:
             block.position(temp_list.pop())
 
-    #TODO: need to finish
     def getJSon(self):
         json_data = {
+            "id": self._street_id
             "color": self._color
         }
         return json_data

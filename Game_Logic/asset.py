@@ -1,5 +1,4 @@
 import block
-# from ef import EF
 
 
 class Asset(block.Block):
@@ -50,7 +49,6 @@ class Asset(block.Block):
     def mortgage_value(self):
         return self._estate_value * self.mortgage_rate
 
-    # TODO: implement changeEF method
     def change_value(self, rate):
         """
         Change ef value
@@ -64,12 +62,13 @@ class Asset(block.Block):
         pass
 
     def getJSon(self):
-        json_data = {
-            "name": self._name,
-            "block_id": self._block_id,
-            "position": self._position,
-            "uid": self._uid,
-            "estate_value": self._estate_value,
-            "status": self._status
-        }
-        return json_data
+        pass
+        # json_data = {
+        #     "name": self._name,
+        #     "block_id": self._block_id,
+        #     "position": self._position,
+        #     "uid": self._uid,
+        #     "estate_value": self._estate_value,
+        #     "status": self._status
+        # }
+        # return json_data

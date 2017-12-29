@@ -1,5 +1,5 @@
 {
-  "set_name": "station_data",
+  "type": "station_data",
   "data": [
 	{
 		"name": "Chongqing",

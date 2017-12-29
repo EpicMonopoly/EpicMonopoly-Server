@@ -1,0 +1,32 @@
+dist: trusty
+sudo: false
+
+# language python, including 3.5, 3.6
+language: python
+python:
+  - "3.5"  
+  - "3.6"
+  - "nightly"
+
+notifications:
+  email:
+    recipients:
+      - 510662916@qq.com
+    on_success: never # default: change
+    on_failure: always # default: always
+
+# install tornado module
+install:
+  - pip install tornado
+
+# test script
+script:
+  - cd back_end/v1.2_multiroom/Game_Logic
+  - echo "Enter directory v1.2_multiroom"
+  - echo "Test begins"
+  - nohup python3 game_entrance.py > /dev/null 2>&1 &
+  - sleep 30s && echo "Running..."
+  
+
+after_script:
+  - echo "Run successfully"

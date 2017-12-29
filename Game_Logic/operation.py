@@ -1,5 +1,6 @@
 import uuid
 import chatdemo
+msg_queue = []
 
 
 # operations
@@ -26,7 +27,7 @@ def pay(payer, gainer, payment, data):
 
 def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
-    bail_fee = jail.bail_fee
+    bail_fee = jail.bail_fee(prionser.in_jail_time)
     if prionser.cash < bail_fee:
         push2all("Not enough money")
         return False
@@ -122,10 +123,16 @@ def trade(data, trade_data):
 
 def update_value(data):
     block_list = data["chess_board"]
+    chest_list = data["chest_list"]
+    chance_list = data["chance_list"]
     ef = data["ef"]
     ef.generate_ef()
     for b in block_list:
         b.change_value(ef.random_rate())
+    for c in chest_list:
+        c.change_value(ef.ef_value)
+    for c in chance_list:
+        c.change_value(ef.ef_value)
 
 
 def broken(gamer, data):
@@ -149,6 +156,9 @@ def mortgage_asset(gamer, data):
         return 0
     while True:
         input_str = wait_choice("Please enter the index you want to mortgage:")
+        if(False):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data["request"]
         try:
             asset_number = int(input_str)
             break
@@ -213,6 +223,9 @@ def construct_building(gamer, data):
     while True:
         input_str = wait_choice(
             "Please enter the number you want to built a house:")
+        if(False):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data["request"]
         try:
             asset_number = int(input_str)
             break
@@ -287,6 +300,9 @@ def remove_building(gamer, data):
     while True:
         input_str = wait_choice(
             "Please enter the number you want to remove a house:")
+        if(False):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data["request"]
         try:
             asset_number = int(input_str)
             break

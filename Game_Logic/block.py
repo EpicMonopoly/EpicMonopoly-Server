@@ -60,19 +60,24 @@ class Go(Block):
     Subclass(Block): Go
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
             :param name: string
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description
         self._reward_value = 200
+
+    @property
+    def reward(self):
+        return self._reward_value
 
     def display(self, gamer, data, dice_result):
         # import operation
         operation.pay(data['epic_bank'], gamer, self._reward_value, data)
-    
+
     def change_value(self, rate):
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
@@ -92,13 +97,14 @@ class Go_To_Jail(Block):
     Subclass(Block): Go_To_Jail
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
             :param name: string
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description
 
     def display(self, gamer, data, dice_result):
         """
@@ -110,6 +116,7 @@ class Go_To_Jail(Block):
         """
         operation.push2all("Move to Jail")
         gamer.move(steps=0, position=10)
+        gamer.add_in_jail_time()
         gamer.cur_status = 0
 
     def change_value(self, rate):
@@ -121,18 +128,18 @@ class In_Jail(Block):
     Subclass(Block): In_jail
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
             :param name: string
             :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description
         self._bail_fee = 50
 
-    @property
-    def bail_fee(self):
-        return self._bail_fee
+    def bail_fee(self, time):
+        return self._bail_fee * time
 
     def display(self, gamer, data, dice_result):
         pass
@@ -146,13 +153,14 @@ class Free_Parking(Block):
     Subclass(Block): Free_Parking
     """
 
-    def __init__(self, name, block_id, position):
+    def __init__(self, name, block_id, position, description):
         """
         Constructor 
         :param name: string
         :param position: int
         """
         super().__init__(name, block_id, position)
+        self._description = description
 
     def display(self, gamer, data, dice_result):
         pass

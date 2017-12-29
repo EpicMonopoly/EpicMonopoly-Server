@@ -1,5 +1,5 @@
 {
-  "set_name": "utility_data",
+  "type": "utility_data",
   "data": [
 	{
 		"name": "Power Station",

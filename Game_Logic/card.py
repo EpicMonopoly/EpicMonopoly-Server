@@ -30,10 +30,10 @@ class Card(metaclass=ABCMeta):
 
     def getJSon(self):
         json_data = {
-            "name": self._name,
             "description": self._description
         }
         return json_data
+
 
 class MoveCard(Card):
     def __init__(self, name, card_type, description, step):
@@ -67,31 +67,37 @@ class MoveCard(Card):
                     break
                 else:
                     continue
-            operation.push2all("Passing Go, Gain 200")
-            operation.pay(data['epic_bank'], gamer, 200, data)
+            go_block = data["chess_board"][0]
+            operation.push2all("Passing Go, Gain %d" % go_block.reward)
+            operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             gamer.move(steps=None, position=tmp)
+            dest_block = data["chess_board"][tmp]
+            dest_block.display(gamer, data, 0)
         else:
             if gamer.position < self._destination:
                 operation.push2all("Do not pass Go, no cash collected.")
             else:
-                operation.push2all("Passing Go, Gain 200")
-                operation.pay(data['epic_bank'], gamer, 200, data)
+                go_block = data["chess_board"][0]
+                operation.push2all("Passing Go, Gain %d" % go_block.reward)
+                operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             if self._destination == 10:
                 # in jail
                 gamer.cur_status = 0
             gamer.move(steps=None, position=self._destination)
+            dest_block = data["chess_board"][self._destination]
+            dest_block.display(gamer, data, 0)
 
     def change_value(self, rate):
         pass
 
-     def getJSon(self):
-        json_data = {
-            "name": self._name,
-            "description": self._description,
-            "destination": self._destination,
-            "card_type": self._card_type
-        }
-        return json_data
+    # def getJSon(self):
+    #     json_data = {
+    #         "name": self._name,
+    #         "description": self._description,
+    #         "destination": self._destination,
+    #         "card_type": self._card_type
+    #     }
+    #     return json_data
 
 
 class PayCard(Card):
@@ -145,14 +151,14 @@ class PayCard(Card):
     def amount(self, amount):
         self._amount = amount
 
-    def getJSon(self):
-        json_data = {
-            "name": self._name,
-            "description": self._description,
-            "amount": self._amount,
-            "card_type": self._card_type
-        }
-        return json_data
+    # def getJSon(self):
+    #     json_data = {
+    #         "name": self._name,
+    #         "description": self._description,
+    #         "amount": self._amount,
+    #         "card_type": self._card_type
+    #     }
+    #     return json_data
 
 
 class CollectCard(Card):
@@ -192,14 +198,14 @@ class CollectCard(Card):
     def amount(self, amount):
         self._amount = amount
 
-    def getJSon(self):
-        json_data = {
-            "name": self._name,
-            "description": self._description,
-            "amount": self._amount,
-            "card_type": self._card_type
-        }
-        return json_data
+    # def getJSon(self):
+    #     json_data = {
+    #         "name": self._name,
+    #         "description": self._description,
+    #         "amount": self._amount,
+    #         "card_type": self._card_type
+    #     }
+    #     return json_data
 
 
 class BailCard(Card):
@@ -222,6 +228,9 @@ class BailCard(Card):
             while True:
                 input_str = operation.wait_choice(
                     "Please enter the number of your decision:")
+                if(False):
+                    input_data = data["msg"].get_json_data("input")
+                    input_str = input_data["request"]
                 try:
                     choice = int(input_str)
                     if choice == 1 or choice == 2:
@@ -238,12 +247,15 @@ class BailCard(Card):
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
                 while True:
-                    #TODO: need checking
+                    # TODO: need checking
                     operation.push2all("Players list:")
                     for p in data['player_dict']:
                         operation.push2all(p['name'])
                     input_str = operation.wait_choice(
                         "Please enter the player of you want to sell the card to or enter 'q' to quit:")
+                    if(False):
+                        input_data = data["msg"].get_json_data("input")
+                        input_str = input_data["request"]
                     try:
                         choice = str(input_str)
                         if choice in data['player_dict'].keys() and choice != gamer.name:
@@ -261,10 +273,10 @@ class BailCard(Card):
                 # TODO: need to implement trade
                 pass
 
-    def getJSon(self):
-        json_data = {
-            "name": self._name,
-            "description": self._description,
-            "card_type": self._card_type
-        }
-        return json_data
+    # def getJSon(self):
+    #     json_data = {
+    #         "name": self._name,
+    #         "description": self._description,
+    #         "card_type": self._card_type
+    #     }
+    #     return json_data

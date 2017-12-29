@@ -7,8 +7,9 @@ class Tax(block.Block):
     Tax class
     """
 
-    def __init__(self, name, block_id, position, rate):
+    def __init__(self, name, block_id, position, description, rate):
         super().__init__(name, block_id, position)
+        self._description = description
         self._rate = rate
 
     @property
@@ -40,13 +41,13 @@ class Income_Tax(Tax):
     Subclass(Tax): Income_Tax
     """
 
-    def __init__(self, name, block_id, position, rate):
+    def __init__(self, name, block_id, position, description, rate):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, block_id, position, rate)
+        super().__init__(name, block_id, position, description, rate)
 
     def display(self, gamer, data, dice_result):
         """
@@ -67,13 +68,13 @@ class Super_Tax(Tax):
     Subclass(Tax): Super_Tax
     """
 
-    def __init__(self, name, block_id, position, rate):
+    def __init__(self, name, block_id, position, description, rate):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, block_id, position, rate)
+        super().__init__(name, block_id, position, description, rate)
 
     def display(self, gamer, data, dice_result):
         """
