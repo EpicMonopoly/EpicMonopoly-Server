@@ -8,22 +8,13 @@ Game Logic development:
 - [x] Game logic
 - [x] Json design
 - [x] Demo
-<<<<<<< HEAD
 - [ ] Communications(Developing) 
-
-## TODO
-- [ ] Trade 
-- [ ] EF
-- [ ] board: new_board(Shelved)
-=======
-- [ ] Communications(Developing)
 
 ## TODO
 - [ ] Trade
 - [ ] EF
 - [ ] Color the block
 - [ ] Json handling
->>>>>>> 2ac733230b00d915658cdbad132c1d46530dd46e
 
 ## Bug
 - [ ] some function in bank(add loan dict, remove loan dict, repayment)
