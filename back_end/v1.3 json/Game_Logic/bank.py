@@ -6,6 +6,7 @@ class Bank(role.Role):
     """
     subclass(Role): Bank
     """
+
     def __init__(self, uid, name, house_number, hotel_number):
         """
         Constructor
@@ -33,30 +34,33 @@ class Bank(role.Role):
     def pay(self, payment):
         # bank never pays anything
         pass
-    
-    def gain(self, payment): 
+
+    def gain(self, payment):
         # bank seems like gaining a lot
         pass
 
     def built_house(self):
         self._cur_house = self.cur_house - 1
-    
+
     def built_hotel(self):
         self._cur_hotel = self._cur_hotel - 1
 
     def remove_house(self, number):
         self._cur_house = self.cur_house + number
-    
-    def remove_hotel(self):
-        self._cur_hotel = self._cur_hotel - 1
 
+    def remove_hotel(self):
+        self._cur_hotel = self._cur_hotel + 1
+
+    # TODO
     def add_loan_dict(self, asset_id, amount):
         self._loan_dict
-    
+
+    # TODO
     def remove_loan_dict(self, asset_id):
         if asset_id in self._loan_dict.keys():
             del self._loan_dict[asset_id]
 
+    # TODO
     def repayment(self, from_role, assets):
         """
         Repay the mortgaged assets
@@ -129,3 +133,15 @@ class Bank(role.Role):
             old_asset.owner = -1
         else:
             pass
+
+    def getJSon(self):
+        json_data = {
+            "type": "bank",
+            "data": [
+                {
+                    "house_num": self._cur_house,
+                    "hotel_num": self._cur_hotel
+                }
+            ]
+        }
+        return json_data

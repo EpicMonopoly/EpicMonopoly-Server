@@ -28,11 +28,12 @@
     var messageContainer = document.getElementById("messages");
     var record = document.getElementById("recordContent");
     var ws;
+    var uid =  guid();    
 
     function WebSocketTest() {
         if ("WebSocket" in window) {
             var roomid = document.getElementById("room").value;
-            ws = new WebSocket("ws://test.sustech.pub:8888/websocket?Id=" + guid() + "&roomid=" + roomid);
+            ws = new WebSocket("ws://test.sustech.pub:8888/websocket?Id=" + uid + "&roomid=" + roomid);
 
             ws.onopen = function () {
                 messageContainer.innerHTML = "Welcome to EpicMonopoly!";
@@ -62,7 +63,16 @@
         var msg = document.getElementById("choice").value;
         messageContainer.innerHTML = messageContainer.innerHTML + "<br/>" + msg;
         document.getElementById("choice").value = "";
-        ws.send(msg);
+        var json_msg = {
+            "type": "input",
+            "data":[
+                {
+                    "from_player_id": uid,
+                    "request": msg
+                }
+            ]
+        }
+        ws.send(JSON.stringify(json_msg));
     }
     function S4() {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);

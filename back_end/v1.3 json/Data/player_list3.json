@@ -1,34 +1,30 @@
 {
-  "set_name": "player_list",
+  "type": "player_list2",
   "data": [
   {
     "name": "Player1",
-    "id": 100,
+    "avatar": "avatar1",
+    "id": "100",
     "cash": 1000,
     "property":{
       "id": []
     },
     "alliance": "Asia",
-    "status": 1
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
   },
   {
     "name": "Player2",
-    "id": 101,
+    "avatar": "avatar2",
+    "id": "101",
     "cash": 1000,
     "property":{
       "id": []
     },
     "alliance": "Europe",
-    "status": 1
-  },
-  {
-    "name": "Player3",
-    "id": 102,
-    "cash": 1000,
-    "property":{
-      "id": []
-    },
-    "alliance": "America",
-    "status": 1
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
   }]
 }

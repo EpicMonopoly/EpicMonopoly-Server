@@ -9,10 +9,26 @@ from tornado.options import define, options, parse_command_line
 
 import room_detail
 
-
 rooms = dict()
 
 # game push methods
+
+
+# def push2all_r(line, roomid, conn):
+#     # print(roomid, ":2p:", line)
+#     conn.send((roomid, line))
+#     # to parentconn in room_detail listener
+
+
+# def wait_choice_r(roomid, conn):
+#     # child to recv
+#     print("Room {} waiting choice.".format(roomid))
+#     iroomid, line = conn.recv()
+#     assert (iroomid == roomid)
+#     while line == -1:
+#         iroomid, line = conn.recv()
+#         assert (iroomid == roomid)
+#     return line
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -35,25 +51,23 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
             self.write_message("<NEW_PLAYER-O>")
 
     def on_message(self, message):
+        print(message)
         try:
             data = json.loads(message)
-            if data['request'] == 'uid':
-                logging.info("Room %s Client %s sent a json : %s " %
-                             (self.roomid, self.id, data))
-                rooms[self.roomid].get_client(
-                    self.id).write_message("Your id is " + self.id)
-                data = {"type": "json",
-                        "response": "This is response for trying to get uid."}
-                rooms[self.roomid].get_client(self.id).write_message(data)
+            # rooms[self.roomid].mess_hand.msg_queue.append(data)
+            if data['type'] == 'input':
+                input_data = data["data"][0]
+                assert(input_data["from_player_id"]==self.id)
+                logging.info("Room %s Client %s sent a message : %s " %
+                            (self.roomid, self.id, input_data["request"]))
+                rooms[self.roomid].sender(message)
+                # rooms[self.roomid].sender(input_data["request"])
+                rooms[self.roomid].global_Choice.set_choice(input_data["request"])
+                rooms[self.roomid].add_log(self.id, input_data["request"]) 
         except (ValueError, TypeError) as err:
             if message == "<recall>":
                 single_push(self.roomid, self.id)
                 return
-            logging.info("Room %s Client %s sent a message : %s " %
-                         (self.roomid, self.id, message))
-            rooms[self.roomid].global_Choice.set_choice(message)
-            rooms[self.roomid].sender(message)
-            rooms[self.roomid].add_log(self.id, message) 
             logging.error("This is not json.")
 
     def on_close(self):

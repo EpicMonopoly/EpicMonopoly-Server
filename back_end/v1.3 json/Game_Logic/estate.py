@@ -51,33 +51,30 @@ class Estate(asset.Asset):
         Return:
             :payment: int
         """
-        if self.house_num == 0:
+        return self._get_payment(self._house_num)
+
+    def _get_payment(self, house_num):
+        if house_num == 0:
             return int(self.value * 0.1)
-        elif self.house_num == 1:
+        elif house_num == 1:
             return int(self.value * 0.15)
-        elif self.house_num == 2:
+        elif house_num == 2:
             return int(self.value * 0.2)
-        elif self.house_num == 3:
+        elif house_num == 3:
             return int(self.value * 0.25)
-        elif self.house_num == 4:
+        elif house_num == 4:
             return int(self.value * 0.3)
-        elif self.house_num == 5:
+        elif house_num == 5:
             return int(self.value * 0.4)
-        elif self.house_num == 6:
+        elif house_num == 6:
             return int(self.value * 0.5)
         else:
             # Should not be here
             raise ValueError("Invalid house number")
 
-    # TODO: implement the method
-    def change_house_value(self, EF):
-        """
-        Change house value according to EF
-        :type EF: float
-        :param EF: economy factor
-        :return: None
-        """
-        pass
+    def change_value(self, rate):
+        self._house_value = self._house_value * (1 + rate)
+        self._estate_value = self._estate_value * (1 + rate)
 
     def display(self, gamer, data, dice_result):
         """
@@ -102,19 +99,23 @@ class Estate(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                operation.push2all("Nobody own %s do you want to buy it?" % self.name)
+                operation.push2all(
+                    "Nobody own %s do you want to buy it?" % self.name)
                 operation.push2all("Price: %d" % self.value)
                 operation.push2all("1: Buy it")
                 operation.push2all("2: Do not buy it")
                 while True:
-                    operation.push2all("Please enter the number of your decision:")
-                    input_str = operation.wait_choice()
+                    input_str = operation.wait_choice(
+                        "Please enter the number of your decision:")
+                    if(True):
+                        input_data = data["msg"].get_json_data("input")
+                        input_str = input_data[0]["request"]
                     try:
                         choice = int(input_str)
                         break
                     except ValueError:
                         operation.push2all("Please enter a number.")
-                operation.push2all(" ")
+                operation.push2all()
                 if choice == 1:
                     price = self.value
                     cur_cash = gamer.cash
@@ -124,7 +125,8 @@ class Estate(asset.Asset):
                     else:
                         operation.pay(gamer, epic_bank, price, data)
                         operation.trade_asset(self, epic_bank, gamer)
-                        operation.push2all("%s buy %s for %d" % (gamer.name, self.name, price))
+                        operation.push2all("%s buy %s for %d" %
+                                           (gamer.name, self.name, price))
                         break
                 elif choice == 2:
                     break
@@ -135,3 +137,23 @@ class Estate(asset.Asset):
             operation.push2all("%s is in mortgaged" % self.name)
         else:
             raise ValueError("Invalid estate status")
+
+    def getJSon(self):
+        payment_list = []
+        for i in range(1, 7):
+            payment_list.append(
+                {"house_number": i, "payment": self._get_payment(i)})
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "uid": self._uid,
+            "estate_value": self._estate_value,
+            "status": self._status,
+            "street_id": self._street_id,
+            "house_value": self._house_value,
+            "house_num": self._house_num,
+            "mortgage_value": self.mortgage_value,
+            "payment": payment_list
+        }
+        return json_data

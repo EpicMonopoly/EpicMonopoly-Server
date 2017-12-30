@@ -6,8 +6,10 @@ class Tax(block.Block):
     """
     Tax class
     """
-    def __init__(self, name, block_id, position, rate):
+
+    def __init__(self, name, block_id, position, description, rate):
         super().__init__(name, block_id, position)
+        self._description = description
         self._rate = rate
 
     @property
@@ -21,19 +23,32 @@ class Tax(block.Block):
     def display(self, gamer, data, dice_result):
         pass
 
+    def change_value(self, new_rate):
+        self._rate = self._rate * (1 + new_rate)
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "rete": self._rate
+        }
+        return json_data
+
 
 class Income_Tax(Tax):
     """
     Subclass(Tax): Income_Tax
     """
-    def __init__(self, name, block_id, position, rate):
+
+    def __init__(self, name, block_id, position, description, rate):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, block_id, position, rate)
-    
+        super().__init__(name, block_id, position, description, rate)
+
     def display(self, gamer, data, dice_result):
         """
         docstring here
@@ -45,7 +60,6 @@ class Income_Tax(Tax):
         bank = data['epic_bank']
         payment = gamer.cash * self.rate
         operation.pay(gamer, bank, payment, data)
-        # print("%s pay %d for tax" % (gamer.name, payment))
         operation.push2all("%s pay %d for tax" % (gamer.name, payment))
 
 
@@ -53,14 +67,15 @@ class Super_Tax(Tax):
     """
     Subclass(Tax): Super_Tax
     """
-    def __init__(self, name, block_id, position, rate):
+
+    def __init__(self, name, block_id, position, description, rate):
         """
         Constructor 
             :param name: string
             :param position: int
         """
-        super().__init__(name, block_id, position, rate)
-    
+        super().__init__(name, block_id, position, description, rate)
+
     def display(self, gamer, data, dice_result):
         """
         docstring here
@@ -72,5 +87,4 @@ class Super_Tax(Tax):
         bank = data['epic_bank']
         payment = gamer.calculate_asset_value() * self.rate
         operation.pay(gamer, bank, payment, data)
-        # print("%s pay %d for tax" % (gamer.name, payment))
         operation.push2all("%s pay %d for tax" % (gamer.name, payment))

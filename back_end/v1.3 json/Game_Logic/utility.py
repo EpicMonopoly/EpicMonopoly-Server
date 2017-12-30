@@ -1,10 +1,12 @@
 import asset
+import operation
 
 
 class Utility(asset.Asset):
     """
     Class Utility
     """
+
     def __init__(self, name, block_id, position, uid, estate_value, status):
         """
         Call superclass construct method
@@ -20,6 +22,9 @@ class Utility(asset.Asset):
             # Should not be here
             return 0
 
+    def change_value(self, rate):
+        self._estate_value = self._estate_value * (1 + rate)
+
     def display(self, gamer, data, dice_result):
         """
         Display description
@@ -27,7 +32,7 @@ class Utility(asset.Asset):
         :type gamer: player.Player
         :return:
         """
-        import operation
+        # import operation
         player_dict = data['player_dict']
         bank = data['epic_bank']
         if self._status == 1:
@@ -36,54 +41,61 @@ class Utility(asset.Asset):
             owner = player_dict[owner_id]
             if owner_id == gamer.id:
                 # Owner pass this station
-                # print("%s own %s" % (gamer.name, self.name))
                 operation.push2all("%s own %s" % (gamer.name, self.name))
             else:
                 # Other pass this station
-                # print("%s own %s" % (owner.name, self.name))
                 operation.push2all("%s own %s" % (owner.name, self.name))
                 payment = self.payment(gamer.utility_num, dice_result)
                 operation.pay(gamer, owner, payment, data)
         elif self._status == -1:
             # Nobody own
             while True:
-                # print("Nobody own %s do you want to buy it?" % self.name)
-                # print("1: Buy it")
-                # print("2: Do not buy it")
-                operation.push2all("Nobody own %s do you want to buy it?" % self.name)
+                operation.push2all(
+                    "Nobody own %s do you want to buy it?" % self.name)
                 operation.push2all("1: Buy it")
                 operation.push2all("2: Do not buy it")
                 while True:
-                    # input_str = input("Please enter the number of your decision:")
-                    input_str = operation.wait_choice()
+                    input_str = operation.wait_choice(
+                        "Please enter the number of your decision:")
+                    if(True):
+                        input_data = data["msg"].get_json_data("input")
+                        input_str = input_data[0]["request"]
                     try:
                         choice = int(input_str)
                         break
                     except ValueError:
-                        # print("Please enter a number.")
                         operation.push2all("Please enter a number.")
-                # print()
-                operation.push2all(" ")
+                operation.push2all()
                 if choice == 1:
                     price = self.value
                     if price > gamer.cash:
-                        # print("You do not have enough money")
                         operation.push2all("You do not have enough money")
                         break
                     else:
                         operation.pay(gamer, bank, price, data)
                         operation.trade_asset(self, bank, gamer)
-                        # print("%s buy %s for %d" %(gamer.name, self.name, price))
-                        operation.push2all("%s buy %s for %d" % (gamer.name, self.name, price))
+                        operation.push2all("%s buy %s for %d" %
+                                           (gamer.name, self.name, price))
                         break
                 elif choice == 2:
                     break
                 else:
-                    # print("Invalid operation")
                     operation.push2all("Invalid operation")
         elif self._status == 0:
             # In mortgage
-            # print("%s is in mortgaged" % self.name)
             operation.push2all("%s is in mortgaged" % self.name)
         else:
             raise ValueError("Invalid estate status")
+
+    def getJSon(self):
+        json_data = {
+            "name": self._name,
+            "block_id": self._block_id,
+            "position": self._position,
+            "uid": self._uid,
+            "estate_value": self._estate_value,
+            "status": self._status,
+            "mortgage_value": self.mortgage_value,
+            "payment": [{"utility_number": 1, "rate": 2}, {"utility_number": 2, "rate": 4}]
+        }
+        return json_data

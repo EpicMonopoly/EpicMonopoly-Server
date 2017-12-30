@@ -1,0 +1,15 @@
+{
+    "type": "player_data",
+    "data": {
+        "name": "Player name",
+        "id": 100,
+        "cash": 1000,
+        "property": {
+            "id": []
+        },
+        "alliance": "Alliance name",
+        "status": 1,
+        "position": 0,
+        "pre_position": 0
+    }
+}

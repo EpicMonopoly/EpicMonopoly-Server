@@ -1,11 +1,11 @@
 {
-  "set_name": "chance_data",
+  "type": "chance_data",
   "data": [
   {
     "card_id": 17,
     "card_type": 0,
     "amount": 200,
-    "description": "Advance to Go(Collect $200)"
+    "description": "Advance to Go"
   },
   {
     "card_id": 18,
@@ -35,7 +35,7 @@
     "card_id": 22,
     "card_type": 0,
     "amount": 50,
-    "description": "Bank pays you dividend of $50(Collect $50)"
+    "description": "Bank pays you dividend of some money"
   },
   {
     "card_id": 23,
@@ -52,25 +52,19 @@
     "card_id": 25,
     "card_type": 4,
     "block_id": 10,
-    "description": "Go directly to Jail. Do not pass Go, do not collect $200"
-  },
-  {
-    "card_id": 26,
-    "card_type": 3,
-    "amount": [25, 100],
-    "description": "Make general repairs on all your property. For each house pay $25, for each hotel $100"
+    "description": "Go directly to Jail. Do not pass Go, do not collect money"
   },
   {
     "card_id": 27,
     "card_type": 2,
     "amount": 15,
-    "description": "Pay poor tax(Pay $15)"
+    "description": "Pay poor tax"
   },
   {
     "card_id": 28,
     "card_type": 4,
     "block_id": 17,
-    "description": "Take a trip to Chongqing Railroad. If you pass Go collect $200"
+    "description": "Take a trip to Chongqing Railroad. If you pass Go collect money"
   },
   {
     "card_id": 29,
@@ -82,18 +76,18 @@
     "card_id": 30,
     "card_type": 8,
     "amount": 50,
-    "description": "You have been elected chairman of the board. Pay each player $50"
+    "description": "You have been elected chairman of the board. Pay each player some money"
   },
    {
     "card_id": 31,
     "card_type": 0,
     "amount": 150,
-    "description": "Your building loan matures(Collect $150)"
+    "description": "Your building loan matures"
   },
    {
     "card_id": 32,
     "card_type": 0,
     "amount": 100,
-    "description": "You have won a crossword competition(Collect $100)"
+    "description": "You have won a crossword competition"
   }]
 }

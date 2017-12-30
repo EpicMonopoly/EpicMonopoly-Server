@@ -1,45 +1,35 @@
 import threading
 import json
 
-# 多进程通信逻辑：
-# push_service处理所有网络请求
-# 如果要创建新房间更新push_service全局变量rooms，key是roomid，value是Room_detail对象
 
-# Room_detail对象创建时，新建game_entrance进程，
-# Room_detail成员变量持有pipe管道连接，父push_service管理进程和子game_entrance进程。
-
-# 子game_entrance进程在运行的时候，
-# 如果要和客户网页通信，调用operation通信函数传递到push_service处理请求。
-
-
-class Messenger:
+class Messager(object):
 
     def __init__(self, room_id, msg_tunnel):
         self._room_id = room_id
         self._msg_tunnel = msg_tunnel
         self._msg_queue = []
-        self._t = threading.Thread(target=self._monitor)
-        self._t.start()
-        self._stop_flag = False
+        self._flag = False
+        # self._t = threading.Thread(target=self._monitor)
+        # self._t.start()
 
     @property
     def msg_queue(self):
         return self._msg_queue
 
     def _monitor(self):
-        while(self._stop_flag is False):
+        while not self._flag:
             self.wait_choice()
 
     def _add_new_player(self, player_info):
         import player
-        import main
+        import game_entrance
         p = player.Player(player_info["id"],
                           player_info["name"], 2000, "America")
-        main.add_player(p)
+        game_entrance.add_player(p)
 
-    def join_thread(self):
-        self._stop_flag = True
-        self._t.join()
+    # def join_thread(self):
+    #     self._flag = True
+    #     self._t.join()
 
     def push2all(self, line):
         # print(roomid, ":2p:", line)
@@ -48,8 +38,9 @@ class Messenger:
 
     def wait_choice(self):
         # child to recv
-        print("wait_choice:", self._room_id)
+        print("Room {} wait choice:".format(self._room_id))
         iroomid, line = self._msg_tunnel.recv()
+        print("line", line)
         assert (iroomid == self._room_id)
         while line == -1:
             iroomid, line = self._msg_tunnel.recv()
@@ -68,5 +59,5 @@ class Messenger:
 
 
 if __name__ == "__main__":
-    m = Messenger(12, "a")
-    m.join_thread()
+    m = Messager(12, "a")
+    # m.join_thread()

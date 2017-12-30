@@ -1,0 +1,82 @@
+{
+  "type": "player_list1",
+  "data": [
+  {
+    "name": "Player1",
+    "avatar": "avatar1",
+    "id": "100",
+    "cash": 1000,
+    "property":{
+      "id": []
+    },
+    "alliance": "Asia",
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
+  },
+  {
+    "name": "Player2",
+    "avatar": "avatar2",
+    "id": "101",
+    "cash": 1000,
+    "property":{
+      "id": []
+    },
+    "alliance": "Europe",
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
+  },
+  {
+    "name": "Player3",
+    "avatar": "avatar3",
+    "id": "102",
+    "cash": 1000,
+    "property":{
+      "id": []
+    },
+    "alliance": "America",
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
+  },
+  {
+    "name": "Player4",
+    "avatar": "avatar4",
+    "id": "103",
+    "cash": 1000,
+    "property": {
+      "id": []
+    },
+    "alliance": "Europe",
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
+  },
+  {
+    "name": "Player5",
+    "avatar": "avatar5",
+    "id": "104",
+    "cash": 1000,
+    "property": {
+      "id": []
+    },
+    "alliance": "Africa",
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
+  },
+  {
+    "name": "Player6",
+    "avatar": "avatar6",
+    "id": "105",
+    "cash": 1000,
+    "property": {
+      "id": []
+    },
+    "alliance": "Australia",
+    "status": 1,
+    "position": 0,
+    "pre_position": 0
+  }]
+}

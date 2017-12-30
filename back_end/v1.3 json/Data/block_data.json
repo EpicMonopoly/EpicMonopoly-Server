@@ -1,5 +1,5 @@
 {
-    "set_name": "block_data",
+    "type": "block_data",
     "data": [
     {
         "name": "Go",

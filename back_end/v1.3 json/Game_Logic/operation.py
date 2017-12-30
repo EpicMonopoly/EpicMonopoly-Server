@@ -1,5 +1,8 @@
-import game_entrance
+import uuid
 import push_service
+import messager
+import game_entrance
+msg_queue = []
 
 
 # operations
@@ -26,7 +29,7 @@ def pay(payer, gainer, payment, data):
 
 def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
-    bail_fee = jail.bail_fee
+    bail_fee = jail.bail_fee(prionser.in_jail_time)
     if prionser.cash < bail_fee:
         push2all("Not enough money")
         return False
@@ -67,15 +70,77 @@ def clearing(gamer, amount_left, data):
     broken(gamer, data)
 
 
-# TODO: implement trade methods
-def trade():
-    pass
+def trade(data, trade_data):
+    import asset
+    # Get infomation
+    gamer_a_dict = trade_data["data"][0]
+    gamer_b_dict = trade_data["data"][1]
+    gamer_a = data["player_dict"][gamer_a_dict["player_id"]]
+    gamer_b = data["player_dict"][gamer_b_dict["player_id"]]
+    # Check validation
+    valid_flag = True
+    if gamer_a.cash < gamer_a_dict["money_give"]:
+        valid_flag = False
+    if gamer_b.cash < gamer_b_dict["money_give"]:
+        valid_flag = False
+    for asset_index in gamer_a_dict["asset_give"]:
+        asset_trade = data["chess_board"][asset_index]
+        if isinstance(asset_trade, asset.Asset) is False:
+            valid_flag = False
+        else:
+            if asset_index not in gamer_a.assets and asset_trade.status != 1:
+                valid_flag = False
+    for asset_index in gamer_b_dict["asset_give"]:
+        asset_trade = data["chess_board"][asset_index]
+        if isinstance(asset_trade, asset.Asset) is False:
+            valid_flag = False
+        else:
+            if asset_index not in gamer_b.assets:
+                valid_flag = False
+    if gamer_a.bail_card_num < gamer_a_dict["card_give"]:
+        valid_flag = False
+    if gamer_b.bail_card_num < gamer_b_dict["card_give"]:
+        valid_flag = False
+    if valid_flag is False:
+        return False
+    # Comfirm trade
+    if gamer_a_dict["money_give"] != 0:
+        pay(gamer_a, gamer_b, gamer_a_dict["money_give"], data)
+    if gamer_b_dict["money_give"] != 0:
+        pay(gamer_b, gamer_a, gamer_b_dict["money_give"], data)
+    for asset_index in gamer_a_dict["asset_give"]:
+        asset_trade = data["chess_board"][asset_index]
+        trade_asset(asset_trade, gamer_a, gamer_b)
+    for asset_index in gamer_b_dict["asset_give"]:
+        asset_trade = data["chess_board"][asset_index]
+        trade_asset(asset_trade, gamer_b, gamer_a)
+    if gamer_a_dict["card_give"] != 0:
+        gamer_a.bail_card_num += -1
+        gamer_b.bail_card_num += 1
+    if gamer_b_dict["card_give"] != 0:
+        gamer_b.bail_card_num += -1
+        gamer_a.bail_card_num += 1
+    return True
+
+
+def update_value(data):
+    block_list = data["chess_board"]
+    chest_list = data["chest_list"]
+    chance_list = data["chance_list"]
+    ef = data["ef"]
+    ef.generate_ef()
+    for b in block_list:
+        b.change_value(ef.random_rate())
+    for c in chest_list:
+        c.change_value(ef.ef_value)
+    for c in chance_list:
+        c.change_value(ef.ef_value)
 
 
 def broken(gamer, data):
     data["player_dict"][gamer.id].cur_status = -1
     data["living_list"].remove(gamer.id)
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         trade_asset(cur_asset, gamer, data["epic_bank"])
         data["epic_bank"].remove_loan_dict(cur_asset.block_id)
     push2all("%s bankrupt" % gamer.name)
@@ -84,7 +149,7 @@ def broken(gamer, data):
 def mortgage_asset(gamer, data):
     push2all("Your current assets")
     asset_number_list = []
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if cur_asset.status == 1:
             push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
             asset_number_list.append(cur_asset.block_id)
@@ -92,21 +157,23 @@ def mortgage_asset(gamer, data):
         push2all("None")
         return 0
     while True:
-        push2all("Please enter the index you want to mortgage:")
-        input_str = wait_choice()
+        input_str = wait_choice("Please enter the index you want to mortgage:")
+        if(True):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data[0]["request"]
         try:
             asset_number = int(input_str)
             break
         except ValueError:
             push2all("Please enter a number. Enter -1 to quit")
-    push2all(" ")
+    push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
             push2all("Invalid input")
             return 0
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
             return_cash = cur_asset.mortgage_value
             pay(data["epic_bank"], gamer, return_cash, data)
@@ -147,30 +214,33 @@ def construct_building(gamer, data):
     own_street = own_all_block(gamer)
     push2all("Valid building list")
     asset_number_list = []
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if isinstance(cur_asset, estate.Estate):
-            if cur_asset.street_id in own_street:
+            if cur_asset.street_id in own_street and (cur_asset.status == 1 or cur_asset.status == 2):
                 push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
         push2all("None")
         return 0
     while True:
-        push2all("Please enter the number you want to built a house:")
-        input_str = wait_choice()
+        input_str = wait_choice(
+            "Please enter the number you want to built a house:")
+        if(True):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data[0]["request"]
         try:
             asset_number = int(input_str)
             break
         except ValueError:
             push2all("Please enter a number. Enter -1 to quit")
-    push2all(" ")
+    push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
             push2all("Invalid input")
             return 0
-    for cur_asset in gamer.properties:
+    for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
             if cur_asset.house_num == 6:
                 push2all("Cannot built more house!")
@@ -198,6 +268,7 @@ def construct_building(gamer, data):
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
+                cur_asset.status = 2
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
                 push2all("%s built one hotel in %s" %
@@ -212,16 +283,59 @@ def construct_building(gamer, data):
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
+                cur_asset.status = 2
                 data["epic_bank"].built_house()
                 push2all("%s built one house in %s" %
                          (gamer.name, cur_asset.name))
 
 
-def push2all(line):
-    mess_hand = game_entrance.get_messenger_handler()
-    return mess_hand.push2all(line)
+def remove_building(gamer, data):
+    import estate
+    push2all("Valid remove building list")
+    asset_number_list = []
+    for cur_asset in gamer.assets:
+        if cur_asset.state == 2:
+            asset_number_list.append(cur_asset.block_id)
+    if asset_number_list == []:
+        push2all("None")
+        return 0
+    while True:
+        input_str = wait_choice(
+            "Please enter the number you want to remove a house:")
+        if(True):
+            input_data = data["msg"].get_json_data("input")
+            input_str = input_data[0]["request"]
+        try:
+            asset_number = int(input_str)
+            break
+        except ValueError:
+            push2all("Please enter a number. Enter -1 to quit")
+    push2all()
+    if asset_number == -1:
+        return 0
+    else:
+        if asset_number not in asset_number_list:
+            push2all("Invalid input")
+            return 0
+    for cur_asset in gamer.assets:
+        if cur_asset.block_id == asset_number:
+            if cur_asset.house_num > 0:
+                epic_bank = data["epic_bank"]
+                cur_asset.house_num += -1
+                pay(epic_bank, gamer, cur_asset.house_value / 2, data)
+                epic_bank.remove_house(1)
+                if cur_asset.house_num == 0:
+                    cur_asset.status == 1
 
 
-def wait_choice():
-    mess_hand = game_entrance.get_messenger_handler()
-    return mess_hand.wait_choice()
+def wait_choice(line=""):
+    """
+    Wait for front end to upload data
+    """
+    mess = game_entrance.get_mess_hand()
+    return mess.wait_choice()
+
+
+def push2all(line=""):
+    mess = game_entrance.get_mess_hand()
+    return mess.push2all(line)

@@ -45,7 +45,12 @@ class Room:
     def leave(self, player):
         self._player_list.remove(player)
 
-
+    def getJSon(self):
+        json_data = {
+            "room_id": self._room_id,
+            "status": self._status
+        }
+        return json_data
 
 
 
