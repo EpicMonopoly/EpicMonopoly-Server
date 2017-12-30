@@ -1,5 +1,7 @@
 import uuid
-import chatdemo
+import push_service
+import messager
+import game_entrance
 msg_queue = []
 
 
@@ -156,9 +158,9 @@ def mortgage_asset(gamer, data):
         return 0
     while True:
         input_str = wait_choice("Please enter the index you want to mortgage:")
-        if(False):
+        if(True):
             input_data = data["msg"].get_json_data("input")
-            input_str = input_data["request"]
+            input_str = input_data[0]["request"]
         try:
             asset_number = int(input_str)
             break
@@ -223,9 +225,9 @@ def construct_building(gamer, data):
     while True:
         input_str = wait_choice(
             "Please enter the number you want to built a house:")
-        if(False):
+        if(True):
             input_data = data["msg"].get_json_data("input")
-            input_str = input_data["request"]
+            input_str = input_data[0]["request"]
         try:
             asset_number = int(input_str)
             break
@@ -300,9 +302,9 @@ def remove_building(gamer, data):
     while True:
         input_str = wait_choice(
             "Please enter the number you want to remove a house:")
-        if(False):
+        if(True):
             input_data = data["msg"].get_json_data("input")
-            input_str = input_data["request"]
+            input_str = input_data[0]["request"]
         try:
             asset_number = int(input_str)
             break
@@ -330,20 +332,10 @@ def wait_choice(line=""):
     """
     Wait for front end to upload data
     """
-    push2all(line)
-    # Substitution for input method
-    return input()
-    choice = chatdemo.global_Choice.get_choice()
-    while choice == -1:
-        choice = chatdemo.global_Choice.get_choice()
-    return choice
+    mess = game_entrance.get_mess_hand()
+    return mess.wait_choice()
 
 
 def push2all(line=""):
-    print(line)
-    message = {
-        "id": str(uuid.uuid4()),
-        "body": line,
-    }
-    # message["html"] = tornado.escape.to_basestring(.render_string("message.html", message=message))
-    chatdemo.global_message_buffer.new_messages([message])
+    mess = game_entrance.get_mess_hand()
+    return mess.push2all(line)

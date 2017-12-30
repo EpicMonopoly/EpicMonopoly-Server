@@ -2,34 +2,34 @@ import threading
 import json
 
 
-class messenger:
+class Messager(object):
 
     def __init__(self, room_id, msg_tunnel):
         self._room_id = room_id
         self._msg_tunnel = msg_tunnel
         self._msg_queue = []
-        self._t = threading.Thread(target=self._monitor)
-        self._t.start()
-        self._stop_flag = False
+        self._flag = False
+        # self._t = threading.Thread(target=self._monitor)
+        # self._t.start()
 
     @property
     def msg_queue(self):
         return self._msg_queue
 
     def _monitor(self):
-        while(self._stop_flag is False):
+        while not self._flag:
             self.wait_choice()
 
     def _add_new_player(self, player_info):
         import player
-        import main
+        import game_entrance
         p = player.Player(player_info["id"],
                           player_info["name"], 2000, "America")
-        main.add_player(p)
+        game_entrance.add_player(p)
 
-    def join_thread(self):
-        self._stop_flag = True
-        self._t.join()
+    # def join_thread(self):
+    #     self._flag = True
+    #     self._t.join()
 
     def push2all(self, line):
         # print(roomid, ":2p:", line)
@@ -38,8 +38,9 @@ class messenger:
 
     def wait_choice(self):
         # child to recv
-        print("wait_choice:", self._room_id)
+        print("Room {} wait choice:".format(self._room_id))
         iroomid, line = self._msg_tunnel.recv()
+        print("line", line)
         assert (iroomid == self._room_id)
         while line == -1:
             iroomid, line = self._msg_tunnel.recv()
@@ -51,12 +52,14 @@ class messenger:
             self._msg_queue.append(json_obj)
 
     def get_json_data(self, key_word):
-        for json_frame in self._msg_queue:
-            if json_frame["type"] == key_word:
-                return json_frame["data"]
+        for i in range(len(self._msg_queue)):
+            if self._msg_queue[i]["type"] == key_word:
+                temp = self._msg_queue[i]
+                del self._msg_queue[i]
+                return temp["data"]
         return False
 
 
 if __name__ == "__main__":
-    m = messenger(12, "a")
-    m.join_thread()
+    m = Messager(12, "a")
+    # m.join_thread()

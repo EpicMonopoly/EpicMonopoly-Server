@@ -24,7 +24,7 @@ class Board:
     Board class
     """
 
-    def __init__(self):
+    def __init__(self, mess_hand):
         """
         Initialize the board
         """
@@ -40,6 +40,7 @@ class Board:
         self._player_dict = {}
         self._epic_bank = None
         self._street_color = OrderedDict()
+        self._messager_handler = mess_hand
         self.init_board()
 
     def _read_data(self):
@@ -242,6 +243,7 @@ class Board:
         data_dict['tax_list'] = self._tax_list
         data_dict['ef'] = ef.EF(0.05)
         data_dict['street_color'] = self._street_color
+        data_dict['msg'] = self._messager_handler
         return data_dict
 
     def new_board(self, chess_board_dict):

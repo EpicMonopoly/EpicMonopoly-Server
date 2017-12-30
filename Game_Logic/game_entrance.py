@@ -3,31 +3,41 @@
 import os
 import random
 from collections import OrderedDict
+
 import bank
 import block
 import board
 import card
 import cardpile
+import color
 import ef
 import estate
+import messager
 import operation
 import player
 import station
 import tax
 import utility
 from json_io import json_reader, json_writer
-import color
+
 data = None
+messager_handler = None
 
 
-def init_game():
+def get_mess_hand():
+    global messager_handler
+    return messager_handler
+
+
+def init_game(mess_hand):
     """
     Initialize the game with map, players and bank
     """
-    global data
-    chess_board = board.Board()
+    global data, messager_handler
+    messager_handler = mess_hand
+    chess_board = board.Board(mess_hand)
     data = chess_board.get_data()
-    
+    data['msg'] = mess_hand
     return data
 
 
@@ -108,9 +118,10 @@ def turn(gamer, data):
         while True:
             input_str = operation.wait_choice(
                 "Please enter the number of your decision:")
-            if(False):
+            if(True):
                 input_data = data["msg"].get_json_data("input")
-                input_str = input_data["request"]
+                input_str = input_data[0]["request"]
+                print("input_str", input_str)
             try:
                 choice = int(input_str)
                 break
@@ -137,8 +148,9 @@ def turn(gamer, data):
             operation.push2all("Invalid choice")
 
 
-def start_game():
-    data = init_game()
+def start_game(mess_hand):
+    global data
+    data = init_game(mess_hand)
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     num_round = 0
@@ -166,9 +178,9 @@ def start_game():
                         while True:
                             input_str = operation.wait_choice(
                                 "Please enter the number of your decision:")
-                            if(False):
+                            if(True):
                                 input_data = data["msg"].get_json_data("input")
-                                input_str = input_data["request"]
+                                input_str = input_data[0]["request"]
                             try:
                                 choice = int(input_str)
                                 break
@@ -199,4 +211,5 @@ def start_game():
 
 
 if __name__ == "__main__":
-    start_game()
+    # start_game()
+    pass

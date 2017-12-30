@@ -107,9 +107,9 @@ class Estate(asset.Asset):
                 while True:
                     input_str = operation.wait_choice(
                         "Please enter the number of your decision:")
-                    if(False):
+                    if(True):
                         input_data = data["msg"].get_json_data("input")
-                        input_str = input_data["request"]
+                        input_str = input_data[0]["request"]
                     try:
                         choice = int(input_str)
                         break
