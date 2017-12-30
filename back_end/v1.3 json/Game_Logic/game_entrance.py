@@ -23,9 +23,11 @@ from json_io import json_reader, json_writer
 data = None
 messager_handler = None
 
+
 def get_mess_hand():
     global messager_handler
     return messager_handler
+
 
 def init_game(mess_hand):
     """
@@ -118,8 +120,8 @@ def turn(gamer, data):
                 "Please enter the number of your decision:")
             if(True):
                 input_data = data["msg"].get_json_data("input")
-                # print(input_data)
                 input_str = input_data[0]["request"]
+                print("input_str", input_str)
             try:
                 choice = int(input_str)
                 break

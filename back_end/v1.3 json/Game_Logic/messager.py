@@ -52,9 +52,11 @@ class Messager(object):
             self._msg_queue.append(json_obj)
 
     def get_json_data(self, key_word):
-        for json_frame in self._msg_queue:
-            if json_frame["type"] == key_word:
-                return json_frame["data"]
+        for i in range(len(self._msg_queue)):
+            if self._msg_queue[i]["type"] == key_word:
+                temp = self._msg_queue[i]
+                del self._msg_queue[i]
+                return temp["data"]
         return False
 
 
