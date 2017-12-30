@@ -31,9 +31,12 @@ class Messager(object):
     #     self._flag = True
     #     self._t.join()
 
+    def push2single(self, uid, line):
+        self._msg_tunnel.send((self._room_id, line, uid))
+
     def push2all(self, line):
         # print(roomid, ":2p:", line)
-        self._msg_tunnel.send((self._room_id, line))
+        self._msg_tunnel.send((self._room_id, line, "ALL"))
         # to parentconn in room_detail listener
 
     def wait_choice(self):

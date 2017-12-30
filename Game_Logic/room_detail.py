@@ -27,12 +27,18 @@ class Room_detail(object):
 
     def listener(self):
         while True:
-            iroomid, line = self.parent_conn.recv()
-            self.add_log("NPC", line)
-            assert(iroomid == self.roomid)
-            for key in self.clients.keys():
-                self.get_client(key).write_message(line)
-                print("Write to Room %s client %s: %s" % (iroomid, key, line))
+            iroomid, line, ranges = self.parent_conn.recv()
+            if ranges == "ALL":
+                self.add_log("NPC", line)
+                assert(iroomid == self.roomid)
+                for key in self.clients.keys():
+                    self.get_client(key).write_message(line)
+                    print("Write to Room %s client %s: %s" % (iroomid, key, line))
+            else:
+                self.add_log(ranges, line)
+                assert(iroomid == self.roomid)
+                self.get_client(ranges).write_message(line)
+                print("Write to Room %s client %s: %s" % (iroomid, ranges, line))
 
     def add_clients(self, id, client):
         self.clients[id] = {"id": id, "object": client}

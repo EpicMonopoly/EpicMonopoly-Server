@@ -11,26 +11,6 @@ import room_detail
 
 rooms = dict()
 
-# game push methods
-
-
-# def push2all_r(line, roomid, conn):
-#     # print(roomid, ":2p:", line)
-#     conn.send((roomid, line))
-#     # to parentconn in room_detail listener
-
-
-# def wait_choice_r(roomid, conn):
-#     # child to recv
-#     print("Room {} waiting choice.".format(roomid))
-#     iroomid, line = conn.recv()
-#     assert (iroomid == roomid)
-#     while line == -1:
-#         iroomid, line = conn.recv()
-#         assert (iroomid == roomid)
-#     return line
-
-
 class IndexHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     def get(self):
