@@ -345,12 +345,12 @@ def remove_building(gamer, data):
 #     mess = game_entrance.get_mess_hand()
 #     return mess.push2single(uid, line)
 
-def some_method(data):
-    line = "" # 要推送的的信息
-    uid = "" # 推送对象
-    # 单个推送
-    data["msg"].push2single(uid, line)
-    # 广播
-    data["msg"].push2all(line)
-    # 等待消息
-    data["msg"].wait_choice()
+# def some_method(data):
+#     line = "" # 要推送的的信息
+#     uid = "" # 推送对象
+#     # 单个推送
+#     data["msg"].push2single(uid, line)
+#     # 广播
+#     data["msg"].push2all(line)
+#     # 等待消息
+#     data["msg"].wait_choice()
