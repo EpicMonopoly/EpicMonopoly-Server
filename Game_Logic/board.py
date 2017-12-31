@@ -347,5 +347,10 @@ class Board:
     # TODO: need to finish
     def getJSon(self):
         json_data = {
-            ""
+            "type": "board_data",
+            "data":[
+                {
+                    
+                }
+            ]
         }
