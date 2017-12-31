@@ -334,16 +334,16 @@ def remove_building(gamer, data):
                     cur_asset.status == 1
 
 
-def gen_hint_dict(msg):
+def gen_hint_json(msg):
     return_json = {}
     return_json["type"] = "hint"
     return_json["data"] = [{"message": msg}]
     return json.dumps(return_json)
 
 
-def gen_record_dict(msg):
+def gen_record_json(msg):
     return_json = {}
-    return_json["type"] = "hint"
+    return_json["type"] = "record"
     return_json["data"] = [{"message": msg}]
     return json.dumps(return_json)
 
@@ -353,6 +353,13 @@ def gen_dice_result_dict(a, b, gamer):
     result_dict["type"] = "dice_result"
     result_dict["data"] = [{"dice_result": [a, b], "player_id": gamer.id}]
     return result_dict
+
+
+def gen_newturn_json(gamer):
+    result_dict = {}
+    result_dict["type"] = "newturn"
+    result_dict["data"] = [{"id": gamer.id}]
+    return json.dumps(result_dict)
 
 
 # def push2all(line=""):

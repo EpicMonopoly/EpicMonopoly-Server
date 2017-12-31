@@ -72,7 +72,7 @@ def roll_dice(gamer, data):
     a = random.randint(1, 6)
     b = random.randint(1, 6)
     data["return_data"] = [operation.gen_dice_result_dict(a, b, gamer)]
-    operation.push2all("Dice number is %d %d" % (a, b))
+    data["msg"].push2all(operation.gen_record_dict("%s' dice number is %d %d" % (gamer.name, a, b)))
     return a, b
 
 
@@ -105,25 +105,13 @@ def turn(gamer, data):
     """
     end_flag = False
     while True:
-        operation.push2all("1: Trade with others")
-        operation.push2all("2: Roll dices")
-        operation.push2all("3: Construct building")
-        operation.push2all("4: Remove building")
-        operation.push2all("5: Mortgage asset")
-        operation.push2all("6: End turn")
-        while True:
-            input_str = operation.wait_choice(
-                "Please enter the number of your decision:")
-            if(True):
-                input_data = data["msg"].get_json_data("input")
-                input_str = input_data[0]["request"]
-                print("input_str", input_str)
-            try:
-                choice = int(input_str)
-                break
-            except ValueError:
-                operation.push2all("Please enter a number.")
-        operation.push2all()
+        data["msg"].push2all(operation.gen_newturn_json(gamer))
+        input_data = data["msg"].get_json_data("input")
+        while input_data is False:
+            input_data = data["msg"].get_json_data("input")
+        input_str = input_data[0]["request"]
+        print("input_str", input_str)
+        choice = int(input_str)
         if choice == 1:
             # operation.trade(data, trade_data)
             pass
@@ -139,9 +127,11 @@ def turn(gamer, data):
             if end_flag is True:
                 break
             else:
-                operation.push2all("Please roll a dice")
+                
+                data["msg"].push2single(gamer.id, operation.gen_hint_json("Please roll a dice"))
+                data["msg"].push2single(gamer.id, operation.gen_newturn_json(gamer))
         else:
-            operation.push2all("Invalid choice")
+            data["msg"].push2single(gamer.id, operation.gen_hint_json("Invalid choice"))
 
 
 def start_game(mess_hand):
@@ -157,12 +147,10 @@ def start_game(mess_hand):
         num_round += 1
         for gamer_id in living_list:
             gamer = data["player_dict"][gamer_id]
-            operation.push2all("Now is %s turn" % gamer.name)
-            operation.push2all("Gamer current cash %d" % gamer.cash)
             if gamer.cur_status == 0:
                 # In jail
-                operation.push2all("%s are in jail" % gamer.name)
-                a, b = roll_dice()
+                data["msg"].push2single(gamer.id, operation.gen_hint_json("%s are in jail" % gamer.name))
+                a, b = roll_dice(gamer, data)
                 if a == b:
                     gamer.cur_status = 1
                     gamer._in_jail = 0
