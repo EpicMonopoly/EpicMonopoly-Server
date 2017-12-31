@@ -21,23 +21,16 @@ import utility
 from json_io import json_reader, json_writer
 
 data = None
-messager_handler = None
-
-
-def get_mess_hand():
-    global messager_handler
-    return messager_handler
 
 
 def init_game(mess_hand):
     """
     Initialize the game with map, players and bank
     """
-    global data, messager_handler
-    messager_handler = mess_hand
+    global data
+    data['msg'] = mess_hand
     chess_board = board.Board(mess_hand)
     data = chess_board.get_data()
-    data['msg'] = mess_hand
     return data
 
 
