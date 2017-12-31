@@ -19,22 +19,26 @@ def pay(payer, gainer, payment, data):
         payment_left = payment - cash_A
         payer.pay(cash_A)
         gainer.gain(payment)
-        data["msg"].push2all("%s pay %d to %s" %
-                             (payer.name, payment, gainer.name))
-        data["msg"].push2all("%s out of cash" % payer.name)
+        # data["msg"].push2all("%s pay %d to %s" %
+        #                      (payer.name, payment, gainer.name))
+        record = str(payer.name) + " pay " + str(payment) + " to " + str(gainer.name)
+        data["msg"].push2all(gen_record_dict(record))
+        record = str(payer.name) + " out of cash"
+        data["msg"].push2all(gen_record_dict(record))
         clearing(payer, payment_left, data)
     else:
         payer.pay(payment)
         gainer.gain(payment)
-        data["msg"].push2all("%s pay %d to %s" %
-                             (payer.name, payment, gainer.name))
-
+        # data["msg"].push2all("%s pay %d to %s" %
+        #                      (payer.name, payment, gainer.name))
+        record = str(payer.name) + " pay " + str(payment) + " to " + str(gainer.name)
+        data["msg"].push2all(gen_record_dict(record))
 
 def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
     bail_fee = jail.bail_fee(prionser.in_jail_time)
     if prionser.cash < bail_fee:
-        data["msg"].push2all("Not enough money")
+        data["msg"].push2all(gen_record_dict("No enough money"))
         return False
     else:
         pay(prionser, data["epic_bank"], bail_fee, data)
@@ -59,7 +63,8 @@ def clearing(gamer, amount_left, data):
     :param gamer:
     :param amount_left:
     """
-    data["msg"].push2all("Start mortgage %s's assets" % gamer.name)
+    record = "Start mortgage " + str(gamer.name)+ "'s assets"
+    data["msg"].push2all(gen_hint_dict(record))
     for cur_asset in gamer.assets:
         if amount_left <= 0:
             return 0
@@ -146,19 +151,23 @@ def broken(gamer, data):
     for cur_asset in gamer.assets:
         trade_asset(cur_asset, gamer, data["epic_bank"])
         data["epic_bank"].remove_loan_dict(cur_asset.block_id)
-    data["msg"].push2all("%s bankrupt" % gamer.name)
+    record  = str(gamer.name) + "bankrupt"
+    # data["msg"].push2all("%s bankrupt" % gamer.name)
+    data["msg"].push2all(gen_record_dict(record))
 
 
 def mortgage_asset(gamer, data):
-    data["msg"].push2all("Your current assets")
+    data["msg"].push2single(gamer.id, gen_hint_dict("Your current assets"))
     asset_number_list = []
     for cur_asset in gamer.assets:
         if cur_asset.status == 1:
-            data["msg"].push2all("No.%d %s" %
-                                 (cur_asset.block_id, cur_asset.name))
+            hint = "No." + str(cur_asset.block_id) + " " + str(cur_asset.name)
+            # data["msg"].push2single(gamer.id, "No.%d %s" %
+            #                      (cur_asset.block_id, cur_asset.name))
+            data["msg"].push2single(gamer.id, gen_hint_dict(hint))
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        data["msg"].push2all("None")
+        data["msg"].push2single(gamer.id, gen_hint_dict("None"))
         return 0
     while True:
         input_str = data["msg"].wait_choice(
@@ -170,13 +179,13 @@ def mortgage_asset(gamer, data):
             asset_number = int(input_str)
             break
         except ValueError:
-            data["msg"].push2all("Please enter a number. Enter -1 to quit")
+            data["msg"].push2single(gamer.id, gen_hint_dict("Please enter a number. Enter -1 to quit"))
     data["msg"].push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
-            data["msg"].push2all("Invalid input")
+            data["msg"].push2single(gamer.id, gen_hint_dict("Invalid input"))
             return 0
     for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
@@ -217,16 +226,18 @@ def own_all_block(gamer):
 def construct_building(gamer, data):
     import estate
     own_street = own_all_block(gamer)
-    data["msg"].push2all("Valid building list")
+    data["msg"].push2single(gamer.id, gen_hint_dict("Valid building list"))
     asset_number_list = []
     for cur_asset in gamer.assets:
         if isinstance(cur_asset, estate.Estate):
             if cur_asset.street_id in own_street and (cur_asset.status == 1 or cur_asset.status == 2):
-                data["msg"].push2all("No.%d %s" %
-                                     (cur_asset.block_id, cur_asset.name))
+                # data["msg"].push2all("No.%d %s" %
+                #                      (cur_asset.block_id, cur_asset.name))
+                hint = "No." + str(cur_asset.block_id) + " " + str(cur_asset.name)
+                data["msg"].push2single(gamer.id, gen_hint_dict(hint))
                 asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        data["msg"].push2all("None")
+        data["msg"].push2single(gamer.id, gen_hint_dict("None"))
         return 0
     while True:
         input_str = data["msg"].wait_choice(
@@ -238,72 +249,80 @@ def construct_building(gamer, data):
             asset_number = int(input_str)
             break
         except ValueError:
-            data["msg"].push2all("Please enter a number. Enter -1 to quit")
+            data["msg"].push2single(gamer.id, gen_hint_dict("Please enter a number. Enter -1 to quit"))
     data["msg"].push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
-            data["msg"].push2all("Invalid input")
+            data["msg"].push2single(gamer.id, gen_hint_dict("Invalid input"))
             return 0
     for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
             if cur_asset.house_num == 6:
-                data["msg"].push2all("Cannot built more house!")
+                data["msg"].push2single(gamer.id, gen_hint_dict("Cannot built more house!"))
                 return 0
             elif cur_asset.house_num == 5:
                 if data["epic_bank"].cur_hotel == 0:
-                    data["msg"].push2all("Bank out of hotel")
+                    data["msg"].push2single(gamer.id, gen_hint_dict("Bank out of hotel"))
                     return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
-                    data["msg"].push2all("Do not have enough money")
+                    data["msg"].push2single(gamer.id, gen_hint_dict("Do not have enough money"))
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_hotel()
-                data["msg"].push2all("%s built one hotel in %s" %
-                                     (gamer.name, cur_asset.name))
+                record = str(gamer.name) + " built one hotel in " + \
+                    str(cur_asset.name)
+                data["msg"].push2single(gamer.id, gen_record_dict(record))
+                # data["msg"].push2single(gamer.id, gen_hint_dict("%s built one hotel in %s" %
+                #                      (gamer.name, cur_asset.name))
             elif cur_asset.house_num == 4:
                 if data["epic_bank"].cur_hotel == 0:
-                    data["msg"].push2all("Bank out of hotel")
+                    data["msg"].push2single(gamer.id, gen_hint_dict("Bank out of hotel"))
                     return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
-                    data["msg"].push2all("Do not have enough money")
+                    data["msg"].push2single(gamer.id, gen_hint_dict("Do not have enough money"))
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
                 cur_asset.status = 2
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
-                data["msg"].push2all("%s built one hotel in %s" %
-                                     (gamer.name, cur_asset.name))
+                # data["msg"].push2single("%s built one hotel in %s" %
+                #                      (gamer.name, cur_asset.name))
+                record = str(gamer.name) + " built one hotel in " + \
+                    str(cur_asset.name)
+                data["msg"].push2single(gamer.id, gen_record_dict(record))
             else:
                 if data["epic_bank"].cur_house == 0:
-                    data["msg"].push2all("Bank out of house")
+                    data["msg"].push2single(gamer.id, gen_hint_dict("Bank out of house"))
                     return 0
                 payment = cur_asset.house_value
                 if payment > gamer.cash:
-                    data["msg"].push2all("Do not have enough money")
+                    data["msg"].push2single(gamer.id, gen_hint_dict("Do not have enough money"))
                     return 0
                 pay(gamer, data["epic_bank"], payment, data)
                 cur_asset.house_num = cur_asset.house_num + 1
                 cur_asset.status = 2
                 data["epic_bank"].built_house()
-                data["msg"].push2all("%s built one house in %s" %
-                                     (gamer.name, cur_asset.name))
-
+                # data["msg"].push2all("%s built one house in %s" %
+                #                      (gamer.name, cur_asset.name))
+                record = str(gamer.name) + " built one house in " + \
+                    str(cur_asset.name)
+                data["msg"].push2single(gamer.id, gen_record_dict(record))
 
 def remove_building(gamer, data):
     import estate
-    data["msg"].push2all("Valid remove building list")
+    data["msg"].push2single(gamer.id, gen_hint_dict("Valid remove building list"))
     asset_number_list = []
     for cur_asset in gamer.assets:
         if cur_asset.state == 2:
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        data["msg"].push2all("None")
+        data["msg"].push2single(gamer.id, gen_hint_dict("None"))
         return 0
     while True:
         input_str = data["msg"].wait_choice(
@@ -315,13 +334,13 @@ def remove_building(gamer, data):
             asset_number = int(input_str)
             break
         except ValueError:
-            data["msg"].push2all("Please enter a number. Enter -1 to quit")
+            data["msg"].push2single(gamer.id, gen_hint_dict("Please enter a number. Enter -1 to quit"))
     data["msg"].push2all()
     if asset_number == -1:
         return 0
     else:
         if asset_number not in asset_number_list:
-            data["msg"].push2all("Invalid input")
+            data["msg"].push2single(gamer.id, gen_hint_dict("Invalid input"))
             return 0
     for cur_asset in gamer.assets:
         if cur_asset.block_id == asset_number:
