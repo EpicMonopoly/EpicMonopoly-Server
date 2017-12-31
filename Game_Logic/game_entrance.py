@@ -18,6 +18,7 @@ import player
 import station
 import tax
 import utility
+import json
 from json_io import json_reader, json_writer
 
 data = None
@@ -44,7 +45,7 @@ def roll(gamer, data):
     :bool: The station of end_flag
     """
     # Whether pass Go
-    a, b = roll_dice()
+    a, b = roll_dice(gamer, data)
     if a == b:
         end_flag = False
     else:
@@ -54,21 +55,23 @@ def roll(gamer, data):
     if current_gamer_position + step > 40:
         go_block = data["chess_board"][0]
         operation.pay(data['epic_bank'], gamer, go_block.reward, data)
-        operation.push2all("Passing Go, Gain %d" % go_block.reward)
+        hint_json = json.dumps(operation.gen_hint_dict("Passing Go, Gain %d" % go_block.reward))
+        data["msg"].push2single(gamer.uid, hint_json)
+        data["msg"].push2all("%s passing GO, Gain %d" % (gamer.name, go_block.reward))
     gamer.move(step)
     end_position = gamer.position
     current_block = data['chess_board'][end_position]
     if isinstance(current_block, block.Go_To_Jail):
         end_flag = True
-    operation.push2all("At %s" % current_block.name)
+    data["msg"].push2all("At %s" % current_block.name)
     current_block.display(gamer, data, step)
     return a, b, end_flag
 
 
-def roll_dice():
-    operation.push2all("Rolling")
+def roll_dice(gamer, data):
     a = random.randint(1, 6)
     b = random.randint(1, 6)
+    data["return_data"] = [operation.gen_dice_result_dict(a, b, gamer)]
     operation.push2all("Dice number is %d %d" % (a, b))
     return a, b
 

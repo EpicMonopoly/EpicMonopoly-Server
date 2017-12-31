@@ -51,6 +51,7 @@ data_dict:
     12: ef
     13: living_list
     14: msg
+    15: return_data
 
 player_status:
     -1: broken/dead/out of game

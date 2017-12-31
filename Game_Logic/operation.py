@@ -2,6 +2,7 @@ import uuid
 import push_service
 import messager
 import game_entrance
+import json
 msg_queue = []
 
 
@@ -18,13 +19,15 @@ def pay(payer, gainer, payment, data):
         payment_left = payment - cash_A
         payer.pay(cash_A)
         gainer.gain(payment)
-        data["msg"].push2all("%s pay %d to %s" % (payer.name, payment, gainer.name))
+        data["msg"].push2all("%s pay %d to %s" %
+                             (payer.name, payment, gainer.name))
         data["msg"].push2all("%s out of cash" % payer.name)
         clearing(payer, payment_left, data)
     else:
         payer.pay(payment)
         gainer.gain(payment)
-        data["msg"].push2all("%s pay %d to %s" % (payer.name, payment, gainer.name))
+        data["msg"].push2all("%s pay %d to %s" %
+                             (payer.name, payment, gainer.name))
 
 
 def bail(prionser, data):
@@ -151,13 +154,15 @@ def mortgage_asset(gamer, data):
     asset_number_list = []
     for cur_asset in gamer.assets:
         if cur_asset.status == 1:
-            data["msg"].push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+            data["msg"].push2all("No.%d %s" %
+                                 (cur_asset.block_id, cur_asset.name))
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
         data["msg"].push2all("None")
         return 0
     while True:
-        input_str = data["msg"].wait_choice("Please enter the index you want to mortgage:")
+        input_str = data["msg"].wait_choice(
+            "Please enter the index you want to mortgage:")
         if(True):
             input_data = data["msg"].get_json_data("input")
             input_str = input_data[0]["request"]
@@ -217,7 +222,8 @@ def construct_building(gamer, data):
     for cur_asset in gamer.assets:
         if isinstance(cur_asset, estate.Estate):
             if cur_asset.street_id in own_street and (cur_asset.status == 1 or cur_asset.status == 2):
-                data["msg"].push2all("No.%d %s" % (cur_asset.block_id, cur_asset.name))
+                data["msg"].push2all("No.%d %s" %
+                                     (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
         data["msg"].push2all("None")
@@ -257,7 +263,7 @@ def construct_building(gamer, data):
                 cur_asset.house_num = cur_asset.house_num + 1
                 data["epic_bank"].built_hotel()
                 data["msg"].push2all("%s built one hotel in %s" %
-                         (gamer.name, cur_asset.name))
+                                     (gamer.name, cur_asset.name))
             elif cur_asset.house_num == 4:
                 if data["epic_bank"].cur_hotel == 0:
                     data["msg"].push2all("Bank out of hotel")
@@ -272,7 +278,7 @@ def construct_building(gamer, data):
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
                 data["msg"].push2all("%s built one hotel in %s" %
-                         (gamer.name, cur_asset.name))
+                                     (gamer.name, cur_asset.name))
             else:
                 if data["epic_bank"].cur_house == 0:
                     data["msg"].push2all("Bank out of house")
@@ -286,7 +292,7 @@ def construct_building(gamer, data):
                 cur_asset.status = 2
                 data["epic_bank"].built_house()
                 data["msg"].push2all("%s built one house in %s" %
-                         (gamer.name, cur_asset.name))
+                                     (gamer.name, cur_asset.name))
 
 
 def remove_building(gamer, data):
@@ -326,6 +332,27 @@ def remove_building(gamer, data):
                 epic_bank.remove_house(1)
                 if cur_asset.house_num == 0:
                     cur_asset.status == 1
+
+
+def gen_hint_dict(msg):
+    return_json = {}
+    return_json["type"] = "hint"
+    return_json["data"] = [{"message": msg}]
+    return json.dumps(return_json)
+
+
+def gen_record_dict(msg):
+    return_json = {}
+    return_json["type"] = "hint"
+    return_json["data"] = [{"message": msg}]
+    return json.dumps(return_json)
+
+
+def gen_dice_result_dict(a, b, gamer):
+    result_dict = {}
+    result_dict["type"] = "dice_result"
+    result_dict["data"] = [{"dice_result": [a, b], "player_id": gamer.id}]
+    return result_dict
 
 
 # def push2all(line=""):
