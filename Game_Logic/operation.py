@@ -22,9 +22,9 @@ def pay(payer, gainer, payment, data):
         # data["msg"].push2all("%s pay %d to %s" %
         #                      (payer.name, payment, gainer.name))
         record = str(payer.name) + " pay " + str(payment) + " to " + str(gainer.name)
-        data["msg"].push2all(gen_record_dict(record))
+        data["msg"].push2all(gen_record_json(record))
         record = str(payer.name) + " out of cash"
-        data["msg"].push2all(gen_record_dict(record))
+        data["msg"].push2all(gen_record_json(record))
         clearing(payer, payment_left, data)
     else:
         payer.pay(payment)
@@ -32,13 +32,13 @@ def pay(payer, gainer, payment, data):
         # data["msg"].push2all("%s pay %d to %s" %
         #                      (payer.name, payment, gainer.name))
         record = str(payer.name) + " pay " + str(payment) + " to " + str(gainer.name)
-        data["msg"].push2all(gen_record_dict(record))
+        data["msg"].push2all(gen_record_json(record))
 
 def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
     bail_fee = jail.bail_fee(prionser.in_jail_time)
     if prionser.cash < bail_fee:
-        data["msg"].push2all(gen_record_dict("No enough money"))
+        data["msg"].push2all(gen_record_json("No enough money"))
         return False
     else:
         pay(prionser, data["epic_bank"], bail_fee, data)
@@ -153,7 +153,7 @@ def broken(gamer, data):
         data["epic_bank"].remove_loan_dict(cur_asset.block_id)
     record  = str(gamer.name) + "bankrupt"
     # data["msg"].push2all("%s bankrupt" % gamer.name)
-    data["msg"].push2all(gen_record_dict(record))
+    data["msg"].push2all(gen_record_json(record))
 
 
 def mortgage_asset(gamer, data):
@@ -275,7 +275,7 @@ def construct_building(gamer, data):
                 data["epic_bank"].built_hotel()
                 record = str(gamer.name) + " built one hotel in " + \
                     str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_dict(record))
+                data["msg"].push2single(gamer.id, gen_record_json(record))
                 # data["msg"].push2single(gamer.id, gen_hint_json("%s built one hotel in %s" %
                 #                      (gamer.name, cur_asset.name))
             elif cur_asset.house_num == 4:
@@ -295,7 +295,7 @@ def construct_building(gamer, data):
                 #                      (gamer.name, cur_asset.name))
                 record = str(gamer.name) + " built one hotel in " + \
                     str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_dict(record))
+                data["msg"].push2single(gamer.id, gen_record_json(record))
             else:
                 if data["epic_bank"].cur_house == 0:
                     data["msg"].push2single(gamer.id, gen_hint_json("Bank out of house"))
@@ -312,7 +312,7 @@ def construct_building(gamer, data):
                 #                      (gamer.name, cur_asset.name))
                 record = str(gamer.name) + " built one house in " + \
                     str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_dict(record))
+                data["msg"].push2single(gamer.id, gen_record_json(record))
 
 def remove_building(gamer, data):
     import estate
