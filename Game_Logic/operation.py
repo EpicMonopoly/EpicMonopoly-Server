@@ -327,9 +327,11 @@ def remove_building(gamer, data):
                 if cur_asset.house_num == 0:
                     cur_asset.status == 1
 
+
 def push2all(line=""):
     mess = game_entrance.get_mess_hand()
     return mess.push2all(line)
+
 
 def wait_choice():
     """
@@ -337,6 +339,7 @@ def wait_choice():
     """
     mess = game_entrance.get_mess_hand()
     return mess.wait_choice()
+
 
 def push2single(uid, line=""):
     mess = game_entrance.get_mess_hand()

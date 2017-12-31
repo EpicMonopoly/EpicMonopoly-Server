@@ -15,7 +15,7 @@ class Room_detail(object):
         self.global_Choice = Choice()
 
         self.parent_conn, self.child_conn = multiprocessing.Pipe()
-        self.mess_hand = messager.Messager(self.roomid,self.child_conn)
+        self.mess_hand = messager.Messager(self.roomid, self.child_conn)
         self.p = multiprocessing.Process(
             target=game_entrance.start_game, args=(self.mess_hand,))
         self.p.start()
@@ -33,12 +33,14 @@ class Room_detail(object):
                 assert(iroomid == self.roomid)
                 for key in self.clients.keys():
                     self.get_client(key).write_message(line)
-                    print("Write to Room %s client %s: %s" % (iroomid, key, line))
+                    print("Write to Room %s client %s: %s" %
+                          (iroomid, key, line))
             else:
                 self.add_log(ranges, line)
                 assert(iroomid == self.roomid)
                 self.get_client(ranges).write_message(line)
-                print("Write to Room %s client %s: %s" % (iroomid, ranges, line))
+                print("Write to Room %s client %s: %s" %
+                      (iroomid, ranges, line))
 
     def add_clients(self, id, client):
         self.clients[id] = {"id": id, "object": client}

@@ -11,6 +11,7 @@ import room_detail
 
 rooms = dict()
 
+
 class IndexHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     def get(self):
@@ -37,13 +38,14 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
             # rooms[self.roomid].mess_hand.msg_queue.append(data)
             if data['type'] == 'input':
                 input_data = data["data"][0]
-                assert(input_data["from_player_id"]==self.id)
+                assert(input_data["from_player_id"] == self.id)
                 logging.info("Room %s Client %s sent a message : %s " %
-                            (self.roomid, self.id, input_data["request"]))
+                             (self.roomid, self.id, input_data["request"]))
                 rooms[self.roomid].sender(message)
                 # rooms[self.roomid].sender(input_data["request"])
-                rooms[self.roomid].global_Choice.set_choice(input_data["request"])
-                rooms[self.roomid].add_log(self.id, input_data["request"]) 
+                rooms[self.roomid].global_Choice.set_choice(
+                    input_data["request"])
+                rooms[self.roomid].add_log(self.id, input_data["request"])
         except (ValueError, TypeError) as err:
             if message == "<recall>":
                 single_push(self.roomid, self.id)
