@@ -41,6 +41,7 @@ class Board:
         self._epic_bank = None
         self._street_color = OrderedDict()
         self._messager_handler = mess_hand
+        self._block_position = []
         self.init_board()
 
     def _read_data(self):
@@ -230,6 +231,7 @@ class Board:
     def get_data(self):
         data_dict = OrderedDict()
         data_dict['chess_board'] = self._block_list
+        self.get_block_position()
         data_dict['player_dict'] = self._player_dict
         data_dict['epic_bank'] = self._epic_bank
         data_dict['chest_list'] = self._chest_list
@@ -246,7 +248,7 @@ class Board:
         data_dict['msg'] = self._messager_handler
         return data_dict
 
-    def new_board(self, chess_board_dict):
+    def new_board(self, data_dict):
         """
         Generate a new board
         :return: a board
@@ -279,7 +281,7 @@ class Board:
         self._two_block_street = reduce(
             lambda x, y: x + y, two_block_street_index_all)
         for i in self._two_block_street:
-            chess_board_dict[i] = two_block_street.pop(0)
+            self._block_list[i] = two_block_street.pop(0)
         # three_block_street
         random.shuffle(three_block_street_2_index)
         random.shuffle(three_block_street_3_index)
@@ -293,25 +295,29 @@ class Board:
         self._three_block_street = reduce(
             lambda x, y: x + y, three_block_street_index_all)
         for j in self._three_block_street:
-            chess_board_dict[j] = three_block_street.pop(0)
+            self._block_list[j] = three_block_street.pop(0)
         # station
         random.shuffle(stations_list_index)
         self._station_list = stations_list_index
         for k in self._station_list:
-            chess_board_dict[k] = station_list.pop(0)
+            self._block_list[k] = station_list.pop(0)
         # utility
         random.shuffle(utility_list_index)
         self._utility_list = utility_list_index
         for p in self._utility_list:  # utility
-            chess_board_dict[p] = utility_list.pop(0)
+            self._block_list[p] = utility_list.pop(0)
 
-        chess_board = []
-        for i in range(40):
-            chess_board.append(chess_board_dict[i])
-        return chess_board
+        data_dict['chess_board'] = self._block_list
+        self.get_block_position()
+        return data_dict
 
     def get_block(self, position):
         return self._block_list[position]
+
+    def get_block_position(self):
+        self._block_position = []
+        for i in range(len(self._block_list)):
+            self._block_position.append(self._block_list[i].position)
 
     def change_street_order(self):
         num_three_block_street = len(self._three_block_street)
@@ -347,10 +353,11 @@ class Board:
     # TODO: need to finish
     def getJSon(self):
         json_data = {
-            "type": "board_data",
+            "type": "board",
             "data":[
                 {
-                    
+                    "block_list": self._block_position
                 }
             ]
         }
+        return json_data
