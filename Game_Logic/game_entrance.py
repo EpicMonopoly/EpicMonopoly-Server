@@ -55,7 +55,7 @@ def roll(gamer, data):
     if current_gamer_position + step > 40:
         go_block = data["chess_board"][0]
         operation.pay(data['epic_bank'], gamer, go_block.reward, data)
-        hint_json = json.dumps(operation.gen_hint_dict("Passing Go, Gain %d" % go_block.reward))
+        hint_json = json.dumps(operation.gen_hint_json("Passing Go, Gain %d" % go_block.reward))
         data["msg"].push2single(gamer.uid, hint_json)
         data["msg"].push2all("%s passing GO, Gain %d" % (gamer.name, go_block.reward))
     gamer.move(step)
