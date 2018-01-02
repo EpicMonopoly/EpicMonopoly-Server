@@ -10,7 +10,7 @@ import card
 import cardpile
 import ef
 import estate
-import operation
+# import operation
 import player
 import station
 import tax
