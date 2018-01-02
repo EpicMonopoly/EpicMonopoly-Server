@@ -167,6 +167,8 @@ def start_game(mess_hand):
                         data["msg"].push2single(
                             gamer.id, operation.gen_hint_json("You are in jail"))
                         input_data = data["msg"].get_json_data("input")
+                        while input_data is False:
+                            input_data = data["msg"].get_json_data("input")
                         input_str = input_data[0]["request"]
                         choice = int(input_str)
                         if choice == 1:
