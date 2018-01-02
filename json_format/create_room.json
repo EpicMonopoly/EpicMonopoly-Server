@@ -1,0 +1,28 @@
+{
+    type: "create_room",
+    data: [
+        {
+            "player": {
+                type: "player",
+                data: [
+                    {
+                        "name": "haha",
+                        "avatar": "bug.png"
+                    }
+                ]
+            }
+            "room": {
+                type: "room",
+                data: [
+                    {
+                        "room_name": "prprpr",
+                        "level": "easy",
+                        "init_fund": 1500,
+                        "go_salary": 200,
+                        "is_limited": true
+                    }
+                ]
+            }
+        }
+    ]
+}
