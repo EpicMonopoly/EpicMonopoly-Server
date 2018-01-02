@@ -1,8 +1,8 @@
-import uuid
-import push_service
-import messager
-import game_entrance
 import json
+import uuid
+import game_entrance
+import push_service
+
 msg_queue = []
 
 

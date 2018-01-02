@@ -2,7 +2,6 @@ import asset
 import operation
 # from ef import EF
 
-
 class Estate(asset.Asset):
     """
     Class estate
@@ -90,51 +89,42 @@ class Estate(asset.Asset):
             owner = player_dict[owner_id]
             if owner_id == gamer.id:
                 # Owner pass this estate
-                operation.push2all("%s own %s" % (gamer.name, self.name))
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("%s own %s" % (gamer.name, self.name)))
             else:
                 # Other pass this estate
-                operation.push2all("%s own %s" % (owner.name, self.name))
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("%s own %s" % (owner.name, self.name)))
                 payment = self.payment
                 operation.pay(gamer, owner, payment, data)
         elif self._status == -1:
             # Nobody own
             while True:
-                operation.push2all(
-                    "Nobody own %s do you want to buy it?" % self.name)
-                operation.push2all("Price: %d" % self.value)
-                operation.push2all("1: Buy it")
-                operation.push2all("2: Do not buy it")
-                while True:
-                    input_str = operation.wait_choice(
-                        "Please enter the number of your decision:")
-                    if(True):
-                        input_data = data["msg"].get_json_data("input")
-                        input_str = input_data[0]["request"]
-                    try:
-                        choice = int(input_str)
-                        break
-                    except ValueError:
-                        operation.push2all("Please enter a number.")
-                operation.push2all()
+                # data['msg'].push2singe(gamer.id, operation.gen_hint_json("Nobody own %s do you want to buy it?" % self.name))
+                # data['msg'].push2single(gamer.id, operation.gen_hint_json("Price: %d" % self.value))
+                # data['msg'].push2single(gamer.id, operation.gen_hint_json("1: Buy it"))
+                # data['msg'].push2single(gamer.id, operation.gen_hint_json("2: Do not buy it"))
+                input_str = data['msg'].get_json_data("input")
+                while not input_str:
+                    input_str = data['msg'].get_json_data("input")
+                choice = int(input_str)
+                data['msg'].push2all()
                 if choice == 1:
                     price = self.value
                     cur_cash = gamer.cash
                     if price > cur_cash:
-                        operation.push2all("You do not have enough money")
+                        data['msg'].push2all(gamer.id, operation.gen_hint_json("You do not have enough money"))
                         break
                     else:
                         operation.pay(gamer, epic_bank, price, data)
                         operation.trade_asset(self, epic_bank, gamer)
-                        operation.push2all("%s buy %s for %d" %
-                                           (gamer.name, self.name, price))
+                        data['msg'].push2single(gamer.id, operation.gen_hint_json("%s buy %s for %d" % (gamer.name, self.name, price)))
                         break
                 elif choice == 2:
                     break
                 else:
-                    operation.push2all("Invalid operation")
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Invalid operation"))
         elif self._status == 0:
             # In mortgage
-            operation.push2all("%s is in mortgaged" % self.name)
+            data['msg'].push2single(gamer.id, operation.gen_hint_json("%s is in mortgaged" % self.name))
         else:
             raise ValueError("Invalid estate status")
 
