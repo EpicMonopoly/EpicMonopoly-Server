@@ -1,14 +1,14 @@
 # EpicMonopoly Server
 [![Build Status](https://travis-ci.com/Spacebody/EpicMonopoly-Server.svg?token=MNpGaGjQxonn6yLX6TwY&branch=master)](https://travis-ci.com/Spacebody/EpicMonopoly-Server)
 
-A novel developed monopoly based on web: EpicMonopoly 
+A novel developed monopoly based on web: EpicMonopoly
 
 Game Logic development:
 
 - [x] Game logic
 - [x] Json design
 - [x] Demo
-- [ ] Communications(Developing) 
+- [ ] Communications(Developing)
 
 ## TODO
 - [ ] Trade
