@@ -2,6 +2,7 @@ import asset
 import operation
 # from ef import EF
 
+
 class Estate(asset.Asset):
     """
     Class estate
@@ -89,10 +90,12 @@ class Estate(asset.Asset):
             owner = player_dict[owner_id]
             if owner_id == gamer.id:
                 # Owner pass this estate
-                data['msg'].push2single(gamer.id, operation.gen_hint_json("%s own %s" % (gamer.name, self.name)))
+                data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                    "%s own %s" % (gamer.name, self.name)))
             else:
                 # Other pass this estate
-                data['msg'].push2single(gamer.id, operation.gen_hint_json("%s own %s" % (owner.name, self.name)))
+                data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                    "%s own %s" % (owner.name, self.name)))
                 payment = self.payment
                 operation.pay(gamer, owner, payment, data)
         elif self._status == -1:
@@ -111,20 +114,24 @@ class Estate(asset.Asset):
                     price = self.value
                     cur_cash = gamer.cash
                     if price > cur_cash:
-                        data['msg'].push2all(gamer.id, operation.gen_hint_json("You do not have enough money"))
+                        data['msg'].push2all(gamer.id, operation.gen_hint_json(
+                            "You do not have enough money"))
                         break
                     else:
                         operation.pay(gamer, epic_bank, price, data)
                         operation.trade_asset(self, epic_bank, gamer)
-                        data['msg'].push2single(gamer.id, operation.gen_hint_json("%s buy %s for %d" % (gamer.name, self.name, price)))
+                        data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                            "%s buy %s for %d" % (gamer.name, self.name, price)))
                         break
                 elif choice == 2:
                     break
                 else:
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Invalid operation"))
+                    data['msg'].push2single(
+                        gamer.id, operation.gen_hint_json("Invalid operation"))
         elif self._status == 0:
             # In mortgage
-            data['msg'].push2single(gamer.id, operation.gen_hint_json("%s is in mortgaged" % self.name))
+            data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                "%s is in mortgaged" % self.name))
         else:
             raise ValueError("Invalid estate status")
 

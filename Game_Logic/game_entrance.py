@@ -147,6 +147,10 @@ def start_game(mess_hand):
     data["living_list"] = living_list
     num_round = 0
     update_period = 1
+    result = operation.gen_init_json(data)
+    with open("init_result.json", "w") as f:
+        f.write(result)
+    quit()
     while len(living_list) != 1:
         if num_round % update_period == 0:
             operation.update_value(data)

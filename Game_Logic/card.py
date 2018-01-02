@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 import ef
 import operation
 
+
 class Card(metaclass=ABCMeta):
     """
     Card Class
@@ -62,23 +63,27 @@ class MoveCard(Card):
             for dest in self._destination:
                 if gamer.position < dest:
                     tmp = dest
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Do not pass Go, no cash collected."))
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                        "Do not pass Go, no cash collected."))
                     gamer.move(steps=None, position=tmp)
                     break
                 else:
                     continue
             go_block = data["chess_board"][0]
-            data['msg'].push2single(gamer.id, operation.gen_hint_json("Passing Go, Gain %d" % go_block.reward))
+            data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                "Passing Go, Gain %d" % go_block.reward))
             operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             gamer.move(steps=None, position=tmp)
             dest_block = data["chess_board"][tmp]
             dest_block.display(gamer, data, 0)
         else:
             if gamer.position < self._destination:
-                data['msg'].push2single(gamer.id, operation.gen_hint_json("Do not pass Go, no cash collected."))
+                data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                    "Do not pass Go, no cash collected."))
             else:
                 go_block = data["chess_board"][0]
-                data['msg'].push2single(gamer.id, operation.gen_hint_json("Passing Go, Gain %d" % go_block.reward))
+                data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                    "Passing Go, Gain %d" % go_block.reward))
                 operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             if self._destination == 10:
                 # in jail
@@ -114,7 +119,8 @@ class PayCard(Card):
         :param from_role: a player or bank or rest players
         :param data: global game data
         """
-        data['msg'].push2single(gamer.id, operation.gen_hint_json(self.description))
+        data['msg'].push2single(
+            gamer.id, operation.gen_hint_json(self.description))
         if self._card_type == 2:
             to_role = data['epic_bank']
             from_role = gamer
@@ -175,7 +181,8 @@ class CollectCard(Card):
         :param from_role: a player or bank or rest players
         :param from_role: player or bank or rest players
         """
-        data['msg'].push2single(gamer.id, operation.gen_hint_json(self.description))
+        data['msg'].push2single(
+            gamer.id, operation.gen_hint_json(self.description))
         if self._card_type == 0:
             to_role = gamer
             operation.pay(data['epic_bank'], to_role, self._amount, data)
@@ -221,10 +228,13 @@ class BailCard(Card):
         Baild card, can be collected by players
         """
         to_role = gamer
-        data['msg'].push2single(gamer.id, operation.gen_hint_json(self.description))
+        data['msg'].push2single(
+            gamer.id, operation.gen_hint_json(self.description))
         if to_role.bail_card_num == 0:
-            data['msg'].push2single(gamer.id, operation.gen_hint_json("1. Keep it yourself."))
-            data['msg'].push2single(gamer.id. operation.gen_hint_json("2. Sell to others."))
+            data['msg'].push2single(
+                gamer.id, operation.gen_hint_json("1. Keep it yourself."))
+            data['msg'].push2single(
+                gamer.id. operation.gen_hint_json("2. Sell to others."))
             input_str = data['msg'].get_json_data("input")
             while not input_str:
                 input_str = data['msg'].get_json_data("input")
@@ -232,23 +242,26 @@ class BailCard(Card):
             if choice == 1:
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
-                data['msg'].push2single(gamer.id, operation.gen_hint_json("Players list:"))
+                data['msg'].push2single(
+                    gamer.id, operation.gen_hint_json("Players list:"))
                 for p in data['player_dict']:
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json(p['name']))
+                    data['msg'].push2single(
+                        gamer.id, operation.gen_hint_json(p['name']))
                 input_str = data['msg'].gen_json_data("input")
                 while not input_str:
                     input_str = data["msg"].get_json_data("input")
                 choice = str(input_str)
                 if choice not in data['player_dict'].keys() or choice == gamer.name:
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice, please input again."))
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                        "Invaild choice, please input again."))
                 else:
                     to_role = data['player_dict'][choice]
                     from_role = gamer
                     # TODO: need to implement trade
                     pass
             else:
-                data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice."))
-           
+                data['msg'].push2single(
+                    gamer.id, operation.gen_hint_json("Invaild choice."))
 
     # def getJSon(self):
     #     json_data = {

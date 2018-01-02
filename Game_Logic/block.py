@@ -46,7 +46,7 @@ class Block(metaclass=ABCMeta):
     def change_value(self, rate):
         pass
 
-    def getJSon(self):
+    def getJSon_block(self):
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
