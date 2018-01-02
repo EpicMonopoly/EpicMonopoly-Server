@@ -1,10 +1,10 @@
 {
-    type: "join_room",
-    data: [
+    "type": "join_room",
+    "data": [
         {
             "player": {
-                type: "player",
-                data: [
+                "type": "player",
+                "data": [
                     {
                         "name": "haha",
                         "avatar": "bug.png"
