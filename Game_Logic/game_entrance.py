@@ -21,7 +21,7 @@ import utility
 import json
 from json_io import json_reader, json_writer
 
-data = None
+data = {}
 
 
 def init_game(mess_hand):
