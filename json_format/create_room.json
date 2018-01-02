@@ -1,10 +1,10 @@
 {
-    type: "create_room",
-    data: [
+    "type": "create_room",
+    "data": [
         {
             "player": {
-                type: "player",
-                data: [
+                "type": "player",
+                "data": [
                     {
                         "name": "haha",
                         "avatar": "bug.png"
@@ -12,8 +12,8 @@
                 ]
             },
             "room": {
-                type: "room",
-                data: [
+                "type": "room",
+                "data": [
                     {
                         "room_name": "prprpr",
                         "level": "easy",
