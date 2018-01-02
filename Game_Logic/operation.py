@@ -355,20 +355,48 @@ def gen_newturn_json(gamer):
 
 def gen_init_json(data):
     data_list = []
+    json_block = {
+        "type": "block"
+    }
+    block_list_a = []
     for i in data["chess_board"]:
-        data_list.append(i.getJSon_block())
+        block_list_a.append(i.getJSon_block())
+    json_block["data"] = block_list_a
+    json_estate = {
+        "type": "estate"
+    }
+    block_list_b = []
     for i in data["estate_list"]:
-        data_list.append(i.getJSon())
+        block_list_b.append(i.getJSon())
+    json_estate["data"] = block_list_b
+    json_station = {
+        "type": "station"
+    }
+    block_list_c = []
     for i in data["station_list"]:
-        data_list.append(i.getJSon())
+        block_list_c.append(i.getJSon())
+    json_station["data"] = block_list_c
+    json_utility = {
+        "type": "utility"
+    }
+    block_list_d = []
     for i in data["utility_list"]:
-        data_list.append(i.getJSon())
+        block_list_d.append(i.getJSon())
+    json_utility["data"] = block_list_d
+    json_player = {
+        "type": "player"
+    }
+    block_list_e = []
     for i in data["player_dict"]:
-        data_list.append(i.getJSon())
-    data.append(data["ef"].get_Json())
+        block_list_e.append(data["player_dict"][i].getJSon())
+    json_player["data"] = block_list_e
+    json_ef = {
+        "type" : "ef",
+        "data" : [data["ef"].getJSon()]
+    }
     init_dict = {
         "type": "init",
-        "data": data_list
+        "data": [json_block, json_estate, json_station, json_utility, json_player, json_ef]
     }
     return json.dumps(init_dict)
 

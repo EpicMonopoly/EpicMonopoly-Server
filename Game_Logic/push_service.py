@@ -17,6 +17,12 @@ class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("index.html")
 
+class InitRoomHanler(tornado.web.RequestHandler):
+    def post(self):
+        pass
+           
+
+
 
 class MywebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self, *args):
