@@ -5,7 +5,6 @@ import os
 from collections import OrderedDict
 import bank
 import block
-import board
 import card
 import cardpile
 import ef
