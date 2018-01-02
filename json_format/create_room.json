@@ -10,7 +10,7 @@
                         "avatar": "bug.png"
                     }
                 ]
-            }
+            },
             "room": {
                 type: "room",
                 data: [
