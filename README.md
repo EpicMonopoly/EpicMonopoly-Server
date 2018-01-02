@@ -1,4 +1,4 @@
-# EpicMonopoly
+# EpicMonopoly Server
 [![Build Status](https://travis-ci.com/Spacebody/EpicMonopoly-Server.svg?token=MNpGaGjQxonn6yLX6TwY&branch=master)](https://travis-ci.com/Spacebody/EpicMonopoly-Server)
 
 A novel developed monopoly based on web: EpicMonopoly 
@@ -12,19 +12,18 @@ Game Logic development:
 
 ## TODO
 - [ ] Trade
-- [ ] EF
-- [ ] Color the block
-- [ ] Json handling
 
 ## Bug
 - [ ] some function in bank(add loan dict, remove loan dict, repayment)
 
+Need to tested
+
 Server structure:
 
-- [ ] Web server: nginx
-- [ ] Database: mongoDB
-- [ ] Application server: tornado
-- [ ] Cache server: redis(Shelved)
+- [ ] ~~Web server: nginx~~
+- [ ] ~~Database: mongoDB~~
+- [x] Application server: tornado
+- [ ] ~~Cache server: redis~~
 
 ## Details
 
