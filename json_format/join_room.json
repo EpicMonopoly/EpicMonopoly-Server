@@ -2,15 +2,15 @@
     "type": "join_room",
     "data": [
         {
-            "player": {
-                "type": "player",
-                "data": [
-                    {
-                        "name": "haha",
-                        "avatar": "bug.png"
-                    }
-                ]
-            },
+            "type": "player",
+            "data": [
+                {
+                    "name": "haha",
+                    "avatar": "bug.png"
+                }
+            ]
+        },
+        {
             "room_id": 123
         }
     ]
