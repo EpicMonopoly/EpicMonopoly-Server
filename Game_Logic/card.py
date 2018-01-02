@@ -225,44 +225,30 @@ class BailCard(Card):
         if to_role.bail_card_num == 0:
             data['msg'].push2single(gamer.id, operation.gen_hint_json("1. Keep it yourself."))
             data['msg'].push2single(gamer.id. operation.gen_hint_json("2. Sell to others."))
-            while True:
-                input_str = data['msg'].waitchoice(
-                    "Please enter the number of your decision:")
-                if(True):
-                    input_data = data["msg"].get_json_data("input")
-                    input_str = input_data[0]["request"]
-                try:
-                    choice = int(input_str)
-                    if choice == 1 or choice == 2:
-                        break
-                    elif choice == -1:
-                        return False
-                    else:
-                        data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice, please input again."))
-                except ValueError:
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Please enter a number. Enter -1 to quit"))
+            input_str = data['msg'].get_json_data("input")
+            while not input_str:
+                input_str = data['msg'].get_json_data("input")
+            choice = int(input_str)
             if choice == 1:
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
-                while True:
-                    # TODO: need checking
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Players list:"))
-                    for p in data['player_dict']:
-                        data['msg'].push2single(gamer.id, operation.gen_hint_json(p['name']))
-                    input_str = data['msg'].gen_json_data()
-                    while not input_str:
-                        input_data = data["msg"].get_json_data("input")
-                    choice = str(input_str)
-                    if choice in data['player_dict'].keys() and choice != gamer.name:
-                        break
-                    elif choice == 'q':
-                        return False
-                    else:
-                        data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice, please input again."))
-                to_role = data['player_dict'][choice]
-                from_role = gamer
-                # TODO: need to implement trade
-                pass
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("Players list:"))
+                for p in data['player_dict']:
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(p['name']))
+                input_str = data['msg'].gen_json_data("input")
+                while not input_str:
+                    input_str = data["msg"].get_json_data("input")
+                choice = str(input_str)
+                if choice not in data['player_dict'].keys() or choice == gamer.name:
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice, please input again."))
+                else:
+                    to_role = data['player_dict'][choice]
+                    from_role = gamer
+                    # TODO: need to implement trade
+                    pass
+            else:
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice."))
+           
 
     # def getJSon(self):
     #     json_data = {
