@@ -2,7 +2,6 @@ from abc import ABCMeta, abstractmethod
 import ef
 import operation
 
-
 class Card(metaclass=ABCMeta):
     """
     Card Class
@@ -56,29 +55,30 @@ class MoveCard(Card):
         """
         Move player on the map to certain block
         """
-        operation.push2all(self.description)
+        data['msg'].push2single(
+            gamer.id, operation.gen_hint_json(self.description))
         if isinstance(self._destination, list):
             tmp = self._destination[0]
             for dest in self._destination:
                 if gamer.position < dest:
                     tmp = dest
-                    operation.push2all("Do not pass Go, no cash collected.")
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Do not pass Go, no cash collected."))
                     gamer.move(steps=None, position=tmp)
                     break
                 else:
                     continue
             go_block = data["chess_board"][0]
-            operation.push2all("Passing Go, Gain %d" % go_block.reward)
+            data['msg'].push2single(gamer.id, operation.gen_hint_json("Passing Go, Gain %d" % go_block.reward))
             operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             gamer.move(steps=None, position=tmp)
             dest_block = data["chess_board"][tmp]
             dest_block.display(gamer, data, 0)
         else:
             if gamer.position < self._destination:
-                operation.push2all("Do not pass Go, no cash collected.")
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("Do not pass Go, no cash collected."))
             else:
                 go_block = data["chess_board"][0]
-                operation.push2all("Passing Go, Gain %d" % go_block.reward)
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("Passing Go, Gain %d" % go_block.reward))
                 operation.pay(data['epic_bank'], gamer, go_block.reward, data)
             if self._destination == 10:
                 # in jail
@@ -114,7 +114,7 @@ class PayCard(Card):
         :param from_role: a player or bank or rest players
         :param data: global game data
         """
-        operation.push2all(self.description)
+        data['msg'].push2single(gamer.id, operation.gen_hint_json(self.description))
         if self._card_type == 2:
             to_role = data['epic_bank']
             from_role = gamer
@@ -175,7 +175,7 @@ class CollectCard(Card):
         :param from_role: a player or bank or rest players
         :param from_role: player or bank or rest players
         """
-        operation.push2all(self.description)
+        data['msg'].push2single(gamer.id, operation.gen_hint_json(self.description))
         if self._card_type == 0:
             to_role = gamer
             operation.pay(data['epic_bank'], to_role, self._amount, data)
@@ -221,57 +221,34 @@ class BailCard(Card):
         Baild card, can be collected by players
         """
         to_role = gamer
-        operation.push2all(self.description)
+        data['msg'].push2single(gamer.id, operation.gen_hint_json(self.description))
         if to_role.bail_card_num == 0:
-            operation.push2all("1. Keep it yourself.")
-            operation.push2all("2. Sell to others.")
-            while True:
-                input_str = operation.wait_choice(
-                    "Please enter the number of your decision:")
-                if(True):
-                    input_data = data["msg"].get_json_data("input")
-                    input_str = input_data[0]["request"]
-                try:
-                    choice = int(input_str)
-                    if choice == 1 or choice == 2:
-                        break
-                    elif choice == -1:
-                        return False
-                    else:
-                        operation.push2all(
-                            "Invaild choice, please input again.")
-                except ValueError:
-                    operation.push2all(
-                        "Please enter a number. Enter -1 to quit")
+            data['msg'].push2single(gamer.id, operation.gen_hint_json("1. Keep it yourself."))
+            data['msg'].push2single(gamer.id. operation.gen_hint_json("2. Sell to others."))
+            input_str = data['msg'].get_json_data("input")
+            while not input_str:
+                input_str = data['msg'].get_json_data("input")
+            choice = int(input_str)
             if choice == 1:
                 to_role.bail_card_num = to_role.bail_card_num + 1
             elif choice == 2:
-                while True:
-                    # TODO: need checking
-                    operation.push2all("Players list:")
-                    for p in data['player_dict']:
-                        operation.push2all(p['name'])
-                    input_str = operation.wait_choice(
-                        "Please enter the player of you want to sell the card to or enter 'q' to quit:")
-                    if(True):
-                        input_data = data["msg"].get_json_data("input")
-                        input_str = input_data[0]["request"]
-                    try:
-                        choice = str(input_str)
-                        if choice in data['player_dict'].keys() and choice != gamer.name:
-                            break
-                        elif choice == 'q':
-                            return False
-                        else:
-                            operation.push2all(
-                                "Invaild choice, please input again.")
-                    except ValueError:
-                        operation.push2all(
-                            "Please enter a player name. Enter q to quit")
-                to_role = data['player_dict'][choice]
-                from_role = gamer
-                # TODO: need to implement trade
-                pass
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("Players list:"))
+                for p in data['player_dict']:
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(p['name']))
+                input_str = data['msg'].gen_json_data("input")
+                while not input_str:
+                    input_str = data["msg"].get_json_data("input")
+                choice = str(input_str)
+                if choice not in data['player_dict'].keys() or choice == gamer.name:
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice, please input again."))
+                else:
+                    to_role = data['player_dict'][choice]
+                    from_role = gamer
+                    # TODO: need to implement trade
+                    pass
+            else:
+                data['msg'].push2single(gamer.id, operation.gen_hint_json("Invaild choice."))
+           
 
     # def getJSon(self):
     #     json_data = {

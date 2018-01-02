@@ -1,8 +1,8 @@
-import uuid
-import push_service
-import messager
-import game_entrance
 import json
+import uuid
+import game_entrance
+import push_service
+
 msg_queue = []
 
 
@@ -19,22 +19,13 @@ def pay(payer, gainer, payment, data):
         payment_left = payment - cash_A
         payer.pay(cash_A)
         gainer.gain(payment)
-        # data["msg"].push2all("%s pay %d to %s" %
-        #                      (payer.name, payment, gainer.name))
-        record = str(payer.name) + " pay " + \
-            str(payment) + " to " + str(gainer.name)
-        data["msg"].push2all(gen_record_json(record))
-        record = str(payer.name) + " out of cash"
-        data["msg"].push2all(gen_record_json(record))
+        data["msg"].push2all(gen_record_json("%s pay %d to %s" % (payer.name, payment, gainer.name)))
+        data["msg"].push2all(gen_record_json("%s out of cash" % payer.name))
         clearing(payer, payment_left, data)
     else:
         payer.pay(payment)
         gainer.gain(payment)
-        # data["msg"].push2all("%s pay %d to %s" %
-        #                      (payer.name, payment, gainer.name))
-        record = str(payer.name) + " pay " + \
-            str(payment) + " to " + str(gainer.name)
-        data["msg"].push2all(gen_record_json(record))
+        data["msg"].push2all(gen_record_json("%s pay %d to %s" % (payer.name, payment, gainer.name)))
 
 
 def bail(prionser, data):
@@ -155,8 +146,7 @@ def broken(gamer, data):
         trade_asset(cur_asset, gamer, data["epic_bank"])
         data["epic_bank"].remove_loan_dict(cur_asset.block_id)
     record = str(gamer.name) + "bankrupt"
-    # data["msg"].push2all("%s bankrupt" % gamer.name)
-    data["msg"].push2all(gen_record_json(record))
+    data["msg"].push2all(gen_record_json("%s bankrupt" % gamer.name))
 
 
 def mortgage_asset(gamer, data):
@@ -164,26 +154,15 @@ def mortgage_asset(gamer, data):
     asset_number_list = []
     for cur_asset in gamer.assets:
         if cur_asset.status == 1:
-            hint = "No." + str(cur_asset.block_id) + " " + str(cur_asset.name)
-            # data["msg"].push2single(gamer.id, "No.%d %s" %
-            #                      (cur_asset.block_id, cur_asset.name))
-            data["msg"].push2single(gamer.id, gen_hint_json(hint))
+            data["msg"].push2single(gamer.id, gen_hint_json("No.%d %s" % (cur_asset.block_id, cur_asset.name)))
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
         data["msg"].push2single(gamer.id, gen_hint_json("None"))
         return 0
-    while True:
-        input_str = data["msg"].wait_choice(
-            "Please enter the index you want to mortgage:")
-        if(True):
-            input_data = data["msg"].get_json_data("input")
-            input_str = input_data[0]["request"]
-        try:
-            asset_number = int(input_str)
-            break
-        except ValueError:
-            data["msg"].push2single(gamer.id, gen_hint_json(
-                "Please enter a number. Enter -1 to quit"))
+    input_str = data["msg"].get_json_data("input")
+    while not input_str:
+        input_str = data["msg"].get_json_data("input")
+    asset_number = int(input_str)
     data["msg"].push2all()
     if asset_number == -1:
         return 0
@@ -235,27 +214,15 @@ def construct_building(gamer, data):
     for cur_asset in gamer.assets:
         if isinstance(cur_asset, estate.Estate):
             if cur_asset.street_id in own_street and (cur_asset.status == 1 or cur_asset.status == 2):
-                # data["msg"].push2all("No.%d %s" %
-                #                      (cur_asset.block_id, cur_asset.name))
-                hint = "No." + str(cur_asset.block_id) + \
-                    " " + str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_hint_json(hint))
+                data["msg"].push2single(gamer.id, gen_hint_json("No.%d %s" % (cur_asset.block_id, cur_asset.name)))
                 asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
         data["msg"].push2single(gamer.id, gen_hint_json("None"))
         return 0
-    while True:
-        input_str = data["msg"].wait_choice(
-            "Please enter the number you want to built a house:")
-        if(True):
-            input_data = data["msg"].get_json_data("input")
-            input_str = input_data[0]["request"]
-        try:
-            asset_number = int(input_str)
-            break
-        except ValueError:
-            data["msg"].push2single(gamer.id, gen_hint_json(
-                "Please enter a number. Enter -1 to quit"))
+    input_str = data["msg"].get_json_data("input")
+    while not input_str:
+        input_str = data["msg"].get_json_data("input")
+    asset_number = int(input_str)
     data["msg"].push2all()
     if asset_number == -1:
         return 0
@@ -284,9 +251,7 @@ def construct_building(gamer, data):
                 data["epic_bank"].built_hotel()
                 record = str(gamer.name) + " built one hotel in " + \
                     str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_json(record))
-                # data["msg"].push2single(gamer.id, gen_hint_json("%s built one hotel in %s" %
-                #                      (gamer.name, cur_asset.name))
+                data["msg"].push2single(gamer.id, gen_record_json(gen_hint_json("%s built one hotel in %s" % (gamer.name, cur_asset.name))))
             elif cur_asset.house_num == 4:
                 if data["epic_bank"].cur_hotel == 0:
                     data["msg"].push2single(
@@ -302,11 +267,7 @@ def construct_building(gamer, data):
                 cur_asset.status = 2
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
-                # data["msg"].push2single("%s built one hotel in %s" %
-                #                      (gamer.name, cur_asset.name))
-                record = str(gamer.name) + " built one hotel in " + \
-                    str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_json(record))
+                data["msg"].push2single(gamer.id, gen_record_json("%s built one hotel in %s" % (gamer.name, cur_asset.name)))
             else:
                 if data["epic_bank"].cur_house == 0:
                     data["msg"].push2single(
@@ -321,11 +282,7 @@ def construct_building(gamer, data):
                 cur_asset.house_num = cur_asset.house_num + 1
                 cur_asset.status = 2
                 data["epic_bank"].built_house()
-                # data["msg"].push2all("%s built one house in %s" %
-                #                      (gamer.name, cur_asset.name))
-                record = str(gamer.name) + " built one house in " + \
-                    str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_json(record))
+                data["msg"].push2single(gamer.id, gen_record_json("%s built one house in %s" % (gamer.name, cur_asset.name)))
 
 
 def remove_building(gamer, data):
@@ -339,18 +296,10 @@ def remove_building(gamer, data):
     if asset_number_list == []:
         data["msg"].push2single(gamer.id, gen_hint_json("None"))
         return 0
-    while True:
-        input_str = data["msg"].wait_choice(
-            "Please enter the number you want to remove a house:")
-        if(True):
-            input_data = data["msg"].get_json_data("input")
-            input_str = input_data[0]["request"]
-        try:
-            asset_number = int(input_str)
-            break
-        except ValueError:
-            data["msg"].push2single(gamer.id, gen_hint_json(
-                "Please enter a number. Enter -1 to quit"))
+    input_str = data["msg"].get_json_data("input")
+    while not input_str:
+        input_str = data["msg"].get_json_data("input")
+    asset_number = int(input_str)
     data["msg"].push2all()
     if asset_number == -1:
         return 0
