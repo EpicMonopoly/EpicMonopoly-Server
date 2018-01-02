@@ -55,9 +55,11 @@ def roll(gamer, data):
     if current_gamer_position + step > 40:
         go_block = data["chess_board"][0]
         operation.pay(data['epic_bank'], gamer, go_block.reward, data)
-        hint_json = json.dumps(operation.gen_hint_json("Passing Go, Gain %d" % go_block.reward))
+        hint_json = json.dumps(operation.gen_hint_json(
+            "Passing Go, Gain %d" % go_block.reward))
         data["msg"].push2single(gamer.uid, hint_json)
-        data["msg"].push2all("%s passing GO, Gain %d" % (gamer.name, go_block.reward))
+        data["msg"].push2all("%s passing GO, Gain %d" %
+                             (gamer.name, go_block.reward))
     gamer.move(step)
     end_position = gamer.position
     current_block = data['chess_board'][end_position]
@@ -72,7 +74,8 @@ def roll_dice(gamer, data):
     a = random.randint(1, 6)
     b = random.randint(1, 6)
     data["return_data"] = [operation.gen_dice_result_dict(a, b, gamer)]
-    data["msg"].push2all(operation.gen_record_dict("%s' dice number is %d %d" % (gamer.name, a, b)))
+    data["msg"].push2all(operation.gen_record_json(
+        "%s' dice number is %d %d" % (gamer.name, a, b)))
     return a, b
 
 
@@ -127,11 +130,14 @@ def turn(gamer, data):
             if end_flag is True:
                 break
             else:
-                
-                data["msg"].push2single(gamer.id, operation.gen_hint_json("Please roll a dice"))
-                data["msg"].push2single(gamer.id, operation.gen_newturn_json(gamer))
+
+                data["msg"].push2single(
+                    gamer.id, operation.gen_hint_json("Please roll a dice"))
+                data["msg"].push2single(
+                    gamer.id, operation.gen_newturn_json(gamer))
         else:
-            data["msg"].push2single(gamer.id, operation.gen_hint_json("Invalid choice"))
+            data["msg"].push2single(
+                gamer.id, operation.gen_hint_json("Invalid choice"))
 
 
 def start_game(mess_hand):
@@ -149,7 +155,8 @@ def start_game(mess_hand):
             gamer = data["player_dict"][gamer_id]
             if gamer.cur_status == 0:
                 # In jail
-                data["msg"].push2single(gamer.id, operation.gen_hint_json("%s are in jail" % gamer.name))
+                data["msg"].push2single(gamer.id, operation.gen_hint_json(
+                    "%s are in jail" % gamer.name))
                 a, b = roll_dice(gamer, data)
                 if a == b:
                     gamer.cur_status = 1
@@ -157,20 +164,11 @@ def start_game(mess_hand):
                     turn(gamer, data)
                 else:
                     while True:
-                        operation.push2all("1: Bail. Get out of prison.")
-                        operation.push2all("2: Stay in prison.")
-                        while True:
-                            input_str = operation.wait_choice(
-                                "Please enter the number of your decision:")
-                            if(True):
-                                input_data = data["msg"].get_json_data("input")
-                                input_str = input_data[0]["request"]
-                            try:
-                                choice = int(input_str)
-                                break
-                            except ValueError:
-                                operation.push2all("Please enter a number.")
-                        operation.push2all()
+                        data["msg"].push2single(
+                            gamer.id, operation.gen_hint_json("You are in jail"))
+                        input_data = data["msg"].get_json_data("input")
+                        input_str = input_data[0]["request"]
+                        choice = int(input_str)
                         if choice == 1:
                             if operation.bail(gamer, data):
                                 gamer.cur_status = 1
@@ -178,20 +176,21 @@ def start_game(mess_hand):
                                 turn(gamer, data)
                                 break
                             else:
-                                operation.push2all("Please stay in jail")
+                                data["msg"].push2single(
+                                    gamer.id, operation.gen_hint_json("Please stay in jail"))
                                 gamer.count_in_jail()
                                 break
                         elif choice == 2:
                             gamer.count_in_jail()
                             break
                         else:
-                            operation.push2all("Invalid choice")
+                            data["msg"].push2single(
+                                gamer.id, operation.gen_hint_json("Invalid choice"))
             elif gamer.cur_status == 1:
                 # Normal Status
                 turn(gamer, data)
             else:
                 pass
-            operation.push2all()
 
 
 if __name__ == "__main__":

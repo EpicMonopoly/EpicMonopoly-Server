@@ -44,7 +44,7 @@ class Street:
 
     def getJSon(self):
         json_data = {
-            "id": self._street_id
+            "id": self._street_id,
             "color": self._color
         }
         return json_data

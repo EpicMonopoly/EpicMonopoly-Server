@@ -71,7 +71,7 @@ class Board:
                               self._player_dict_data[i]['alliance'])
             output_str = "{0} {1} {2} {3}".format(
                 p.cash, p.id, p.name, p.alliance)
-            operation.push2all(output_str)
+            print(output_str)
             self._player_dict[self._player_dict_data[i]['id']] = p
 
     def _init_bank(self):
@@ -204,8 +204,8 @@ class Board:
 
     def _init_block_street(self):
         # initialize chess board
-        selected_colors = random.choices(
-            [hex(c.value) for c in color.Color], k=8)
+        selected_colors = random.choice(
+            [hex(c.value) for c in color.Color])
         for i in range(8):
             self._street_color[i] = selected_colors[i]
         self._two_block_street = []
@@ -354,7 +354,7 @@ class Board:
     def getJSon(self):
         json_data = {
             "type": "board",
-            "data":[
+            "data": [
                 {
                     "block_list": self._block_position
                 }

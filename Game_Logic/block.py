@@ -114,7 +114,7 @@ class Go_To_Jail(Block):
             :param data: 
             :param dice_result: 
         """
-        operation.push2all("Move to Jail")
+        data["msg"].push2single(gamer.id, operation.gen_hint_json("Move to jail"))
         gamer.move(steps=0, position=10)
         gamer.add_in_jail_time()
         gamer.cur_status = 0
