@@ -1,5 +1,6 @@
 # The main control of the game
 
+import json
 import os
 import random
 from collections import OrderedDict
@@ -18,7 +19,6 @@ import player
 import station
 import tax
 import utility
-import json
 from json_io import json_reader, json_writer
 
 data = {}
@@ -102,6 +102,7 @@ def add_player(p):
 
 
 def turn(gamer, data):
+    # print("in turn")
     """
     :param gamer: players
     :return:
@@ -112,6 +113,7 @@ def turn(gamer, data):
         input_data = data["msg"].get_json_data("input")
         while input_data is False:
             input_data = data["msg"].get_json_data("input")
+            # print(input_data)
         input_str = input_data[0]["request"]
         print("input_str", input_str)
         choice = int(input_str)
@@ -140,17 +142,18 @@ def turn(gamer, data):
                 gamer.id, operation.gen_hint_json("Invalid choice"))
 
 
-def start_game(mess_hand):
+def start_game(roomid, child_conn):
     global data
+    mess_hand = messager.Messager(roomid, child_conn)
     data = init_game(mess_hand)
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     num_round = 0
     update_period = 1
     result = operation.gen_init_json(data)
-    with open("init_result.json", "w") as f:
-        f.write(result)
-    quit()
+    # with open("init_result.json", "w") as f:
+    #     f.write(result)
+    # quit()
     while len(living_list) != 1:
         if num_round % update_period == 0:
             operation.update_value(data)

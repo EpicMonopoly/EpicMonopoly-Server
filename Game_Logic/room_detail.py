@@ -1,6 +1,6 @@
 import multiprocessing
 import threading
-import messager
+# import messager
 import game_entrance
 
 
@@ -15,9 +15,9 @@ class Room_detail(object):
         self.global_Choice = Choice()
 
         self.parent_conn, self.child_conn = multiprocessing.Pipe()
-        self.mess_hand = messager.Messager(self.roomid, self.child_conn)
+        # self.mess_hand = messager.Messager(self.roomid, self.child_conn)
         self.p = multiprocessing.Process(
-            target=game_entrance.start_game, args=(self.mess_hand,))
+            target=game_entrance.start_game, args=(self.roomid, self.child_conn,))
         self.p.start()
         self.hear = threading.Thread(target=self.listener)
         self.hear.start()

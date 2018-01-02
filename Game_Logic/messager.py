@@ -9,8 +9,8 @@ class Messager(object):
         self._msg_tunnel = msg_tunnel
         self._msg_queue = []
         self._flag = False
-        # self._t = threading.Thread(target=self._monitor)
-        # self._t.start()
+        self._t = threading.Thread(target=self._monitor)
+        self._t.start()
 
     @property
     def msg_queue(self):
@@ -55,9 +55,12 @@ class Messager(object):
             self._add_new_player(json_obj["data"][0])
         else:
             self._msg_queue.append(json_obj)
+        # print(self._msg_queue)
 
     def get_json_data(self, key_word):
+        # print("queue", self._msg_queue, key_word)
         for i in range(len(self._msg_queue)):
+            # print(key_word, self._msg_queue[i]["type"])
             if self._msg_queue[i]["type"] == key_word:
                 temp = self._msg_queue[i]
                 del self._msg_queue[i]
