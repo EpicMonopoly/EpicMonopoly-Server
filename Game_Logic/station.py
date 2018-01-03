@@ -39,6 +39,11 @@ class Station(asset.Asset):
     def change_value(self, rate):
         self._estate_value = self._estate_value * (1 + rate)
 
+    @property
+    def block_id(self):
+        return self._block_id
+
+
     def display(self, gamer, data, dice_result):
         """
         Display description

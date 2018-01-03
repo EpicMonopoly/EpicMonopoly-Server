@@ -3,10 +3,16 @@ import operation
 
 
 class Utility(asset.Asset):
-    """
-    Class Utility
-    """
+    """utility class
 
+    Parameters
+    ----------
+    asset.Asset: 
+
+    Returns
+    -------
+
+    """
     def __init__(self, name, block_id, position, uid, estate_value, status):
         """
         Call superclass construct method
@@ -24,6 +30,11 @@ class Utility(asset.Asset):
 
     def change_value(self, rate):
         self._estate_value = self._estate_value * (1 + rate)
+
+    @property
+    def block_id(self):
+        return self._block_id
+
 
     def display(self, gamer, data, dice_result):
         """
