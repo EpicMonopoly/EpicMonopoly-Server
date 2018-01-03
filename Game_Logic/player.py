@@ -63,6 +63,9 @@ class Player(role.Role):
         return self._utility_num
 
     def count_in_jail(self):
+        """
+        count the times of being prisoned
+        """
         if self._in_jail < 2:
             self._in_jail = self._in_jail + 1
             return False
@@ -84,15 +87,24 @@ class Player(role.Role):
         return self._in_jail_time
 
     def add_in_jail_time(self):
+        """
+        add the times in jail
+        """
         self._in_jail_time += 1
 
     def calculate_asset_value(self):
+        """
+        calculate the value of asset
+        """
         total_asset_value = self._cash
         for a in self._assets:
             total_asset_value = total_asset_value + a.value
         return total_asset_value
 
     def get_built_list(self):
+        """
+        get the list of available buildings
+        """
         import operation
         import estate
         available_built_list = []
@@ -106,7 +118,6 @@ class Player(role.Role):
     def add_asset(self, new_asset):
         """
         Add asset to player
-        :type new_asset: estate.Estate, station.Station, utility.Utility
         """
         import estate
         import station
@@ -130,9 +141,7 @@ class Player(role.Role):
 
     def remove_asset(self, old_asset):
         """
-        docstring here
-            :param self: 
-            :type old_asset: estate.Estate, station.Station, utility.Utility
+        remove asset
         """
         import estate
         import station
