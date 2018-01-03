@@ -61,6 +61,10 @@ class Station(asset.Asset):
                 data["msg"].push2all(operation.gen_record_json(
                     "%s own %s" % (gamer.name, self.name)))
                 fee = self.payment(gamer.station_num)
+                if gamer.alliance == owner.alliance:
+                    # Make discount to alliance
+                    fee = fee * 0.9
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json("%s and %s are alliances, make discount" % (owner.name, gamer.name)))
                 operation.pay(gamer, owner, fee, data)
         elif self._status == -1:
             # Nobody own
