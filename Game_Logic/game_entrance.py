@@ -148,10 +148,11 @@ def turn(gamer, data):
 def start_game(create_room_dict, child_conn):
     global data
     # Initialize messager
+    roomid = list(create_room_dict.keys())[0]
     roomid = create_room_dict["data"][1]["data"][0]["room_id"]
     mess_hand = messager.Messager(roomid, child_conn)
     # Initialize game setting
-    data = init_game(mess_hand, create_room_dict)
+    data = init_game(mess_hand, create_room_dict[roomid])
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     num_round = 0
