@@ -5,19 +5,21 @@ import game_entrance
 
 
 class Room_detail(object):
-    def __init__(self, roomid, init_client=None):
+    def __init__(self, roomid, create_room_dict, init_client):
         self.roomid = roomid
         self.clients = dict()
-        if init_client is not None:
-            client_id, client_self = init_client
-            self.add_clients(client_id, client_self)
         self.game_log = []
         self.global_Choice = Choice()
+        self.create_room_dict = create_room_dict
+        # print("+",create_room_dict)
+
+        for it in init_client:
+            self.add_clients(it, init_client[it])
 
         self.parent_conn, self.child_conn = multiprocessing.Pipe()
         # self.mess_hand = messager.Messager(self.roomid, self.child_conn)
         self.p = multiprocessing.Process(
-            target=game_entrance.start_game, args=(self.roomid, self.child_conn,))
+            target=game_entrance.start_game, args=(self.create_room_dict, self.child_conn,))
         self.p.start()
         self.hear = threading.Thread(target=self.listener)
         self.hear.start()
