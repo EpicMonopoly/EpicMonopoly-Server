@@ -247,6 +247,9 @@ class Board:
         self._init_player()
 
     def get_data(self):
+        """
+        Return data dict
+        """
         data_dict = OrderedDict()
         data_dict['chess_board'] = self._block_list
         self.get_block_position()
@@ -344,6 +347,9 @@ class Board:
             self._block_position.append(self._block_list[i].position)
 
     def change_street_order(self):
+        """
+        Dynamic change the map
+        """
         num_three_block_street = len(self._three_block_street)
         random_num = random.random()
         if random_num < 0.5:
@@ -374,7 +380,6 @@ class Board:
             block.position(street_b[index].position)
             street_b[index].position(temp)
 
-    # TODO: need to finish
     def getJSON(self):
         json_data = {
             "type": "board",
