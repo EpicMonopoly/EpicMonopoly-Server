@@ -82,9 +82,11 @@ def roll_dice(gamer, data):
     """
     a = random.randint(1, 6)
     b = random.randint(1, 6)
-    data["return_data"] = [operation.gen_dice_result_dict(a, b, gamer)]
-    data["msg"].push2all(operation.gen_record_json(
-        "%s' dice number is %d %d" % (gamer.name, a, b)))
+    data["msg"].push2single(
+        gamer.id, operation.gen_dice_result_dict(a, b, gamer))
+    print("dice", a, b)
+    # data["msg"].push2all(operation.gen_record_json(
+    #     "%s' dice number is %d %d" % (gamer.name, a, b)))
     return a, b
 
 
@@ -156,7 +158,7 @@ def turn(gamer, data):
 def start_game(create_room_dict, child_conn):
     """
     start a game
-    
+
     """
     global data
     print("*", create_room_dict)
