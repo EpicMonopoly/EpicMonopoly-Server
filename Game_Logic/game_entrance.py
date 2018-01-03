@@ -76,6 +76,10 @@ def roll(gamer, data):
 
 
 def roll_dice(gamer, data):
+    """
+    roll two dice 
+
+    """
     a = random.randint(1, 6)
     b = random.randint(1, 6)
     data["return_data"] = [operation.gen_dice_result_dict(a, b, gamer)]
@@ -85,6 +89,9 @@ def roll_dice(gamer, data):
 
 
 def add_player(p):
+    """
+    
+    """
     global data
     data["living_list"].append(p.id)
     data["player_dict"][p.id] = p

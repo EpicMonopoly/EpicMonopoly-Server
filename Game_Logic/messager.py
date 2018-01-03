@@ -2,7 +2,7 @@ import threading
 import json
 
 
-class Messager(object):
+class Messager:
 
     def __init__(self, room_id, msg_tunnel):
         self._room_id = room_id
@@ -24,7 +24,7 @@ class Messager(object):
         import player
         import game_entrance
         p = player.Player(player_info["id"],
-                          player_info["name"], 2000, "America")
+                          player_info["name"], 2000, "America", player_info['avatar'])
         game_entrance.add_player(p)
 
     # def join_thread(self):
@@ -32,16 +32,26 @@ class Messager(object):
     #     self._t.join()
 
     def push2single(self, uid, line):
+        """
+        push message to single player
+
+        """
         self._msg_tunnel.send((self._room_id, line, uid))
         print("M:Push to Room {}@{} {}".format(self._room_id, uid, line))
 
     def push2all(self, line):
+        """
+        push message to all players
+        """
         # print(roomid, ":2p:", line)
         self._msg_tunnel.send((self._room_id, line, "ALL"))
         print("M:Push to Room {}@ALL {}".format(self._room_id, line))
         # to parentconn in room_detail listener
 
     def wait_choice(self):
+        """
+        wait for choice
+        """
         # child to recv
         print("Room {} wait choice:".format(self._room_id))
         iroomid, line = self._msg_tunnel.recv()
