@@ -37,12 +37,17 @@ def init_game(mess_hand):
 
 def roll(gamer, data):
     """
-    Roll a dice
-    :param gamer: The player who roll dices
-    Returns:
-    :int: The number of first dice
-    :int: The number of second dice
-    :bool: The station of end_flag
+    Roll dice
+
+    Parameters
+    ----------
+    gamer: 
+    data: 
+
+    Returns
+    -------
+    result of two dice, end_flag determind whether obtain same result
+
     """
     # Whether pass Go
     a, b = roll_dice(gamer, data)
@@ -79,22 +84,6 @@ def roll_dice(gamer, data):
     return a, b
 
 
-def own_all_block(gamer):
-    block_number = [0 for x in range(9)]
-    own_street = []
-    for cur_asset in gamer.properties:
-        if isinstance(cur_asset, estate.Estate):
-            block_number[cur_asset.street_id] = block_number[cur_asset.street_id] + 1
-    for i in range(9):
-        if block_number[i] == 3:
-            own_street.append(i)
-    if block_number[1] == 2:
-        own_street.append(1)
-    if block_number[8] == 2:
-        own_street.append(8)
-    return own_street
-
-
 def add_player(p):
     global data
     data["living_list"].append(p.id)
@@ -102,10 +91,13 @@ def add_player(p):
 
 
 def turn(gamer, data):
-    # print("in turn")
     """
-    :param gamer: players
-    :return:
+    Start gamer's turn
+
+    Parameters
+    ----------
+    gamer: Player who current play
+    data: The whole data dict
     """
     end_flag = False
     while True:
@@ -118,48 +110,60 @@ def turn(gamer, data):
         print("input_str", input_str)
         choice = int(input_str)
         if choice == 1:
+            # Trade with others
             trade_data = data["msg"].get_json_data("trade")
             while trade_data is False:
                 trade_data = data["msg"].get_json_data("trade")
             operation.trade(data, trade_data)
         elif choice == 2 and end_flag is False:
+            # Roll dice
             dice_a, dice_b, end_flag = roll(gamer, data)
         elif choice == 3:
+            # Construct building
             operation.construct_building(gamer, data)
         elif choice == 4:
+            # Remove building
             operation.remove_building(gamer, data)
         elif choice == 5:
+            # Mortgage
             operation.mortgage_asset(gamer, data)
         elif choice == 6:
             if end_flag is True:
+                # End turn
                 break
             else:
+                # haven't rolled dice
                 data["msg"].push2single(
                     gamer.id, operation.gen_hint_json("Please roll a dice"))
                 data["msg"].push2single(
                     gamer.id, operation.gen_newturn_json(gamer))
         else:
+            # Invalide choice
             data["msg"].push2single(
                 gamer.id, operation.gen_hint_json("Invalid choice"))
+        # Update all value to front end
+        data["msg"].push2all(operation.gen_update_json(data))
 
 
 def start_game(roomid, child_conn):
     global data
+    # Initialize messager
     mess_hand = messager.Messager(roomid, child_conn)
+    # Initialize game setting
     data = init_game(mess_hand)
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     num_round = 0
     update_period = 1
     result = operation.gen_init_json(data)
-    # with open("init_result.json", "w") as f:
-    #     f.write(result)
-    # quit()
     while len(living_list) != 1:
+        # When only one player left, end the game
         if num_round % update_period == 0:
+            # Dynamic change the value after every update period
             operation.update_value(data)
         num_round += 1
         for gamer_id in living_list:
+            # Iterate every player
             gamer = data["player_dict"][gamer_id]
             if gamer.cur_status == 0:
                 # In jail
@@ -167,32 +171,38 @@ def start_game(roomid, child_conn):
                     "%s are in jail" % gamer.name))
                 a, b = roll_dice(gamer, data)
                 if a == b:
+                    # Out of jail
                     gamer.cur_status = 1
                     gamer._in_jail = 0
                     turn(gamer, data)
                 else:
                     while True:
-                        data["msg"].push2all(gamer.id, operation.gen_choice_json("You are in jail! Do you want to bail yourself out?"))
+                        data["msg"].push2all(gamer.id, operation.gen_choice_json(
+                            "You are in jail! Do you want to bail yourself out?"))
                         input_data = data["msg"].get_json_data("input")
                         while input_data is False:
                             input_data = data["msg"].get_json_data("input")
                         input_str = input_data[0]["request"]
                         choice = int(input_str)
                         if choice == 1:
+                            # Bail out
                             if operation.bail(gamer, data):
                                 gamer.cur_status = 1
                                 gamer._in_jail = 0
                                 turn(gamer, data)
                                 break
                             else:
+                                # Don't have enough money
                                 data["msg"].push2single(
                                     gamer.id, operation.gen_hint_json("Please stay in jail"))
                                 gamer.count_in_jail()
                                 break
                         elif choice == 2:
+                            # Stay in jail
                             gamer.count_in_jail()
                             break
                         else:
+                            # Invalid choice
                             data["msg"].push2single(
                                 gamer.id, operation.gen_hint_json("Invalid choice"))
             elif gamer.cur_status == 1:
