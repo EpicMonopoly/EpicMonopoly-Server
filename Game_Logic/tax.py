@@ -3,21 +3,57 @@ import operation
 
 
 class Tax(block.Block):
-    """
-    Tax class
-    """
+    """Class Tax
 
+    Parameters
+    ----------
+    block.Block: superclass 
+
+    """
     def __init__(self, name, block_id, position, description, rate):
+        """constructor
+
+        Parameters
+        ----------
+        self: class itself
+        name: name of tax
+        block_id: block id of tax
+        position: position of tax
+        description: description of tax
+        rate: rate
+
+        """
         super().__init__(name, block_id, position)
         self._description = description
         self._rate = rate
 
     @property
     def rate(self):
+        """rate
+
+        Parameters
+        ----------
+        self: class itself
+
+        Returns
+        -------
+        rate: rate
+        """
         return self._rate
 
     @rate.setter
     def rate(self, rate):
+        """rate setter
+
+        Parameters
+        ----------
+        self: class itself
+        rate: new rate
+
+        Returns
+        -------
+        rate: newly set rate
+        """
         self._rate = rate
 
     def display(self, gamer, data, dice_result):
@@ -27,6 +63,9 @@ class Tax(block.Block):
         self._rate = self._rate * (1 + new_rate)
 
     def getJSON(self):
+        """
+        get data in json format
+        """
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
@@ -37,25 +76,38 @@ class Tax(block.Block):
 
 
 class Income_Tax(Tax):
-    """
-    Subclass(Tax): Income_Tax
-    """
+    """Class Income_Tax
 
+    Parameters
+    ----------
+    Tax: superclass
+
+    """
     def __init__(self, name, block_id, position, description, rate):
-        """
-        Constructor 
-            :param name: string
-            :param position: int
+        """constructor
+
+        Parameters
+        ----------
+        self: class itself
+        name: name of tax
+        block_id: block id of tax
+        position: position of tax
+        description: description of tax
+        rate: rate
+
         """
         super().__init__(name, block_id, position, description, rate)
 
     def display(self, gamer, data, dice_result):
-        """
-        docstring here
-            :type gamer: player.Player
-            :param gamer: 
-            :param data: 
-            :param dice_result: 
+        """display message
+
+        Parameters
+        ----------
+        self: class itself
+        gamer: gamer who invloved in
+        data: data dict
+        dice_result: result of dice
+
         """
         bank = data['epic_bank']
         payment = gamer.cash * self.rate
@@ -64,25 +116,38 @@ class Income_Tax(Tax):
 
 
 class Super_Tax(Tax):
-    """
-    Subclass(Tax): Super_Tax
-    """
+    """Class Super_Tax
 
+    Parameters
+    ----------
+    Tax: superclass
+
+    """
     def __init__(self, name, block_id, position, description, rate):
-        """
-        Constructor 
-            :param name: string
-            :param position: int
+        """constructor
+
+        Parameters
+        ----------
+        self: class itself
+        name: name of tax
+        block_id: block id of tax
+        position: position of tax
+        description: description of tax
+        rate: rate
+
         """
         super().__init__(name, block_id, position, description, rate)
 
     def display(self, gamer, data, dice_result):
-        """
-        docstring here
-            :type gamer: player.Player
-            :param gamer: 
-            :param data: 
-            :param dice_result: 
+        """display message
+
+        Parameters
+        ----------
+        self: class itself
+        gamer: gamer who invloved in
+        data: data dict
+        dice_result: result of dice
+
         """
         bank = data['epic_bank']
         payment = gamer.calculate_asset_value() * self.rate

@@ -3,7 +3,7 @@ import operation
 
 
 class Utility(asset.Asset):
-    """utility class
+    """Class Utility
 
     Parameters
     ----------
