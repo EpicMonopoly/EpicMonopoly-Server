@@ -38,8 +38,8 @@ class Board:
         self._tax_list = []
         self._player_dict = {}
         self._create_room_dict = create_room_dict
-        self._players_list = self._create_room_dict["data"][0]["data"]
-        self._game_setting = self._create_room_dict["data"][1]["data"]
+        self._players_list = self._create_room_dict["player_list"]
+        self._game_setting = self._create_room_dict["room"]
         self._epic_bank = None
         self._street_color = OrderedDict()
         self._messager_handler = mess_hand
