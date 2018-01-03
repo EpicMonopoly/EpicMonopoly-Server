@@ -51,16 +51,22 @@ class Bank(role.Role):
     def remove_hotel(self):
         self._cur_hotel = self._cur_hotel + 1
 
-    # TODO
-    def add_loan_dict(self, asset_id, amount):
-        self._loan_dict
+    # TODO: test
+    def add_loan_dict(self, gamer, assets_id, amount):
+        import player
+        for asset_id in assets_id:
+            for a in gamer.assets:
+                if a.block_id == asset_id:
+                    gamer.remove_asset(a)
+                    self._loan_dict[asset_id] = a
 
-    # TODO
-    def remove_loan_dict(self, asset_id):
-        if asset_id in self._loan_dict.keys():
-            del self._loan_dict[asset_id]
+    # TODO: test
+    def remove_loan_dict(self, assets_id):
+        for asset_id in assets_id:
+            if asset_id in self._loan_dict.keys():
+                del self._loan_dict[asset_id]
 
-    # TODO
+    # TODO: test
     def repayment(self, from_role, assets):
         """
         Repay the mortgaged assets
