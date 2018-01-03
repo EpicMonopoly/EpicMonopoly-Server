@@ -23,6 +23,14 @@ class Station(asset.Asset):
         return self._get_payment(station_num)
 
     def _get_payment(self, station_num):
+        """get payment 
+
+        Parameters
+        ----------
+        self: class itself
+        station_num: number of station 
+
+        """
         value = self._estate_value
         if station_num == 1:
             return (1 / 8) * value
@@ -114,6 +122,9 @@ class Station(asset.Asset):
             raise ValueError("Invalid estate status")
 
     def getJSON(self):
+        """
+        get data in json format
+        """
         payment_list = []
         for i in range(1, 5):
             payment_list.append(

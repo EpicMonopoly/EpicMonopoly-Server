@@ -332,6 +332,9 @@ def remove_building(gamer, data):
 
 
 def gen_hint_json(msg):
+    """
+    generate hint message in json format
+    """
     return_json = {}
     return_json["type"] = "hint"
     return_json["data"] = [{"message": msg}]
@@ -339,6 +342,9 @@ def gen_hint_json(msg):
 
 
 def gen_record_json(msg):
+    """
+    generate record message in json format
+    """
     return_json = {}
     return_json["type"] = "record"
     return_json["data"] = [{"message": msg}]
@@ -346,6 +352,9 @@ def gen_record_json(msg):
 
 
 def gen_dice_result_dict(a, b, gamer):
+    """
+    generate the result of dice in json format
+    """
     result_dict = {}
     result_dict["type"] = "dice_result"
     result_dict["data"] = [{"dice_result": [a, b], "player_id": gamer.id}]
@@ -353,6 +362,9 @@ def gen_dice_result_dict(a, b, gamer):
 
 
 def gen_newturn_json(gamer):
+    """
+    generate new turn data in json format
+    """
     result_dict = {}
     result_dict["type"] = "newturn"
     result_dict["data"] = [{"id": gamer.id}]
@@ -360,6 +372,9 @@ def gen_newturn_json(gamer):
 
 
 def gen_choice_json(msg):
+    """
+    generate choice input in json format
+    """
     return_json = {}
     return_json["type"] = "choice"
     return_json["data"] = [{"message": msg}]
@@ -367,6 +382,9 @@ def gen_choice_json(msg):
 
 
 def gen_init_json(data):
+    """
+    generate initialization data in json format
+    """
     data_list = []
     json_block = {
         "type": "block"
@@ -415,6 +433,9 @@ def gen_init_json(data):
 
 
 def gen_update_json(data):
+    """
+    generate update data in json format
+    """
     data_list = []
     json_estate = {
         "type": "estate"

@@ -4,12 +4,16 @@ import threading
 import game_entrance
 
 
-class Room_detail(object):
+class Room_detail:
+    """
+    Class Room_detail
+
+    """
     def __init__(self, roomid, create_room_dict, init_client):
         self.roomid = roomid
         self.clients = dict()
         self.game_log = []
-        self.global_Choice = Choice()
+        self.global_choice = Choice()
         self.create_room_dict = create_room_dict
         # print("+",create_room_dict)
 
@@ -25,9 +29,18 @@ class Room_detail(object):
         self.hear.start()
 
     def sender(self, line):
+        """
+        sender
+
+        """   
         self.parent_conn.send((self.roomid, line))
 
+
     def listener(self):
+        """
+        listener
+
+        """
         while True:
             iroomid, line, ranges = self.parent_conn.recv()
             if ranges == "ALL":
