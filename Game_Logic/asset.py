@@ -128,6 +128,16 @@ class Asset(block.Block):
 
     @property
     def block_id(self):
+        """block id
+
+        Parameters
+        ----------
+        self: class itself
+
+        Returns
+        -------
+        block_id: block id of asset
+        """
         return self._block_id
 
     def payment(self):
