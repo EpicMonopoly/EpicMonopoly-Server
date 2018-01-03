@@ -119,10 +119,6 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
             in_game_room[self.roomid] = {}
         in_game_room[self.roomid][self.id] = self
 
-        if len(in_game_room[self.roomid]) == len(wait_room[self.roomid]):
-            rooms[self.roomid] = room_detail.Room_detail(self.roomid,
-                                                         wait_room[self.roomid], in_game_room[self.roomid])
-
         self.stream.set_nodelay(True)
         # if self.roomid in rooms:
         #     # 新玩家加入
@@ -135,8 +131,16 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
         #     self.write_message("<NEW_PLAYER-O>")
 
     def on_message(self, message):
-        print(message)
+        print("message", message)
         try:
+            if message == "start":
+                if len(in_game_room[self.roomid]) == len(wait_room[self.roomid]):
+                    rooms[self.roomid] = room_detail.Room_detail(
+                        self.roomid, wait_room[self.roomid], in_game_room[self.roomid])
+                    print("create game")
+                else:
+                    print("not create", len(in_game_room[self.roomid]), len(wait_room[self.roomid]))
+                    return
             data = json.loads(message)
             # rooms[self.roomid].mess_hand.msg_queue.append(data)
             if data['type'] == 'input':

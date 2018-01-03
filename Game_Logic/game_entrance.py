@@ -76,6 +76,10 @@ def roll(gamer, data):
 
 
 def roll_dice(gamer, data):
+    """
+    roll two dice 
+
+    """
     a = random.randint(1, 6)
     b = random.randint(1, 6)
     data["return_data"] = [operation.gen_dice_result_dict(a, b, gamer)]
@@ -85,6 +89,10 @@ def roll_dice(gamer, data):
 
 
 def add_player(p):
+    """
+    add new player
+
+    """
     global data
     data["living_list"].append(p.id)
     data["player_dict"][p.id] = p
@@ -146,6 +154,10 @@ def turn(gamer, data):
 
 
 def start_game(create_room_dict, child_conn):
+    """
+    start a game
+    
+    """
     global data
     print("*", create_room_dict)
     # Initialize messager
@@ -158,6 +170,7 @@ def start_game(create_room_dict, child_conn):
     num_round = 0
     update_period = 1
     result = operation.gen_init_json(data)
+    data["msg"].push2all(result)
     while len(living_list) != 1:
         # When only one player left, end the game
         if num_round % update_period == 0:
