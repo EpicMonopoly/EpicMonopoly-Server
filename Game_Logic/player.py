@@ -6,7 +6,7 @@ class Player(role.Role):
     subclass(Role): Player
     """
 
-    def __init__(self, uid, name, cash, alliance):
+    def __init__(self, uid, name, cash, alliance, avatar):
         """
         Constructor
         :param uid: int
@@ -24,6 +24,7 @@ class Player(role.Role):
         self._in_jail = 0
         self._pre_position = 0
         self._in_jail_time = 0
+        self._avatar = avatar
 
     @property  # getAlliance
     def alliance(self):
@@ -167,6 +168,7 @@ class Player(role.Role):
             "bail_card_num": self._bail_card_num,
             "cur_status": self._cur_status,
             "pre_position": self._pre_position,
-            "property": list(self.assets)
+            "property": list(self.assets),
+            "avatar": self._avatar
         }
         return json_data

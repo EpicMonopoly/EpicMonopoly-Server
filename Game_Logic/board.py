@@ -78,7 +78,7 @@ class Board:
         self._player_dict_data = self._player_dict_data["data"]
         for i in range(len(self._players_list)):
             p = player.Player(self._players_list[i]['uid'], self._players_list[i]['name'], self._game_setting["init_fund"],
-                              self._player_dict_data[i]['alliance'])
+                              self._player_dict_data[i]['alliance'], [self._players_list[i]["avatar"][0], i])
             output_str = "{0} {1} {2} {3}".format(
                 p.cash, p.id, p.name, p.alliance)
             print(output_str)
