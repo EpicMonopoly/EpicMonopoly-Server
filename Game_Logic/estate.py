@@ -45,6 +45,10 @@ class Estate(asset.Asset):
         return self._street_id
 
     @property
+    def block_id(self):
+        return self._block_id
+
+    @property
     def payment(self):
         """
         Calculate the payment of the house
