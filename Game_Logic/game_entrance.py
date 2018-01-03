@@ -90,7 +90,8 @@ def roll_dice(gamer, data):
 
 def add_player(p):
     """
-    
+    add new player
+
     """
     global data
     data["living_list"].append(p.id)
@@ -153,6 +154,10 @@ def turn(gamer, data):
 
 
 def start_game(create_room_dict, child_conn):
+    """
+    start a game
+    
+    """
     global data
     print("*", create_room_dict)
     # Initialize messager

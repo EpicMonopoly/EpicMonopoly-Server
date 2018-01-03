@@ -83,8 +83,6 @@ class Estate(asset.Asset):
     def display(self, gamer, data, dice_result):
         """
         Display description
-        :param dice_result:
-        :return:
         """
         player_dict = data['player_dict']
         epic_bank = data['epic_bank']
