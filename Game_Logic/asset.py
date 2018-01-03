@@ -1,4 +1,3 @@
-from abc import abstractmethod
 import block
 
 
@@ -122,7 +121,6 @@ class Asset(block.Block):
         """
         return self._estate_value * self.mortgage_rate
 
-    @abstractmethod
     def change_value(self, rate):
         pass
 
@@ -144,11 +142,9 @@ class Asset(block.Block):
         """
         return self._estate_value
 
-    @abstractmethod
     def display(self, gamer, data_dict, dice_result):
         pass
 
-    @abstractmethod
     def getJSON(self):
         pass
         # json_data = {
