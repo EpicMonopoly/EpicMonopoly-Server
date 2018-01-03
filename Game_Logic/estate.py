@@ -98,13 +98,20 @@ class Estate(asset.Asset):
                     "%s own %s" % (gamer.name, self.name)))
             else:
                 # Other pass this estate
+                passing_time = 0
+                if gamer.id in self.enter_log:
+                    passing_time = self.enter_log[gamer.id]
+                    self.enter_log[gamer.id] += 1
+                else:
+                    self.enter_log[gamer.id] = 1
+                payment = self.payment * (0.9 ** passing_time)
                 data['msg'].push2single(gamer.id, operation.gen_hint_json(
                     "%s own %s" % (owner.name, self.name)))
-                payment = self.payment
                 if gamer.alliance == owner.alliance:
                     # Make discount to alliance
                     payment = payment * 0.9
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("%s and %s are alliances, make discount" % (owner.name, gamer.name)))
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                        "%s and %s are alliances, make discount" % (owner.name, gamer.name)))
                 operation.pay(gamer, owner, payment, data)
         elif self._status == -1:
             # Nobody own

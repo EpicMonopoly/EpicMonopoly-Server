@@ -43,7 +43,6 @@ class Station(asset.Asset):
     def block_id(self):
         return self._block_id
 
-
     def display(self, gamer, data, dice_result):
         """
         Display description
@@ -63,20 +62,28 @@ class Station(asset.Asset):
                     "%s own %s" % (gamer.name, self.name)))
             else:
                 # Other pass this station
+                passing_time = 0
+                if gamer.id in self.enter_log:
+                    passing_time = self.enter_log[gamer.id]
+                    self.enter_log[gamer.id] += 1
+                else:
+                    self.enter_log[gamer.id] = 1
                 data["msg"].push2all(operation.gen_record_json(
                     "%s own %s" % (gamer.name, self.name)))
-                fee = self.payment(gamer.station_num)
+                fee = self.payment(gamer.station_num) * (0.9 ** passing_time)
                 if gamer.alliance == owner.alliance:
                     # Make discount to alliance
                     fee = fee * 0.9
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("%s and %s are alliances, make discount" % (owner.name, gamer.name)))
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                        "%s and %s are alliances, make discount" % (owner.name, gamer.name)))
                 operation.pay(gamer, owner, fee, data)
         elif self._status == -1:
             # Nobody own
             while True:
                 # data["msg"].push2single(gamer.id, operation.gen_hint_json(
                 #     "Nobody own %s do you want to buy it?" % self.name))
-                data["msg"].push2single(gamer.id, operation.gen_choice_json("Nobody own %s do you want to buy it?" % self.name))
+                data["msg"].push2single(gamer.id, operation.gen_choice_json(
+                    "Nobody own %s do you want to buy it?" % self.name))
                 input_data = data["msg"].get_json_data("input")
                 while input_data is False:
                     input_data = data["msg"].get_json_data("input")

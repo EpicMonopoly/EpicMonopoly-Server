@@ -56,9 +56,15 @@ class Utility(asset.Asset):
                     "%s own %s" % (gamer.name, self.name)))
             else:
                 # Other pass this station
+                passing_time = 0
+                if gamer.id in self.enter_log:
+                    passing_time = self.enter_log[gamer.id]
+                    self.enter_log[gamer.id] += 1
+                else:
+                    self.enter_log[gamer.id] = 1
                 data["msg"].push2all(operation.gen_record_json(
                     "%s own %s" % (gamer.name, self.name)))
-                payment = self.payment(gamer.utility_num, dice_result)
+                payment = self.payment(gamer.utility_num, dice_result) * (0.9 ** passing_time)
                 if gamer.alliance == owner.alliance:
                     # Make discount to alliance
                     payment = payment * 0.9
