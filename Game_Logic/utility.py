@@ -131,7 +131,7 @@ class Utility(asset.Asset):
         else:
             raise ValueError("Invalid estate status")
 
-    def getJSon(self):
+    def getJSON(self):
         """get data in JSON format
 
         Parameters
