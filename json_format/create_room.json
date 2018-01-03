@@ -6,6 +6,7 @@
             "data": [
                 {
                     "name": "haha",
+                    "uid": 123, //这一行由通信加，不由前端负责
                     "avatar": "bug.png"
                 }
             ]
