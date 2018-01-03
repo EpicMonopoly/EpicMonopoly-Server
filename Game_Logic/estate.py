@@ -160,8 +160,7 @@ class Estate(asset.Asset):
         """
         payment_list = []
         for i in range(1, 7):
-            payment_list.append(
-                {"house_number": i, "payment": self._get_payment(i)})
+            payment_list.append({"house_number": i, "payment": self._get_payment(i)})
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
