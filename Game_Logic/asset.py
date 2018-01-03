@@ -126,6 +126,10 @@ class Asset(block.Block):
     def change_value(self, rate):
         pass
 
+    @property
+    def block_id(self):
+        return self._block_id
+
     def payment(self):
         """payment
 
