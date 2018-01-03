@@ -150,8 +150,8 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
                              (self.roomid, self.id, input_data["request"]))
                 rooms[self.roomid].sender(message)
                 # rooms[self.roomid].sender(input_data["request"])
-                rooms[self.roomid].global_Choice.set_choice(
-                    input_data["request"])
+                # rooms[self.roomid].global_Choice.set_choice(
+                #     input_data["request"])
                 rooms[self.roomid].add_log(self.id, input_data["request"])
         except (ValueError, TypeError) as err:
             if message == "<recall>":
