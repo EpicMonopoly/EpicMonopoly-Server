@@ -172,6 +172,7 @@ def start_game(create_room_dict, child_conn):
     num_round = 0
     update_period = 1
     result = operation.gen_init_json(data)
+    data["msg"].push2all(result)
     while len(living_list) != 1:
         # When only one player left, end the game
         if num_round % update_period == 0:
