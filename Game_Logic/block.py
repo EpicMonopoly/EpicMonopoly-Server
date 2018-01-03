@@ -60,7 +60,7 @@ class Go(Block):
     Subclass(Block): Go
     """
 
-    def __init__(self, name, block_id, position, description):
+    def __init__(self, name, block_id, position, reward, description):
         """
         Constructor 
             :param name: string
@@ -68,7 +68,7 @@ class Go(Block):
         """
         super().__init__(name, block_id, position)
         self._description = description
-        self._reward_value = 200
+        self._reward_value = reward
 
     @property
     def reward(self):

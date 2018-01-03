@@ -23,7 +23,7 @@ class Board:
     Board class
     """
 
-    def __init__(self, mess_hand):
+    def __init__(self, mess_hand, create_room_dict):
         """
         Initialize the board
         """
@@ -37,6 +37,9 @@ class Board:
         self._chance_block_list = []
         self._tax_list = []
         self._player_dict = {}
+        self._create_room_dict = create_room_dict
+        self._players_list = self._create_room_dict["data"][0]["data"]
+        self._game_setting = self._create_room_dict["data"][1]["data"]
         self._epic_bank = None
         self._street_color = OrderedDict()
         self._messager_handler = mess_hand
@@ -64,9 +67,17 @@ class Board:
             os.path.join(parent_addr, 'Data/player_list3.json'))
 
     def _init_player(self):
+        # self._player_dict_data = self._player_dict_data["data"]
+        # for i in range(len(self._player_dict_data)):
+        #     p = player.Player(self._player_dict_data[i]['id'], self._player_dict_data[i]['name'], self._player_dict_data[i]['cash'],
+        #                       self._player_dict_data[i]['alliance'])
+        #     output_str = "{0} {1} {2} {3}".format(
+        #         p.cash, p.id, p.name, p.alliance)
+        #     print(output_str)
+        #     self._player_dict[self._player_dict_data[i]['id']] = p
         self._player_dict_data = self._player_dict_data["data"]
-        for i in range(len(self._player_dict_data)):
-            p = player.Player(self._player_dict_data[i]['id'], self._player_dict_data[i]['name'], self._player_dict_data[i]['cash'],
+        for i in range(len(self._players_list)):
+            p = player.Player(self._players_list[i]['uid'], self._players_list[i]['name'], self._game_setting["init_fund"],
                               self._player_dict_data[i]['alliance'])
             output_str = "{0} {1} {2} {3}".format(
                 p.cash, p.id, p.name, p.alliance)
@@ -74,8 +85,11 @@ class Board:
             self._player_dict[self._player_dict_data[i]['id']] = p
 
     def _init_bank(self):
-        self._epic_bank = bank.Bank(
-            '99', 'EpicBank', self._bank_data['data']['house_number'], self._bank_data['data']['hotel_number'])
+        if self._game_setting["is_limited"] is True:
+            self._epic_bank = bank.Bank(
+                '99', 'EpicBank', self._bank_data['data']['house_number'], self._bank_data['data']['hotel_number'])
+        else:
+            self._epic_bank = bank.Bank('99', 'EpicBank', 99, 99)
 
     def _init_block(self):
         for b in self._block_list_data["data"]:
@@ -83,7 +97,7 @@ class Board:
                 # ["Go", "Go to Jail", "In Jail", "Free Parking"]
                 if b['name'] == "Go":
                     corner_block = block.Go(
-                        b['name'], b['block_id'], b['position'], b['description'])
+                        b['name'], b['block_id'], b['position'], self._game_setting["go_salary"], b['description'])
                 elif b['name'] == "Go to Jail":
                     corner_block = block.Go_To_Jail(
                         b['name'], b['block_id'], b['position'], b['description'])
@@ -242,9 +256,15 @@ class Board:
         data_dict['chest_block_list'] = self._chest_block_list
         data_dict['chance_block_list'] = self._chance_block_list
         data_dict['tax_list'] = self._tax_list
-        data_dict['ef'] = ef.EF(0.05)
         data_dict['street_color'] = self._street_color
         data_dict['msg'] = self._messager_handler
+        difficulty = self._game_setting["level"]
+        if difficulty == "easy":
+            data_dict['ef'] = ef.EF(0.05)
+        elif difficulty == "normal":
+            data_dict['ef'] = ef.EF(0.10)
+        else:
+            data_dict['ef'] = ef.EF(0.15)
         return data_dict
 
     def new_board(self, data_dict):

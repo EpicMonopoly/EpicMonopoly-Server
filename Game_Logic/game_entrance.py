@@ -24,13 +24,13 @@ from json_io import json_reader, json_writer
 data = {}
 
 
-def init_game(mess_hand):
+def init_game(mess_hand, create_room_dict):
     """
     Initialize the game with map, players and bank
     """
     global data
     data['msg'] = mess_hand
-    chess_board = board.Board(mess_hand)
+    chess_board = board.Board(mess_hand, create_room_dict)
     data = chess_board.get_data()
     return data
 
@@ -145,12 +145,13 @@ def turn(gamer, data):
         data["msg"].push2all(operation.gen_update_json(data))
 
 
-def start_game(roomid, child_conn):
+def start_game(create_room_dict, child_conn):
     global data
     # Initialize messager
+    roomid = create_room_dict["data"][1]["data"][0]["room_id"]
     mess_hand = messager.Messager(roomid, child_conn)
     # Initialize game setting
-    data = init_game(mess_hand)
+    data = init_game(mess_hand, create_room_dict)
     living_list = list(data["player_dict"].keys())
     data["living_list"] = living_list
     num_round = 0

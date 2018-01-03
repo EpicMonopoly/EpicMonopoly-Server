@@ -16,6 +16,7 @@
             "data": [
                 {
                     "room_name": "prprpr",
+                    "room_id": 123, //这一行由通信加，不由前端负责
                     "level": "easy",
                     "init_fund": 1500,
                     "go_salary": 200,
