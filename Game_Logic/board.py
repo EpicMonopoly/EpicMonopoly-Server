@@ -171,9 +171,9 @@ class Board:
             # elif chest['card_type'] == 7:  # Move
             #     self._chest_list.append(card.MoveCard(chest['card_id'], chest['card_type'], chest['description'],
             #                                     chest['steps']))
-            elif chest['card_type'] == 5:  # Bailcard
-                self._chest_list.append(card.BailCard(
-                    chest['card_id'], chest['card_type'], chest['description']))
+            # elif chest['card_type'] == 5:  # Bailcard
+            #     self._chest_list.append(card.BailCard(
+            #         chest['card_id'], chest['card_type'], chest['description']))
 
     def _init_chance(self):
         # initialize chance cards
@@ -197,9 +197,9 @@ class Board:
             elif chance['card_type'] == 7:  # Move
                 self._chance_list.append(card.MoveCard(chance['card_id'], chance['card_type'], chance['description'],
                                                        chance['steps']))
-            elif chance['card_type'] == 5:  # Bailcard
-                self._chance_list.append(card.BailCard(
-                    chance['card_id'], chance['card_type'], chance['description']))
+            # elif chance['card_type'] == 5:  # Bailcard
+            #     self._chance_list.append(card.BailCard(
+            #         chance['card_id'], chance['card_type'], chance['description']))
 
     def _init_block_street(self):
         # initialize chess board
