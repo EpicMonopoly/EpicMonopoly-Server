@@ -14,12 +14,21 @@ import room_detail
 
 rooms = dict()
 wait_room = dict()
+room_id_counter = 100
+
+in_game_room = dict()
 
 
-# class IndexHandler(tornado.web.RequestHandler):
-#     @tornado.web.asynchronous
-#     def get(self):
-#         self.render("index.html")
+def get_roomid():
+    global room_id_counter
+    room_id_counter += 1
+    return room_id_counter - 1
+
+
+class gameHandler(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    def get(self):
+        self.render("index.html")
 
 
 class IndexHandler(tornado.web.RequestHandler):
@@ -35,6 +44,8 @@ class InGameHandler(tornado.web.RequestHandler):
 
 
 class InitRoomHanler(tornado.web.RequestHandler):
+    global wait_room
+
     def post(self):
         print(self.request.body)
         if self.request.body:
@@ -47,7 +58,7 @@ class InitRoomHanler(tornado.web.RequestHandler):
                         if dat["type"] == "player":
                             dat["data"][0]["uid"] = str(uuid.uuid1())
                         elif dat["type"] == "room":
-                            dat["data"][0]["room_id"] = str(uuid.uuid4())
+                            dat["data"][0]["room_id"] = str(get_roomid())
                 print("response", json_data)
 
                 for dat in json_data["data"]:
@@ -76,24 +87,52 @@ class InitRoomHanler(tornado.web.RequestHandler):
                 message = 'Unable to parse JSON.'
                 self.send_error(400, message=message)  # Bad Request
 
+
 class RoomlistHanler(tornado.web.RequestHandler):
-     def get(self):
-         self.write(tornado.escape.json_encode(wait_room))
+    global wait_room
+
+    def get(self):
+        self.write(tornado.escape.json_encode(wait_room))
+
+
+class StartGametHanler(tornado.web.RequestHandler):
+    global wait_room
+
+    def post(self):
+        roomid = self.get_argument("roomid")
+        if len(wait_room[roomid]["player_list"]) > 1:
+            response = {"start": True}
+            self.write(tornado.escape.json_encode(response))
+        else:
+            response = {"start": False}
+            self.write(tornado.escape.json_encode(response))
+
 
 class MywebSocketHandler(tornado.websocket.WebSocketHandler):
+    global wait_room, in_game_room, rooms
+
     def open(self, *args):
         self.id = self.get_argument("Id")
         self.roomid = self.get_argument("roomid")
+
+        if self.roomid not in in_game_room:
+            in_game_room[self.roomid] = {}
+        in_game_room[self.roomid][self.id] = self
+
+        if len(in_game_room[self.roomid]) == len(wait_room[self.roomid]):
+            rooms[self.roomid] = room_detail.Room_detail(self.roomid,
+                                                         wait_room[self.roomid], in_game_room[self.roomid])
+
         self.stream.set_nodelay(True)
-        if self.roomid in rooms:
-            # 新玩家加入
-            rooms[self.roomid].add_clients(self.id, self)
-            self.write_message("<NEW_PLAYER-S>")
-        else:
-            # 创建新房间
-            rooms[self.roomid] = room_detail.Room_detail(
-                self.roomid, (self.id, self))
-            self.write_message("<NEW_PLAYER-O>")
+        # if self.roomid in rooms:
+        #     # 新玩家加入
+        #     rooms[self.roomid].add_clients(self.id, self)
+        #     self.write_message("<NEW_PLAYER-S>")
+        # else:
+        #     # 创建新房间
+        #     rooms[self.roomid] = room_detail.Room_detail(
+        #         self.roomid, (self.id, self))
+        #     self.write_message("<NEW_PLAYER-O>")
 
     def on_message(self, message):
         print(message)
@@ -136,6 +175,8 @@ app = tornado.web.Application(
         (r"/joingame", InitRoomHanler),
         (r"/ingame", InGameHandler),
         (r"/roomlist", RoomlistHanler),
+        (r"/start", StartGametHanler),
+        (r"/game", gameHandler),
         (r"/websocket", MywebSocketHandler),
     ],
     static_path=os.path.join(os.path.dirname(__file__), "static")

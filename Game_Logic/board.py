@@ -27,6 +27,7 @@ class Board:
         """
         Initialize the board
         """
+        print(create_room_dict)
         self._two_block_street = []
         self._three_block_street = []
         self._block_list = [0 for x in range(40)]
