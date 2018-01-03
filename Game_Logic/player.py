@@ -92,6 +92,17 @@ class Player(role.Role):
             total_asset_value = total_asset_value + a.value
         return total_asset_value
 
+    def get_built_list(self):
+        import operation
+        import estate
+        available_built_list = []
+        own_street_list = operation.own_all_block(self)
+        for cur_asset in self._assets:
+            if isinstance(cur_asset, estate.Estate):
+                if (cur_asset.street_id in own_street_list) and (cur_asset.status == 1):
+                    available_built_list.append(cur_asset.block_id)
+        return available_built_list
+
     def add_asset(self, new_asset):
         """
         Add asset to player
@@ -165,10 +176,11 @@ class Player(role.Role):
             "id": self.id,
             "position": self._position,
             "alliance": self._alliance,
-            "bail_card_num": self._bail_card_num,
+            "card_num": self._bail_card_num,
             "cur_status": self._cur_status,
             "pre_position": self._pre_position,
             "property": list(self.assets),
-            "avatar": self._avatar
+            "avatar": self._avatar,
+            "available_built_list": self.get_built_list()
         }
         return json_data

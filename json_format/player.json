@@ -9,21 +9,36 @@
 			"position": 1,
 			"pre_position": 39,
 			"card_num": 1,
-			"property": [1, 2, 3]
+			"property": [1, 2, 3],
+			"cur_status": 1,
+			"avatar": [0, 3],
+			"available_built_list": [23, 13]
 		},
 		{
 			"name": "player2",
 			"id": "12345678",
+			"alliance": "america",
 			"cash": 123456789,
+			"position": 1,
+			"pre_position": 39,
 			"card_num": 1,
-			"property":[1, 2, 3]
+			"property": [1, 2, 3],
+			"cur_status": 1,
+			"avatar": [0, 3],
+			"available_built_list": [23, 13]
 		},
 		{
 			"name": "player3",
 			"id": "12345678",
+			"alliance": "america",
 			"cash": 123456789,
+			"position": 1,
+			"pre_position": 39,
 			"card_num": 1,
-			"property": [1, 2, 3]
+			"property": [1, 2, 3],
+			"cur_status": 1,
+			"avatar": [0, 3],
+			"available_built_list": [23, 13]
 		}
 	]
 }
