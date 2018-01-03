@@ -34,7 +34,7 @@ def bail(prionser, data):
     jail = data["chess_board"][prionser.position]
     bail_fee = jail.bail_fee(prionser.in_jail_time)
     if prionser.cash < bail_fee:
-        data["msg"].push2all(gen_record_json("No enough money"))
+        data["msg"].push2single(prionser.id, gen_hint_json("No enough money"))
         return False
     else:
         pay(prionser, data["epic_bank"], bail_fee, data)
@@ -61,6 +61,7 @@ def clearing(gamer, amount_left, data):
     """
     record = "Start mortgage " + str(gamer.name) + "'s assets"
     data["msg"].push2all(gen_hint_json(record))
+    data["msg"].push2all(gen_record_json(record))
     for cur_asset in gamer.assets:
         if amount_left <= 0:
             return 0
@@ -152,15 +153,15 @@ def broken(gamer, data):
 
 
 def mortgage_asset(gamer, data):
-    data["msg"].push2single(gamer.id, gen_hint_json("Your current assets"))
+    # data["msg"].push2single(gamer.id, gen_hint_json("Your current assets"))
     asset_number_list = []
     for cur_asset in gamer.assets:
         if cur_asset.status == 1:
-            data["msg"].push2single(gamer.id, gen_hint_json(
-                "No.%d %s" % (cur_asset.block_id, cur_asset.name)))
+            # data["msg"].push2single(gamer.id, gen_hint_json(
+            #     "No.%d %s" % (cur_asset.block_id, cur_asset.name)))
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        data["msg"].push2single(gamer.id, gen_hint_json("None"))
+        # data["msg"].push2single(gamer.id, gen_hint_json("None"))
         return 0
     input_str = data["msg"].get_json_data("input")
     while not input_str:
@@ -212,22 +213,24 @@ def own_all_block(gamer):
 def construct_building(gamer, data):
     import estate
     own_street = own_all_block(gamer)
-    data["msg"].push2single(gamer.id, gen_hint_json("Valid building list"))
+    # data["msg"].push2single(gamer.id, gen_hint_json("Valid building list"))
+    print("Valid building list")
     asset_number_list = []
     for cur_asset in gamer.assets:
         if isinstance(cur_asset, estate.Estate):
             if cur_asset.street_id in own_street and (cur_asset.status == 1 or cur_asset.status == 2):
-                data["msg"].push2single(gamer.id, gen_hint_json(
-                    "No.%d %s" % (cur_asset.block_id, cur_asset.name)))
+                # data["msg"].push2single(gamer.id, gen_hint_json(
+                #     "No.%d %s" % (cur_asset.block_id, cur_asset.name)))
+                print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
                 asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        data["msg"].push2single(gamer.id, gen_hint_json("None"))
+        # data["msg"].push2single(gamer.id, gen_hint_json("None"))
+        print("None")
         return 0
     input_str = data["msg"].get_json_data("input")
     while not input_str:
         input_str = data["msg"].get_json_data("input")
     asset_number = int(input_str)
-    data["msg"].push2all()
     if asset_number == -1:
         return 0
     else:
@@ -255,7 +258,7 @@ def construct_building(gamer, data):
                 data["epic_bank"].built_hotel()
                 record = str(gamer.name) + " built one hotel in " + \
                     str(cur_asset.name)
-                data["msg"].push2single(gamer.id, gen_record_json(gen_hint_json(
+                data["msg"].push2all(gen_record_json(gen_hint_json(
                     "%s built one hotel in %s" % (gamer.name, cur_asset.name))))
             elif cur_asset.house_num == 4:
                 if data["epic_bank"].cur_hotel == 0:
@@ -272,7 +275,7 @@ def construct_building(gamer, data):
                 cur_asset.status = 2
                 data["epic_bank"].built_hotel()
                 data["epic_bank"].remove_house(4)
-                data["msg"].push2single(gamer.id, gen_record_json(
+                data["msg"].push2all(gen_record_json(
                     "%s built one hotel in %s" % (gamer.name, cur_asset.name)))
             else:
                 if data["epic_bank"].cur_house == 0:
@@ -288,26 +291,28 @@ def construct_building(gamer, data):
                 cur_asset.house_num = cur_asset.house_num + 1
                 cur_asset.status = 2
                 data["epic_bank"].built_house()
-                data["msg"].push2single(gamer.id, gen_record_json(
+                data["msg"].push2all(gen_record_json(
                     "%s built one house in %s" % (gamer.name, cur_asset.name)))
 
 
 def remove_building(gamer, data):
     import estate
-    data["msg"].push2single(
-        gamer.id, gen_hint_json("Valid remove building list"))
+    # data["msg"].push2single(
+    #     gamer.id, gen_hint_json("Valid remove building list"))
+    print("Valid remove building list")
     asset_number_list = []
     for cur_asset in gamer.assets:
         if cur_asset.state == 2:
+            print("No.%d %s" % (cur_asset.block_id, cur_asset.name))
             asset_number_list.append(cur_asset.block_id)
     if asset_number_list == []:
-        data["msg"].push2single(gamer.id, gen_hint_json("None"))
+        # data["msg"].push2single(gamer.id, gen_hint_json("None"))
+        print("None")
         return 0
     input_str = data["msg"].get_json_data("input")
     while not input_str:
         input_str = data["msg"].get_json_data("input")
     asset_number = int(input_str)
-    data["msg"].push2all()
     if asset_number == -1:
         return 0
     else:
@@ -391,12 +396,53 @@ def gen_init_json(data):
         block_list_e.append(data["player_dict"][i].getJSon())
     json_player["data"] = block_list_e
     json_ef = {
-        "type" : "ef",
-        "data" : [data["ef"].getJSon()]
+        "type": "ef",
+        "data": [data["ef"].getJSon()]
     }
     init_dict = {
         "type": "init",
         "data": [json_block, json_estate, json_station, json_utility, json_player, json_ef]
+    }
+    return json.dumps(init_dict)
+
+
+def gen_update_json(data):
+    data_list = []
+    json_estate = {
+        "type": "estate"
+    }
+    block_list_b = []
+    for i in data["estate_list"]:
+        block_list_b.append(i.getJSon())
+    json_estate["data"] = block_list_b
+    json_station = {
+        "type": "station"
+    }
+    block_list_c = []
+    for i in data["station_list"]:
+        block_list_c.append(i.getJSon())
+    json_station["data"] = block_list_c
+    json_utility = {
+        "type": "utility"
+    }
+    block_list_d = []
+    for i in data["utility_list"]:
+        block_list_d.append(i.getJSon())
+    json_utility["data"] = block_list_d
+    json_player = {
+        "type": "player"
+    }
+    block_list_e = []
+    for i in data["player_dict"]:
+        block_list_e.append(data["player_dict"][i].getJSon())
+    json_player["data"] = block_list_e
+    json_ef = {
+        "type": "ef",
+        "data": [data["ef"].getJSon()]
+    }
+    init_dict = {
+        "type": "init",
+        "data": [json_estate, json_station, json_utility, json_player, json_ef]
     }
     return json.dumps(init_dict)
 

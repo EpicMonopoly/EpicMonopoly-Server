@@ -55,9 +55,8 @@ def roll(gamer, data):
     if current_gamer_position + step > 40:
         go_block = data["chess_board"][0]
         operation.pay(data['epic_bank'], gamer, go_block.reward, data)
-        hint_json = json.dumps(operation.gen_hint_json(
+        data["msg"].push2single(gamer.uid, operation.gen_hint_json(
             "Passing Go, Gain %d" % go_block.reward))
-        data["msg"].push2single(gamer.uid, hint_json)
         data["msg"].push2all("%s passing GO, Gain %d" %
                              (gamer.name, go_block.reward))
     gamer.move(step)
@@ -65,7 +64,8 @@ def roll(gamer, data):
     current_block = data['chess_board'][end_position]
     if isinstance(current_block, block.Go_To_Jail):
         end_flag = True
-    data["msg"].push2all("At %s" % current_block.name)
+    data["msg"].push2all(operation.gen_record_json(
+        "%s at %s" % (gamer.name, current_block.name)))
     current_block.display(gamer, data, step)
     return a, b, end_flag
 
@@ -118,8 +118,10 @@ def turn(gamer, data):
         print("input_str", input_str)
         choice = int(input_str)
         if choice == 1:
-            # operation.trade(data, trade_data)
-            pass
+            trade_data = data["msg"].get_json_data("trade")
+            while trade_data is False:
+                trade_data = data["msg"].get_json_data("trade")
+            operation.trade(data, trade_data)
         elif choice == 2 and end_flag is False:
             dice_a, dice_b, end_flag = roll(gamer, data)
         elif choice == 3:
@@ -132,7 +134,6 @@ def turn(gamer, data):
             if end_flag is True:
                 break
             else:
-
                 data["msg"].push2single(
                     gamer.id, operation.gen_hint_json("Please roll a dice"))
                 data["msg"].push2single(

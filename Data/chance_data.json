@@ -38,11 +38,6 @@
     "description": "Bank pays you dividend of some money"
   },
   {
-    "card_id": 23,
-    "card_type": 5,
-    "description": "Get out of Jail free. This card may be kept until needed, or sold"
-  },
-  {
     "card_id": 24,
     "card_type": 7,
     "steps": -3,

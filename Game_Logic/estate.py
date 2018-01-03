@@ -55,19 +55,19 @@ class Estate(asset.Asset):
 
     def _get_payment(self, house_num):
         if house_num == 0:
-            return int(self.value * 0.1)
+            return int(self._estate_value + (0 * self._house_value) * 0.1)
         elif house_num == 1:
-            return int(self.value * 0.15)
+            return int(self._estate_value + (1 * self._house_value) * 0.15)
         elif house_num == 2:
-            return int(self.value * 0.2)
+            return int(self._estate_value + (2 * self._house_value) * 0.2)
         elif house_num == 3:
-            return int(self.value * 0.25)
+            return int(self._estate_value + (3 * self._house_value) * 0.25)
         elif house_num == 4:
-            return int(self.value * 0.3)
+            return int(self._estate_value + (4 * self._house_value) * 0.3)
         elif house_num == 5:
-            return int(self.value * 0.4)
+            return int(self._estate_value + (5 * self._house_value) * 0.4)
         elif house_num == 6:
-            return int(self.value * 0.5)
+            return int(self._estate_value + (6 * self._house_value) * 0.5)
         else:
             # Should not be here
             raise ValueError("Invalid house number")
@@ -101,7 +101,7 @@ class Estate(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                # data['msg'].push2singe(gamer.id, operation.gen_hint_json("Nobody own %s do you want to buy it?" % self.name))
+                data['msg'].push2singe(gamer.id, operation.gen_hint_json("Nobody own %s do you want to buy it?" % self.name))
                 # data['msg'].push2single(gamer.id, operation.gen_hint_json("Price: %d" % self.value))
                 # data['msg'].push2single(gamer.id, operation.gen_hint_json("1: Buy it"))
                 # data['msg'].push2single(gamer.id, operation.gen_hint_json("2: Do not buy it"))
@@ -109,19 +109,17 @@ class Estate(asset.Asset):
                 while not input_str:
                     input_str = data['msg'].get_json_data("input")
                 choice = int(input_str)
-                data['msg'].push2all()
                 if choice == 1:
                     price = self.value
                     cur_cash = gamer.cash
                     if price > cur_cash:
-                        data['msg'].push2all(gamer.id, operation.gen_hint_json(
+                        data['msg'].push2singe(gamer.id, operation.gen_hint_json(
                             "You do not have enough money"))
                         break
                     else:
                         operation.pay(gamer, epic_bank, price, data)
                         operation.trade_asset(self, epic_bank, gamer)
-                        data['msg'].push2single(gamer.id, operation.gen_hint_json(
-                            "%s buy %s for %d" % (gamer.name, self.name, price)))
+                        data['msg'].push2all(operation.gen_hint_json("%s buy %s for %d" % (gamer.name, self.name, price)))
                         break
                 elif choice == 2:
                     break
