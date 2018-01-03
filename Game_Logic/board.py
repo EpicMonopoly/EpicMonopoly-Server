@@ -27,6 +27,7 @@ class Board:
         """
         Initialize the board
         """
+        print(create_room_dict)
         self._two_block_street = []
         self._three_block_street = []
         self._block_list = [0 for x in range(40)]
@@ -47,6 +48,9 @@ class Board:
         self.init_board()
 
     def _read_data(self):
+        """
+        Read data from json file. Initialize map
+        """
         # generate a map
         parent_addr = os.path.abspath(os.pardir)
         self._block_list_data = json_reader(os.path.join(
@@ -67,14 +71,9 @@ class Board:
             os.path.join(parent_addr, 'Data/player_list3.json'))
 
     def _init_player(self):
-        # self._player_dict_data = self._player_dict_data["data"]
-        # for i in range(len(self._player_dict_data)):
-        #     p = player.Player(self._player_dict_data[i]['id'], self._player_dict_data[i]['name'], self._player_dict_data[i]['cash'],
-        #                       self._player_dict_data[i]['alliance'])
-        #     output_str = "{0} {1} {2} {3}".format(
-        #         p.cash, p.id, p.name, p.alliance)
-        #     print(output_str)
-        #     self._player_dict[self._player_dict_data[i]['id']] = p
+        """
+        Init player
+        """
         self._player_dict_data = self._player_dict_data["data"]
         for i in range(len(self._players_list)):
             p = player.Player(self._players_list[i]['uid'], self._players_list[i]['name'], self._game_setting["init_fund"],
@@ -85,6 +84,9 @@ class Board:
             self._player_dict[self._player_dict_data[i]['id']] = p
 
     def _init_bank(self):
+        """
+        Init bank
+        """
         if self._game_setting["is_limited"] is True:
             self._epic_bank = bank.Bank(
                 '99', 'EpicBank', self._bank_data['data']['house_number'], self._bank_data['data']['hotel_number'])
@@ -92,6 +94,9 @@ class Board:
             self._epic_bank = bank.Bank('99', 'EpicBank', 99, 99)
 
     def _init_block(self):
+        """
+        Init block
+        """
         for b in self._block_list_data["data"]:
             if b['block_type'] == 0:
                 # ["Go", "Go to Jail", "In Jail", "Free Parking"]
@@ -242,6 +247,9 @@ class Board:
         self._init_player()
 
     def get_data(self):
+        """
+        Return data dict
+        """
         data_dict = OrderedDict()
         data_dict['chess_board'] = self._block_list
         self.get_block_position()
@@ -339,6 +347,9 @@ class Board:
             self._block_position.append(self._block_list[i].position)
 
     def change_street_order(self):
+        """
+        Dynamic change the map
+        """
         num_three_block_street = len(self._three_block_street)
         random_num = random.random()
         if random_num < 0.5:
@@ -369,7 +380,6 @@ class Board:
             block.position(street_b[index].position)
             street_b[index].position(temp)
 
-    # TODO: need to finish
     def getJSON(self):
         json_data = {
             "type": "board",

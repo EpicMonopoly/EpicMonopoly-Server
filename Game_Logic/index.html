@@ -17,6 +17,10 @@
                 room
                 <input type="text" id="room">
             </div>
+            <div>
+                uid
+                <input type="text" id="uid">
+            </div>
             <input type="text" id="choice">
             <button onclick="push()" type="button">push</button>
         </form>
@@ -28,11 +32,11 @@
     var messageContainer = document.getElementById("messages");
     var record = document.getElementById("recordContent");
     var ws;
-    var uid =  guid();    
 
     function WebSocketTest() {
         if ("WebSocket" in window) {
             var roomid = document.getElementById("room").value;
+            var uid = document.getElementById("uid").value;    
             ws = new WebSocket("ws://test.sustech.pub:8888/websocket?Id=" + uid + "&roomid=" + roomid);
 
             ws.onopen = function () {
