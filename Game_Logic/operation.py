@@ -167,6 +167,7 @@ def mortgage_asset(gamer, data):
     input_str = data["msg"].get_json_data("input")
     while not input_str:
         input_str = data["msg"].get_json_data("input")
+    input_str = input_str[0]["request"]
     asset_number = int(input_str)
     data["msg"].push2all()
     if asset_number == -1:
@@ -231,6 +232,7 @@ def construct_building(gamer, data):
     input_str = data["msg"].get_json_data("input")
     while not input_str:
         input_str = data["msg"].get_json_data("input")
+    input_str = input_str[0]["request"]
     asset_number = int(input_str)
     if asset_number == -1:
         return 0
@@ -313,6 +315,7 @@ def remove_building(gamer, data):
     input_str = data["msg"].get_json_data("input")
     while not input_str:
         input_str = data["msg"].get_json_data("input")
+    input_str = input_str[0]["request"]
     asset_number = int(input_str)
     if asset_number == -1:
         return 0

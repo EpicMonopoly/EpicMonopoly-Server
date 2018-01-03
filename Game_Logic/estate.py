@@ -127,6 +127,7 @@ class Estate(asset.Asset):
                 input_str = data['msg'].get_json_data("input")
                 while not input_str:
                     input_str = data['msg'].get_json_data("input")
+                input_str = input_str[0]["request"]
                 choice = int(input_str)
                 if choice == 1:
                     price = self.value
