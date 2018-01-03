@@ -21,14 +21,23 @@ class Bank(role.Role):
 
     @property
     def loan_list(self):
+        """
+        Return load list
+        """
         return self._loan_dict
 
     @property
     def cur_house(self):
+        """
+        Return current valid house number
+        """
         return self._cur_house
 
     @property
     def cur_hotel(self):
+        """
+        Return current valid house number
+        """
         return self._cur_hotel
 
     def pay(self, payment):
@@ -51,55 +60,54 @@ class Bank(role.Role):
     def remove_hotel(self):
         self._cur_hotel = self._cur_hotel + 1
 
-    # TODO: test
-    def add_loan_dict(self, gamer, assets_id, amount):
-        import player
-        for asset_id in assets_id:
-            for a in gamer.assets:
-                if a.block_id == asset_id:
-                    gamer.remove_asset(a)
-                    self._loan_dict[asset_id] = a
+    # # TODO: test
+    # def add_loan_dict(self, gamer, assets_id, amount):
+    #     import player
+    #     for asset_id in assets_id:
+    #         for a in gamer.assets:
+    #             if a.block_id == asset_id:
+    #                 gamer.remove_asset(a)
+    #                 self._loan_dict[asset_id] = a
 
-    # TODO: test
-    def remove_loan_dict(self, assets_id):
-        for asset_id in assets_id:
-            if asset_id in self._loan_dict.keys():
-                del self._loan_dict[asset_id]
+    # # TODO: test
+    # def remove_loan_dict(self, assets_id):
+    #     for asset_id in assets_id:
+    #         if asset_id in self._loan_dict.keys():
+    #             del self._loan_dict[asset_id]
 
-    # TODO: test
-    def repayment(self, from_role, assets):
-        """
-        Repay the mortgaged assets
-        :type from_role: player.Player
-        :type assets: list
-        :param from_role: player
-        :param assets: a set of assets
-        :return: True or not of this repayment
-        """
-        import station
-        import utility
-        import estate
-        repay_value = 0
-        if assets:
-            for a in assets:
-                if isinstance(a, station.Station):
-                    repay_value += a.mortgage_value
-                    self._loan_dict[from_role.name] = a
-                elif isinstance(a, utility.Utility):
-                    repay_value += a.mortgage_value
-                    self._loan_dict[from_role.name] = a
-                elif isinstance(a, estate.Estate):
-                    repay_value += a.mortgage_value
-                    self._loan_dict[from_role.name] = a
-            from_role.gain(repay_value)
-            return True
-        else:
-            return False
+    # # TODO: test
+    # def repayment(self, from_role, assets):
+    #     """
+    #     Repay the mortgaged assets
+    #     :type from_role: player.Player
+    #     :type assets: list
+    #     :param from_role: player
+    #     :param assets: a set of assets
+    #     :return: True or not of this repayment
+    #     """
+    #     import station
+    #     import utility
+    #     import estate
+    #     repay_value = 0
+    #     if assets:
+    #         for a in assets:
+    #             if isinstance(a, station.Station):
+    #                 repay_value += a.mortgage_value
+    #                 self._loan_dict[from_role.name] = a
+    #             elif isinstance(a, utility.Utility):
+    #                 repay_value += a.mortgage_value
+    #                 self._loan_dict[from_role.name] = a
+    #             elif isinstance(a, estate.Estate):
+    #                 repay_value += a.mortgage_value
+    #                 self._loan_dict[from_role.name] = a
+    #         from_role.gain(repay_value)
+    #         return True
+    #     else:
+    #         return False
 
     def add_asset(self, new_asset):
         """
-        Add asset to player
-        :param self: self
+        Add asset to bank
         """
         import station
         import utility
@@ -121,9 +129,7 @@ class Bank(role.Role):
 
     def remove_asset(self, old_asset):
         """
-        docstring here
-        :type old_asset: estate.Estate, station.Station, utility.Utility
-        :param self: self
+        Remove an asset from bank
         """
         import station
         import utility
@@ -140,7 +146,10 @@ class Bank(role.Role):
         else:
             pass
 
-    def getJSon(self):
+    def getJSON(self):
+        """
+        Return data according to bank.json
+        """
         json_data = {
             "type": "bank",
             "data": [

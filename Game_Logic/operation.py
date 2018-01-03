@@ -373,39 +373,39 @@ def gen_init_json(data):
     }
     block_list_a = []
     for i in data["chess_board"]:
-        block_list_a.append(i.getJSon_block())
+        block_list_a.append(i.getJSON_block())
     json_block["data"] = block_list_a
     json_estate = {
         "type": "estate"
     }
     block_list_b = []
     for i in data["estate_list"]:
-        block_list_b.append(i.getJSon())
+        block_list_b.append(i.getJSON())
     json_estate["data"] = block_list_b
     json_station = {
         "type": "station"
     }
     block_list_c = []
     for i in data["station_list"]:
-        block_list_c.append(i.getJSon())
+        block_list_c.append(i.getJSON())
     json_station["data"] = block_list_c
     json_utility = {
         "type": "utility"
     }
     block_list_d = []
     for i in data["utility_list"]:
-        block_list_d.append(i.getJSon())
+        block_list_d.append(i.getJSON())
     json_utility["data"] = block_list_d
     json_player = {
         "type": "player"
     }
     block_list_e = []
     for i in data["player_dict"]:
-        block_list_e.append(data["player_dict"][i].getJSon())
+        block_list_e.append(data["player_dict"][i].getJSON())
     json_player["data"] = block_list_e
     json_ef = {
         "type": "ef",
-        "data": [data["ef"].getJSon()]
+        "data": [data["ef"].getJSON()]
     }
     init_dict = {
         "type": "init",
@@ -421,32 +421,32 @@ def gen_update_json(data):
     }
     block_list_b = []
     for i in data["estate_list"]:
-        block_list_b.append(i.getJSon())
+        block_list_b.append(i.getJSON())
     json_estate["data"] = block_list_b
     json_station = {
         "type": "station"
     }
     block_list_c = []
     for i in data["station_list"]:
-        block_list_c.append(i.getJSon())
+        block_list_c.append(i.getJSON())
     json_station["data"] = block_list_c
     json_utility = {
         "type": "utility"
     }
     block_list_d = []
     for i in data["utility_list"]:
-        block_list_d.append(i.getJSon())
+        block_list_d.append(i.getJSON())
     json_utility["data"] = block_list_d
     json_player = {
         "type": "player"
     }
     block_list_e = []
     for i in data["player_dict"]:
-        block_list_e.append(data["player_dict"][i].getJSon())
+        block_list_e.append(data["player_dict"][i].getJSON())
     json_player["data"] = block_list_e
     json_ef = {
         "type": "ef",
-        "data": [data["ef"].getJSon()]
+        "data": [data["ef"].getJSON()]
     }
     init_dict = {
         "type": "init",

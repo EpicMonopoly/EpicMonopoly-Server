@@ -126,6 +126,10 @@ class Asset(block.Block):
     def change_value(self, rate):
         pass
 
+    @property
+    def block_id(self):
+        return self._block_id
+
     def payment(self):
         """payment
 
@@ -145,7 +149,7 @@ class Asset(block.Block):
         pass
 
     @abstractmethod
-    def getJSon(self):
+    def getJSON(self):
         pass
         # json_data = {
         #     "name": self._name,

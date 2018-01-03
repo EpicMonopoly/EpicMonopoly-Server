@@ -169,7 +169,7 @@ class Player(role.Role):
         else:
             self._position = position
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "name": self._name,
             "cash": self._cash,

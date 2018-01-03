@@ -20,22 +20,37 @@ class Block(metaclass=ABCMeta):
 
     @property
     def name(self):
+        """
+        Get name
+        """
         return self._name
 
     @name.setter
     def name(self, name):
+        """
+        Set name
+        """
         self._name = name
 
     @property
     def block_id(self):
+        """
+        Get block id
+        """
         return self._block_id
 
     @property
     def position(self):
+        """
+        Get block position
+        """
         return self._position
 
     @position.setter
     def position(self, position):
+        """
+        Set block position
+        """
         self._position = position
 
     @abstractclassmethod
@@ -46,7 +61,10 @@ class Block(metaclass=ABCMeta):
     def change_value(self, rate):
         pass
 
-    def getJSon_block(self):
+    def getJSON_block(self):
+        """
+        Return block data in block.json format
+        """
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
@@ -72,17 +90,39 @@ class Go(Block):
 
     @property
     def reward(self):
+        """
+        Return the reward payment when passing go
+        """
         return self._reward_value
 
     def display(self, gamer, data, dice_result):
-        # import operation
+        """
+        Start go function
+
+        Parameters
+        ----------
+        gamer: Player who currently play
+        data: All the data in game. Dict format
+        dice_result: The result of dice
+
+        """
         operation.pay(data['epic_bank'], gamer, self._reward_value, data)
 
     def change_value(self, rate):
+        """
+        Change the reward value
+
+        Parameters
+        ----------
+        rate: Change in this rate
+        """
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
 
-    def getJSon(self):
+    def getJSON(self):
+        """
+        Return data in go.json format
+        """
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
@@ -108,13 +148,17 @@ class Go_To_Jail(Block):
 
     def display(self, gamer, data, dice_result):
         """
-        docstring here
-            :type gamer: player.Player
-            :param gamer: 
-            :param data: 
-            :param dice_result: 
+        Start go to jail function
+
+        Parameters
+        ----------
+        gamer: Player who currently play
+        data: All the data in game. Dict format
+        dice_result: The result of dice
+
         """
-        data["msg"].push2single(gamer.id, operation.gen_hint_json("Move to jail"))
+        data["msg"].push2single(
+            gamer.id, operation.gen_hint_json("Move to jail"))
         gamer.move(steps=0, position=10)
         gamer.add_in_jail_time()
         gamer.cur_status = 0

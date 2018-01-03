@@ -9,17 +9,37 @@ class Utility(asset.Asset):
     ----------
     asset.Asset: 
 
-    Returns
-    -------
-
     """
+
     def __init__(self, name, block_id, position, uid, estate_value, status):
-        """
-        Call superclass construct method
+        """constructor
+
+        Parameters
+        ----------
+        self: class itself
+        name: name of utility
+        block_id: block id of utility
+        position: position of utility
+        uid: owner id of utility
+        estate_value: estate value of utility
+        status: status of utility
+
         """
         super().__init__(name, block_id, position, uid, estate_value, status)
 
     def payment(self, utility_num, dice_result):
+        """payment
+
+        Parameters
+        ----------
+        self: class itself
+        utility_num: number of utility
+        dice_result: result of dice
+
+        Returns
+        -------
+        payment: amount of payment
+        """
         if utility_num == 1:
             return dice_result * 4
         elif utility_num == 2:
@@ -29,19 +49,26 @@ class Utility(asset.Asset):
             return 0
 
     def change_value(self, rate):
+        """change estate value
+
+        Parameters
+        ----------
+        self: class itself
+        rate: rate of change
+
+        """
         self._estate_value = self._estate_value * (1 + rate)
 
-    @property
-    def block_id(self):
-        return self._block_id
-
-
     def display(self, gamer, data, dice_result):
-        """
-        Display description
-        :type data: dict
-        :type gamer: player.Player
-        :return:
+        """display message when entering the utility
+
+        Parameters
+        ----------
+        self: class itself
+        gamer: gamer object
+        data: data dict
+        dice_result: result of dice
+
         """
         # import operation
         player_dict = data['player_dict']
@@ -64,11 +91,13 @@ class Utility(asset.Asset):
                     self.enter_log[gamer.id] = 1
                 data["msg"].push2all(operation.gen_record_json(
                     "%s own %s" % (gamer.name, self.name)))
-                payment = self.payment(gamer.utility_num, dice_result) * (0.9 ** passing_time)
+                payment = self.payment(
+                    gamer.utility_num, dice_result) * (0.9 ** passing_time)
                 if gamer.alliance == owner.alliance:
                     # Make discount to alliance
                     payment = payment * 0.9
-                    data['msg'].push2single(gamer.id, operation.gen_hint_json("%s and %s are alliances, make discount" % (owner.name, gamer.name)))
+                    data['msg'].push2single(gamer.id, operation.gen_hint_json(
+                        "%s and %s are alliances, make discount" % (owner.name, gamer.name)))
                 operation.pay(gamer, owner, payment, data)
         elif self._status == -1:
             # Nobody own
@@ -105,6 +134,16 @@ class Utility(asset.Asset):
             raise ValueError("Invalid estate status")
 
     def getJSon(self):
+        """get data in JSON format
+
+        Parameters
+        ----------
+        self: class itself
+
+        Returns
+        -------
+        json_data: data in json format
+        """
         json_data = {
             "name": self._name,
             "block_id": self._block_id,

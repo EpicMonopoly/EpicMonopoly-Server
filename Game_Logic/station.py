@@ -113,7 +113,7 @@ class Station(asset.Asset):
         else:
             raise ValueError("Invalid estate status")
 
-    def getJSon(self):
+    def getJSON(self):
         payment_list = []
         for i in range(1, 5):
             payment_list.append(
