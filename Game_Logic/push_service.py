@@ -1,7 +1,10 @@
 import json
 import logging
 import multiprocessing
+import os
+import uuid
 
+import tornado.escape
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
@@ -10,19 +13,72 @@ from tornado.options import define, options, parse_command_line
 import room_detail
 
 rooms = dict()
+wait_room = dict()
+
+
+# class IndexHandler(tornado.web.RequestHandler):
+#     @tornado.web.asynchronous
+#     def get(self):
+#         self.render("index.html")
 
 
 class IndexHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     def get(self):
-        self.render("index.html")
+        self.render("login_page.html")
+
+
+class InGameHandler(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    def get(self):
+        self.render("in_game.html")
+
 
 class InitRoomHanler(tornado.web.RequestHandler):
     def post(self):
-        pass
-           
+        print(self.request.body)
+        if self.request.body:
+            try:
+                json_data = tornado.escape.json_decode(self.request.body)
+                print("json_data", json_data)
 
+                for dat in json_data["data"]:
+                    if "type" in dat:
+                        if dat["type"] == "player":
+                            dat["data"][0]["uid"] = str(uuid.uuid1())
+                        elif dat["type"] == "room":
+                            dat["data"][0]["room_id"] = str(uuid.uuid4())
+                print("response", json_data)
 
+                for dat in json_data["data"]:
+                    if "type" in dat:
+                        if dat["type"] == "room":
+                            room_config = dat["data"][0]
+                            roomid = room_config["room_id"]
+                            break
+                    else:
+                        roomid = dat["room_id"]
+
+                for dat in json_data["data"]:
+                    if "type" in dat:
+                        if dat["type"] == "player":
+                            player_detail = dat["data"][0]
+                            break
+
+                if roomid not in wait_room:
+                    wait_room[roomid] = {
+                        "room": room_config,
+                        "player_list": []
+                    }
+                wait_room[roomid]["player_list"].append(player_detail)
+                self.write(tornado.escape.json_encode(json_data))
+            except ValueError:
+                message = 'Unable to parse JSON.'
+                self.send_error(400, message=message)  # Bad Request
+
+class RoomlistHanler(tornado.web.RequestHandler):
+     def get(self):
+         self.write(tornado.escape.json_encode(wait_room))
 
 class MywebSocketHandler(tornado.websocket.WebSocketHandler):
     def open(self, *args):
@@ -30,9 +86,11 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
         self.roomid = self.get_argument("roomid")
         self.stream.set_nodelay(True)
         if self.roomid in rooms:
+            # 新玩家加入
             rooms[self.roomid].add_clients(self.id, self)
             self.write_message("<NEW_PLAYER-S>")
         else:
+            # 创建新房间
             rooms[self.roomid] = room_detail.Room_detail(
                 self.roomid, (self.id, self))
             self.write_message("<NEW_PLAYER-O>")
@@ -72,10 +130,16 @@ class MywebSocketHandler(tornado.websocket.WebSocketHandler):
         return True
 
 
-app = tornado.web.Application({
-    (r"/", IndexHandler),
-    (r"/websocket", MywebSocketHandler),
-})
+app = tornado.web.Application(
+    [
+        (r"/", IndexHandler),
+        (r"/joingame", InitRoomHanler),
+        (r"/ingame", InGameHandler),
+        (r"/roomlist", RoomlistHanler),
+        (r"/websocket", MywebSocketHandler),
+    ],
+    static_path=os.path.join(os.path.dirname(__file__), "static")
+)
 
 
 # def push():
