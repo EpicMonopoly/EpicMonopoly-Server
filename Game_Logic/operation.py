@@ -470,7 +470,7 @@ def gen_update_json(data):
         "data": [data["ef"].getJSON()]
     }
     init_dict = {
-        "type": "init",
+        "type": "update",
         "data": [json_estate, json_station, json_utility, json_player, json_ef]
     }
     return json.dumps(init_dict)
