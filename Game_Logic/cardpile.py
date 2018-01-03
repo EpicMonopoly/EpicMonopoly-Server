@@ -25,7 +25,7 @@ class CardPile(block.Block):
         for card in self._cards:
             card.change_value(rate)
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "name": self._name,
             "position": self._position,

@@ -370,7 +370,7 @@ class Board:
             street_b[index].position(temp)
 
     # TODO: need to finish
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "type": "board",
             "data": [

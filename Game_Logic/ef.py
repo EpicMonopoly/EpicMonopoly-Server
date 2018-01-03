@@ -45,7 +45,7 @@ class EF:
         self._cur_rate = new_ef
         self._ef_history.append(new_ef)
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "variation": self._variation,
             "cur_rate": self._cur_rate

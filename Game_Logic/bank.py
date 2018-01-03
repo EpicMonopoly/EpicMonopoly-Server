@@ -140,7 +140,7 @@ class Bank(role.Role):
         else:
             pass
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "type": "bank",
             "data": [

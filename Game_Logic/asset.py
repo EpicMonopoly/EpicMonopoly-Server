@@ -149,7 +149,7 @@ class Asset(block.Block):
         pass
 
     @abstractmethod
-    def getJSon(self):
+    def getJSON(self):
         pass
         # json_data = {
         #     "name": self._name,

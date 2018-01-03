@@ -28,7 +28,7 @@ class Card(metaclass=ABCMeta):
     def change_value(self, rate):
         pass
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "description": self._description
         }
@@ -97,7 +97,7 @@ class MoveCard(Card):
     def change_value(self, rate):
         pass
 
-    # def getJSon(self):
+    # def getJSON(self):
     #     json_data = {
     #         "name": self._name,
     #         "description": self._description,
@@ -161,7 +161,7 @@ class PayCard(Card):
     def amount(self, amount):
         self._amount = amount
 
-    # def getJSon(self):
+    # def getJSON(self):
     #     json_data = {
     #         "name": self._name,
     #         "description": self._description,
@@ -211,7 +211,7 @@ class CollectCard(Card):
     def amount(self, amount):
         self._amount = amount
 
-    # def getJSon(self):
+    # def getJSON(self):
     #     json_data = {
     #         "name": self._name,
     #         "description": self._description,
@@ -270,7 +270,7 @@ class CollectCard(Card):
 #                 data['msg'].push2single(
 #                     gamer.id, operation.gen_hint_json("Invaild choice."))
 
-    # def getJSon(self):
+    # def getJSON(self):
     #     json_data = {
     #         "name": self._name,
     #         "description": self._description,

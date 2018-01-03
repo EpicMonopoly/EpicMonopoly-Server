@@ -46,7 +46,7 @@ class Block(metaclass=ABCMeta):
     def change_value(self, rate):
         pass
 
-    def getJSon_block(self):
+    def getJSON_block(self):
         json_data = {
             "name": self._name,
             "block_id": self._block_id,
@@ -82,7 +82,7 @@ class Go(Block):
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "name": self._name,
             "block_id": self._block_id,

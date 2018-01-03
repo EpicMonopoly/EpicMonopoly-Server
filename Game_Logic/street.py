@@ -42,7 +42,7 @@ class Street:
         for block in self._block_list:
             block.position(temp_list.pop())
 
-    def getJSon(self):
+    def getJSON(self):
         json_data = {
             "id": self._street_id,
             "color": self._color
