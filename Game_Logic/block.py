@@ -116,6 +116,8 @@ class Go(Block):
         ----------
         rate: Change in this rate
         """
+        print(self._reward_value, rate)
+        print(type(self._reward_value), type(rate))
         self._reward_value = self._reward_value * (1 + rate)
         print("Update reward to %d" % self._reward_value)
 

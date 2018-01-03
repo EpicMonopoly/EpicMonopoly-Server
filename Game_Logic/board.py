@@ -40,12 +40,17 @@ class Board:
         self._player_dict = {}
         self._create_room_dict = create_room_dict
         self._players_list = self._create_room_dict["player_list"]
-        self._game_setting = self._create_room_dict["room"]
+        self._game_setting = self._tranform_int(self._create_room_dict["room"])
         self._epic_bank = None
         self._street_color = OrderedDict()
         self._messager_handler = mess_hand
         self._block_position = []
         self.init_board()
+
+    def _tranform_int(self, game_setting):
+        game_setting["init_fund"] = int(game_setting["init_fund"])
+        game_setting["go_salary"] = int(game_setting["go_salary"])
+        return game_setting
 
     def _read_data(self):
         """
