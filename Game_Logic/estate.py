@@ -153,12 +153,12 @@ class Estate(asset.Asset):
             "name": self._name,
             "block_id": self._block_id,
             "position": self._position,
-            "uid": self._uid,
+            "owner_id": self._uid,
             "estate_value": self._estate_value,
             "status": self._status,
             "street_id": self._street_id,
             "house_value": self._house_value,
-            "house_num": self._house_num,
+            "house_number": self._house_num,
             "mortgage_value": self.mortgage_value,
             "payment": payment_list
         }
