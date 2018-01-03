@@ -17,10 +17,16 @@ class Messager:
         return self._msg_queue
 
     def _monitor(self):
+        """
+        A threading keep apply wait_choice function
+        """
         while not self._flag:
             self.wait_choice()
 
     def _add_new_player(self, player_info):
+        """
+        Add new player if exist
+        """
         import player
         import game_entrance
         p = player.Player(player_info["id"],
@@ -33,7 +39,13 @@ class Messager:
 
     def push2single(self, uid, line):
         """
-        push message to single player
+        Push line to player who id is uid
+
+        Parameters
+        ----------
+        self: 
+        uid: id of player
+        line: str
 
         """
         self._msg_tunnel.send((self._room_id, line, uid))
@@ -50,7 +62,7 @@ class Messager:
 
     def wait_choice(self):
         """
-        wait for choice
+        wait player's input
         """
         # child to recv
         print("Room {} wait choice:".format(self._room_id))
@@ -68,9 +80,10 @@ class Messager:
         # print(self._msg_queue)
 
     def get_json_data(self, key_word):
-        # print("queue", self._msg_queue, key_word)
+        """
+        Return json data according to key word
+        """
         for i in range(len(self._msg_queue)):
-            # print(key_word, self._msg_queue[i]["type"])
             if self._msg_queue[i]["type"] == key_word:
                 temp = self._msg_queue[i]
                 del self._msg_queue[i]

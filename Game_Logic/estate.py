@@ -51,13 +51,14 @@ class Estate(asset.Asset):
     @property
     def payment(self):
         """
-        Calculate the payment of the house
-        Return:
-            :payment: int
+        Calculate the payment of estate
         """
         return self._get_payment(self._house_num)
 
     def _get_payment(self, house_num):
+        """
+        Return payment according to house number
+        """
         if house_num == 0:
             return int(self._estate_value + (0 * self._house_value) * 0.1)
         elif house_num == 1:
@@ -77,6 +78,9 @@ class Estate(asset.Asset):
             raise ValueError("Invalid house number")
 
     def change_value(self, rate):
+        """
+        Change house value and estate value
+        """
         self._house_value = self._house_value * (1 + rate)
         self._estate_value = self._estate_value * (1 + rate)
 
@@ -150,6 +154,9 @@ class Estate(asset.Asset):
             raise ValueError("Invalid estate status")
 
     def getJSON(self):
+        """
+        Return data according to estate.json format
+        """
         payment_list = []
         for i in range(1, 7):
             payment_list.append(

@@ -114,6 +114,9 @@ class PayCard(Card):
         self._card_type = card_type
 
     def change_value(self, rate):
+        """
+        Change the value of payment card
+        """
         self._amount = self._amount * (1 + rate)
 
     def play(self, gamer, data):
@@ -121,8 +124,6 @@ class PayCard(Card):
         :param from_role: a player or bank or rest players
         :param data: global game data
         """
-        # data['msg'].push2single(
-        #     gamer.id, operation.gen_hint_json(self.description))
         data['msg'].push2all(operation.gen_hint_json(
             "player %s get card: %s" % (gamer.name, self.description)))
         if self._card_type == 2:
