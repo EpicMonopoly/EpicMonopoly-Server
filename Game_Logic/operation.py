@@ -358,6 +358,13 @@ def gen_newturn_json(gamer):
     return json.dumps(result_dict)
 
 
+def gen_choice_json(msg):
+    return_json = {}
+    return_json["type"] = "choice"
+    return_json["data"] = [{"message": msg}]
+    return json.dumps(return_json)
+
+
 def gen_init_json(data):
     data_list = []
     json_block = {

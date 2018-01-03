@@ -52,7 +52,7 @@ class Utility(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                data["msg"].push2single(gamer.id, operation.gen_hint_json(
+                data["msg"].push2single(gamer.id, operation.gen_choice_json(
                     "Nobody own %s do you want to buy it?" % self.name))
                 input_data = data["msg"].get_json_data("input")
                 while input_data is False:

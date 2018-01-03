@@ -101,7 +101,9 @@ class Estate(asset.Asset):
         elif self._status == -1:
             # Nobody own
             while True:
-                data['msg'].push2singe(gamer.id, operation.gen_hint_json("Nobody own %s do you want to buy it?" % self.name))
+                # data['msg'].push2singe(gamer.id, operation.gen_hint_json("Nobody own %s do you want to buy it?" % self.name))
+                data["msg"].push2single(gamer.id, operation.gen_choice_json(
+                    "Nobody own %s do you want to buy it?" % self.name))
                 # data['msg'].push2single(gamer.id, operation.gen_hint_json("Price: %d" % self.value))
                 # data['msg'].push2single(gamer.id, operation.gen_hint_json("1: Buy it"))
                 # data['msg'].push2single(gamer.id, operation.gen_hint_json("2: Do not buy it"))
@@ -113,13 +115,14 @@ class Estate(asset.Asset):
                     price = self.value
                     cur_cash = gamer.cash
                     if price > cur_cash:
-                        data['msg'].push2singe(gamer.id, operation.gen_hint_json(
+                        data['msg'].push2single(gamer.id, operation.gen_hint_json(
                             "You do not have enough money"))
                         break
                     else:
                         operation.pay(gamer, epic_bank, price, data)
                         operation.trade_asset(self, epic_bank, gamer)
-                        data['msg'].push2all(operation.gen_hint_json("%s buy %s for %d" % (gamer.name, self.name, price)))
+                        data['msg'].push2all(operation.gen_hint_json(
+                            "%s buy %s for %d" % (gamer.name, self.name, price)))
                         break
                 elif choice == 2:
                     break

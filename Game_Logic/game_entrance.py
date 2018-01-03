@@ -172,8 +172,7 @@ def start_game(roomid, child_conn):
                     turn(gamer, data)
                 else:
                     while True:
-                        data["msg"].push2single(
-                            gamer.id, operation.gen_hint_json("You are in jail"))
+                        data["msg"].push2all(gamer.id, operation.gen_choice_json("You are in jail! Do you want to bail yourself out?"))
                         input_data = data["msg"].get_json_data("input")
                         while input_data is False:
                             input_data = data["msg"].get_json_data("input")
