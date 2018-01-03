@@ -34,6 +34,7 @@ class Asset(block.Block):
         self._estate_value = estate_value
         self._status = status
         self.mortgage_rate = mortgage_rate
+        self.enter_log = {}
 
     @property
     def owner(self):
@@ -48,6 +49,12 @@ class Asset(block.Block):
         uid: user id
         """
         return self._uid
+
+    def clear_log(self):
+        """
+        Clear entering log
+        """
+        self.enter_log = {}
 
     @owner.setter
     def owner(self, uid):

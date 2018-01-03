@@ -51,6 +51,7 @@ def trade_asset(new_asset, from_role, to_role):
     """
     from_role.remove_asset(new_asset)
     to_role.add_asset(new_asset)
+    new_asset.clear_log()
 
 
 def clearing(gamer, amount_left, data):
