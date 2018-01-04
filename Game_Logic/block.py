@@ -118,7 +118,7 @@ class Go(Block):
         """
         print(self._reward_value, rate)
         print(type(self._reward_value), type(rate))
-        self._reward_value = self._reward_value * (1 + rate)
+        self._reward_value = int(self._reward_value * (1 + rate))
         print("Update reward to %d" % self._reward_value)
 
     def getJSON(self):
@@ -191,7 +191,7 @@ class In_Jail(Block):
         pass
 
     def change_value(self, rate):
-        self._bail_fee = self._bail_fee * (1 + rate)
+        self._bail_fee = int(self._bail_fee * (1 + rate))
 
 
 class Free_Parking(Block):

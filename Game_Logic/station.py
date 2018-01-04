@@ -45,7 +45,7 @@ class Station(asset.Asset):
             return 0
 
     def change_value(self, rate):
-        self._estate_value = self._estate_value * (1 + rate)
+        self._estate_value = int(self._estate_value * (1 + rate))
 
     @property
     def block_id(self):

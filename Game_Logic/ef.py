@@ -47,7 +47,7 @@ class EF:
 
     def getJSON(self):
         json_data = {
-            "variation": self._variation,
-            "cur_rate": self._cur_rate
+            "variation": round(self._variation, 2),
+            "cur_rate": round(self._cur_rate, 2)
         }
         return json_data

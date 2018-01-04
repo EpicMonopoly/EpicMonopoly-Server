@@ -81,8 +81,8 @@ class Estate(asset.Asset):
         """
         Change house value and estate value
         """
-        self._house_value = self._house_value * (1 + rate)
-        self._estate_value = self._estate_value * (1 + rate)
+        self._house_value = int(self._house_value * (1 + rate))
+        self._estate_value = int(self._estate_value * (1 + rate))
 
     def display(self, gamer, data, dice_result):
         """
@@ -94,6 +94,8 @@ class Estate(asset.Asset):
             # Some body own it
             owner_id = self.owner
             owner = player_dict[owner_id]
+            print(owner_id)
+            print(player_dict)
             if owner_id == gamer.id:
                 # Owner pass this estate
                 data['msg'].push2single(gamer.id, operation.gen_hint_json(
@@ -127,6 +129,7 @@ class Estate(asset.Asset):
                 input_str = data['msg'].get_json_data("input")
                 while not input_str:
                     input_str = data['msg'].get_json_data("input")
+                input_str = input_str[0]["request"]
                 choice = int(input_str)
                 if choice == 1:
                     price = self.value
@@ -159,8 +162,7 @@ class Estate(asset.Asset):
         """
         payment_list = []
         for i in range(1, 7):
-            payment_list.append(
-                {"house_number": i, "payment": self._get_payment(i)})
+            payment_list.append({"house_number": i, "payment": self._get_payment(i)})
         json_data = {
             "name": self._name,
             "block_id": self._block_id,

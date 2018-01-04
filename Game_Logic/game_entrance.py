@@ -111,7 +111,7 @@ def turn(gamer, data):
     """
     end_flag = False
     while True:
-        data["msg"].push2all(operation.gen_newturn_json(gamer))
+
         input_data = data["msg"].get_json_data("input")
         while input_data is False:
             input_data = data["msg"].get_json_data("input")
@@ -182,6 +182,7 @@ def start_game(create_room_dict, child_conn):
         for gamer_id in living_list:
             # Iterate every player
             gamer = data["player_dict"][gamer_id]
+            
             if gamer.cur_status == 0:
                 # In jail
                 data["msg"].push2single(gamer.id, operation.gen_hint_json(
@@ -223,6 +224,7 @@ def start_game(create_room_dict, child_conn):
                             data["msg"].push2single(
                                 gamer.id, operation.gen_hint_json("Invalid choice"))
             elif gamer.cur_status == 1:
+                data["msg"].push2all(operation.gen_newturn_json(gamer))
                 # Normal Status
                 turn(gamer, data)
             else:
