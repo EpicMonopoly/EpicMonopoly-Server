@@ -94,6 +94,8 @@ class Estate(asset.Asset):
             # Some body own it
             owner_id = self.owner
             owner = player_dict[owner_id]
+            print(owner_id)
+            print(player_dict)
             if owner_id == gamer.id:
                 # Owner pass this estate
                 data['msg'].push2single(gamer.id, operation.gen_hint_json(
