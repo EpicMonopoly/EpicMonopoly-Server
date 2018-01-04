@@ -447,6 +447,8 @@ def gen_update_json(data):
     for i in data["estate_list"]:
         block_list_b.append(i.getJSON())
     json_estate["data"] = block_list_b
+    assert(type(json_estate) == dict)
+
     json_station = {
         "type": "station"
     }
@@ -454,6 +456,8 @@ def gen_update_json(data):
     for i in data["station_list"]:
         block_list_c.append(i.getJSON())
     json_station["data"] = block_list_c
+    assert(type(json_station) == dict)
+
     json_utility = {
         "type": "utility"
     }
@@ -461,6 +465,8 @@ def gen_update_json(data):
     for i in data["utility_list"]:
         block_list_d.append(i.getJSON())
     json_utility["data"] = block_list_d
+    assert(type(json_utility) == dict)
+
     json_player = {
         "type": "player"
     }
@@ -468,6 +474,8 @@ def gen_update_json(data):
     for i in data["player_dict"]:
         block_list_e.append(data["player_dict"][i].getJSON())
     json_player["data"] = block_list_e
+    assert(type(json_player) == dict)
+
     json_ef = {
         "type": "ef",
         "data": [data["ef"].getJSON()]
@@ -476,6 +484,7 @@ def gen_update_json(data):
         "type": "update",
         "data": [json_estate, json_station, json_utility, json_player, json_ef]
     }
+    assert(type(init_dict) == dict)
     print(init_dict)
     return json.dumps(init_dict)
 
