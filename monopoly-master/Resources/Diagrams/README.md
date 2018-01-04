@@ -1,1 +1,0 @@
-These diagrams have been completed using [draw.io](http://draw.io)

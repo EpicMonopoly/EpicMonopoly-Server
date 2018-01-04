@@ -1,5 +1,0 @@
-{
-    "type": "end_turn",
-    // ID of client that sends this message
-    "source": 1
-}
