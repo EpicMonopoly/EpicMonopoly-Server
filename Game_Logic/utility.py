@@ -57,7 +57,7 @@ class Utility(asset.Asset):
         rate: rate of change
 
         """
-        self._estate_value = self._estate_value * (1 + rate)
+        self._estate_value = int(self._estate_value * (1 + rate))
 
     def display(self, gamer, data, dice_result):
         """display message when entering the utility

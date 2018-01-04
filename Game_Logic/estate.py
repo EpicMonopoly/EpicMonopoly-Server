@@ -81,8 +81,8 @@ class Estate(asset.Asset):
         """
         Change house value and estate value
         """
-        self._house_value = self._house_value * (1 + rate)
-        self._estate_value = self._estate_value * (1 + rate)
+        self._house_value = int(self._house_value * (1 + rate))
+        self._estate_value = int(self._estate_value * (1 + rate))
 
     def display(self, gamer, data, dice_result):
         """

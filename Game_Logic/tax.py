@@ -60,7 +60,7 @@ class Tax(block.Block):
         pass
 
     def change_value(self, new_rate):
-        self._rate = self._rate * (1 + new_rate)
+        self._rate = int(self._rate * (1 + new_rate))
 
     def getJSON(self):
         """

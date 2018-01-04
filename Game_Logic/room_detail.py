@@ -9,6 +9,7 @@ class Room_detail:
     Class Room_detail
 
     """
+
     def __init__(self, roomid, create_room_dict, init_client):
         self.roomid = roomid
         self.clients = dict()
@@ -32,9 +33,8 @@ class Room_detail:
         """
         sender
 
-        """   
+        """
         self.parent_conn.send((self.roomid, line))
-
 
     def listener(self):
         """

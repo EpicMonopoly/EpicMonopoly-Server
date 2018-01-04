@@ -117,7 +117,7 @@ class PayCard(Card):
         """
         Change the value of payment card
         """
-        self._amount = self._amount * (1 + rate)
+        self._amount = int(self._amount * (1 + rate))
 
     def play(self, gamer, data):
         """
