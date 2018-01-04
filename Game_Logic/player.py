@@ -179,9 +179,9 @@ class Player(role.Role):
             self._position = position
 
     def getJSON(self):
-        property_list = []
-        for asset in self.assets:
-            property_list.append(asset.blockid)
+        # property_list = []
+        # for asset in self.assets:
+        #     property_list.append(asset.block_id)
         json_data = {
             "name": self._name,
             "cash": self._cash,
@@ -191,7 +191,7 @@ class Player(role.Role):
             "card_num": self._bail_card_num,
             "cur_status": self._cur_status,
             "pre_position": self._pre_position,
-            "property": property_list,
+            # "property": property_list,
             "avatar": self._avatar,
             "available_built_list": self.get_built_list()
         }
